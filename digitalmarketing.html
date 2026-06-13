@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Marketing - Web Affino</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Unified Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================
+           UNIFIED TYPOGRAPHY SYSTEM
+           ============================================ */
+        :root {
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            /* Type Scale */
+            --fs-hero:        clamp(3.5rem, 8vw, 7.5rem);
+            --fs-section:     clamp(2.5rem, 5.5vw, 5rem);
+            --fs-card-title:  2.691rem;     /* 43px */
+            --fs-body-lg:     1.863rem;     /* 29.8px */
+            --fs-body:        1.656rem;     /* 26.5px */
+            --fs-body-sm:     1.5525rem;    /* 24.8px */
+            --fs-eyebrow:     0.75rem;      /* 12px */
+
+            --lh-tight:       1.05;
+            --lh-snug:        1.25;
+            --lh-normal:      1.6;
+            --lh-relaxed:     1.7;
+            --ls-tight:       -0.02em;
+            --ls-widest:      0.2em;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-body);
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-size: var(--fs-body);
+            line-height: var(--lh-normal);
+        }
+
+        ::selection { background-color: #A855F7; color: white; }
+
+        /* Unified typography classes */
+        .font-heading { font-family: var(--font-heading); }
+        .font-body { font-family: var(--font-body); }
+        .font-mono { font-family: var(--font-mono); }
+
+        .h-hero { font-family: var(--font-heading); font-size: var(--fs-hero); font-weight: 800; line-height: var(--lh-tight); letter-spacing: var(--ls-tight); }
+        .h-section { font-family: var(--font-heading); font-size: var(--fs-section); font-weight: 800; line-height: var(--lh-snug); letter-spacing: var(--ls-tight); }
+        .h-card { font-family: var(--font-heading); font-size: var(--fs-card-title); font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; }
+        .body-lead { font-family: var(--font-body); font-size: var(--fs-body-lg); font-weight: 300; line-height: var(--lh-relaxed); }
+        .body-text { font-family: var(--font-body); font-size: var(--fs-body-sm); font-weight: 400; line-height: var(--lh-relaxed); }
+        .eyebrow { font-family: var(--font-body); font-size: var(--fs-eyebrow); font-weight: 700; letter-spacing: var(--ls-widest); text-transform: uppercase; }
+
+        /* Digital Marketing Omnichannel Gradient (Indigo -> Fuchsia) */
+        .text-gradient-omni {
+            background-image: linear-gradient(90deg, #818CF8 0%, #E879F9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-up { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+        .delay-100 { animation-delay: 0.1s; } .delay-200 { animation-delay: 0.2s; } .delay-300 { animation-delay: 0.3s; }
+
+        /* Background Pattern */
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        }
+
+        /* Journey Node Connections */
+        .journey-node {
+            transition: transform 0.2s ease;
+        }
+
+        .journey-node:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Float elements */
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        .animate-float-slow { animation: float-slow 6s ease-in-out infinite; }
+    </style>
+</head>
+<body class="bg-black text-white antialiased overflow-x-hidden min-h-screen">
+
+    <!-- ========================================= -->
+    <!-- HERO SECTION                              -->
+    <!-- ========================================= -->
+    <section class="relative pt-36 pb-24 overflow-hidden min-h-[85vh] flex flex-col justify-center">
+        
+        <!-- Ambient Background -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-[1600px] bg-indigo-900/20 blur-[150px] rounded-full pointer-events-none z-0"></div>
+        <div class="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none z-0"></div>
+
+        <!-- Strict Container Constraints -->
+        <div class="max-w-[1600px] mx-auto w-full px-6 md:px-12 xl:px-[50px] relative z-10 flex flex-col items-center">
+            
+            <div class="text-center max-w-5xl mx-auto animate-fade-up">
+                <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 backdrop-blur-md mb-8">
+                    <i data-lucide="globe-2" class="w-4 h-4 text-indigo-400"></i>
+                    <span class="eyebrow text-indigo-300">Digital Marketing</span>
+                </div>
+
+                <h1 class="h-hero text-white mb-8">
+                    Connect Every Dot in the <br>
+                    <span class="text-gradient-omni">Digital Ecosystem.</span>
+                </h1>
+                
+                <p class="body-lead text-neutral-400 max-w-4xl mx-auto mb-12">
+                    Holistic strategies designed to improve user journeys, maximize engagement, and exponentially multiply your revenue.
+                </p>
+
+                <div class="flex justify-center gap-6">
+                    <a href="#holistic-journey" class="font-body group relative inline-flex items-center gap-3 px-8 py-4 bg-white/5 border border-white/10 text-white text-lg font-bold rounded-full overflow-hidden transition-all hover:bg-white/10 active:scale-95 backdrop-blur-md">
+                        See The Journey <i data-lucide="arrow-down" class="w-5 h-5 group-hover:translate-y-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Floating Omni-channel Nodes -->
+            <div class="absolute top-1/4 left-[10%] hidden lg:flex items-center justify-center w-16 h-16 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md animate-float-slow" style="animation-delay: 0s;">
+                <i data-lucide="mail" class="w-8 h-8 text-indigo-400"></i>
+            </div>
+            <div class="absolute bottom-1/4 right-[10%] hidden lg:flex items-center justify-center w-16 h-16 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md animate-float-slow" style="animation-delay: 2s;">
+                <i data-lucide="smartphone" class="w-8 h-8 text-fuchsia-400"></i>
+            </div>
+            <div class="absolute top-1/3 right-[15%] hidden lg:flex items-center justify-center w-16 h-16 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md animate-float-slow" style="animation-delay: 1s;">
+                <i data-lucide="search" class="w-8 h-8 text-blue-400"></i>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- DYNAMIC HOLISTIC JOURNEY ANIMATION        -->
+    <!-- ========================================= -->
+    <section id="holistic-journey" class="relative py-32 bg-[#050505] border-t border-white/5 overflow-hidden">
+        <div class="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none"></div>
+        
+        <div class="max-w-[1600px] mx-auto w-full px-6 md:px-12 xl:px-[50px] relative z-10">
+            
+            <div class="text-center mb-20 animate-fade-up">
+                <h2 class="h-section text-white mb-6">The Holistic Journey</h2>
+                <p class="body-lead text-neutral-400 max-w-3xl mx-auto">
+                    Digital marketing isn't just about running ads. It's about engineering a continuous loop of <span class="text-indigo-400 font-medium">awareness</span>, <span class="text-fuchsia-400 font-medium">engagement</span>, and <span class="text-emerald-400 font-medium">revenue</span>.
+                </p>
+            </div>
+
+            <!-- Interactive Journey Dashboard -->
+            <div class="relative w-full max-w-6xl mx-auto bg-[#0a0a0a] border border-white/10 rounded-[3rem] p-8 md:p-16 shadow-2xl overflow-hidden">
+                <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-indigo-500/10 to-fuchsia-500/10 blur-[100px] rounded-full pointer-events-none"></div>
+
+                <!-- Desktop SVG Connectors -->
+                <svg class="absolute inset-0 w-full h-full pointer-events-none hidden md:block z-0" style="z-index: 0;">
+                    <!-- Line 1: Traffic to Engagement -->
+                    <path d="M 25% 50% L 50% 50%" id="path-1" fill="none" stroke="#6366F1" stroke-width="4" stroke-linecap="round"/>
+                    <!-- Line 2: Engagement to Revenue -->
+                    <path d="M 50% 50% L 75% 50%" id="path-2" fill="none" stroke="#D946EF" stroke-width="4" stroke-linecap="round"/>
+                </svg>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-4 relative z-10">
+                    
+                    <!-- Node 1: User Journeys (Traffic/Awareness) -->
+                    <div id="node-1" class="journey-node bg-[#111] border border-white/10 rounded-3xl p-8 flex flex-col items-center text-center relative">
+                        <div class="w-20 h-20 rounded-full bg-indigo-500/20 flex items-center justify-center mb-6 relative z-10">
+                            <i data-lucide="users" class="w-10 h-10 text-indigo-400"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-2xl text-white mb-2 relative z-10">1. User Journeys</h3>
+                        <p class="body-text text-neutral-400 text-sm relative z-10">We map and capture high-intent traffic across Search, Social, and Display.</p>
+                        
+                        <!-- Mini dynamic stat -->
+                        <div class="mt-6 bg-black/50 border border-white/5 rounded-lg px-4 py-2 flex items-center gap-3 relative z-10">
+                            <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+                            <span class="font-mono text-xs text-indigo-300">Traffic: <span id="stat-traffic">1,420</span>/s</span>
+                        </div>
+                    </div>
+
+                    <!-- Node 2: Engagement -->
+                    <div id="node-2" class="journey-node bg-[#111] border border-white/10 rounded-3xl p-8 flex flex-col items-center text-center relative">
+                        <div class="w-20 h-20 rounded-full bg-fuchsia-500/20 flex items-center justify-center mb-6 relative z-10">
+                            <i data-lucide="heart-handshake" class="w-10 h-10 text-fuchsia-400"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-2xl text-white mb-2 relative z-10">2. Engagement</h3>
+                        <p class="body-text text-neutral-400 text-sm relative z-10">Optimized content and UI/UX keep users on-site, building trust and authority.</p>
+                        
+                        <!-- Mini dynamic stat -->
+                        <div class="mt-6 bg-black/50 border border-white/5 rounded-lg px-4 py-2 flex items-center gap-3 relative z-10">
+                            <span class="w-2 h-2 rounded-full bg-fuchsia-500"></span>
+                            <span class="font-mono text-xs text-fuchsia-300">Time on Site: <span id="stat-time">2:25</span></span>
+                        </div>
+                    </div>
+
+                    <!-- Node 3: Revenue -->
+                    <div id="node-3" class="journey-node bg-[#111] border border-white/10 rounded-3xl p-8 flex flex-col items-center text-center relative">
+                        <div class="w-20 h-20 rounded-full bg-emerald-500/20 flex items-center justify-center mb-6 relative z-10">
+                            <i data-lucide="trending-up" class="w-10 h-10 text-emerald-400"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-2xl text-white mb-2 relative z-10">3. Revenue</h3>
+                        <p class="body-text text-neutral-400 text-sm relative z-10">Frictionless conversion points turn engaged users into measurable profit.</p>
+                        
+                        <!-- Mini dynamic stat -->
+                        <div class="mt-6 bg-black/50 border border-white/5 rounded-lg px-4 py-2 flex items-center gap-3 relative z-10">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            <span class="font-mono text-xs text-emerald-300">ROAS: <span id="stat-roas">4.8</span>x</span>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <!-- Sequence Status Bar -->
+                <div class="mt-12 flex justify-center items-center gap-4 border-t border-white/10 pt-8 relative z-10">
+                    <i data-lucide="activity" class="w-5 h-5 text-emerald-400"></i>
+                    <p id="sequence-status" class="font-mono text-sm text-emerald-400 uppercase tracking-widest">Digital Ecosystem Active</p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- TYPES OF DIGITAL MARKETING GRID           -->
+    <!-- ========================================= -->
+    <section class="relative py-32 bg-gray-900 border-t border-gray-800 overflow-hidden">
+        <!-- Ambient Background -->
+        <div class="absolute bottom-0 right-0 w-[600px] h-[600px] bg-fuchsia-900/10 blur-[150px] rounded-full pointer-events-none z-0"></div>
+
+        <div class="max-w-[1600px] mx-auto w-full px-6 md:px-12 xl:px-[50px] relative z-10">
+            
+            <div class="text-center mb-20 animate-fade-up">
+                <h2 class="h-section text-white mb-6">Mastering Every Channel.</h2>
+                <p class="body-lead text-neutral-400 max-w-3xl mx-auto">From the first click to the final sale, our digital strategies blanket the entire online landscape.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Service 1 -->
+                <div class="group bg-[#0A0A0A] border border-white/10 rounded-[2.5rem] p-10 hover:border-blue-500/50 transition-all duration-500 hover:-translate-y-2 shadow-xl animate-fade-up delay-100">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-8 border border-blue-500/20 group-hover:bg-blue-500/20 transition-colors">
+                        <i data-lucide="mouse-pointer-2" class="w-7 h-7 text-blue-400"></i>
+                    </div>
+                    <h3 class="h-card text-white mb-4 text-2xl group-hover:text-blue-400 transition-colors">Paid Media (PPC)</h3>
+                    <p class="body-text text-neutral-400 text-sm">
+                        Hyper-targeted Google & Meta ads designed to capture bottom-of-the-funnel intent and maximize immediate ROI.
+                    </p>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="group bg-[#0A0A0A] border border-white/10 rounded-[2.5rem] p-10 hover:border-purple-500/50 transition-all duration-500 hover:-translate-y-2 shadow-xl animate-fade-up delay-200">
+                    <div class="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center mb-8 border border-purple-500/20 group-hover:bg-purple-500/20 transition-colors">
+                        <i data-lucide="share-2" class="w-7 h-7 text-purple-400"></i>
+                    </div>
+                    <h3 class="h-card text-white mb-4 text-2xl group-hover:text-purple-400 transition-colors">Social Media Strategy</h3>
+                    <p class="body-text text-neutral-400 text-sm">
+                        Building organic communities and brand loyalty on platforms where your audience spends their daily time.
+                    </p>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="group bg-[#0A0A0A] border border-white/10 rounded-[2.5rem] p-10 hover:border-emerald-500/50 transition-all duration-500 hover:-translate-y-2 shadow-xl animate-fade-up delay-300">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center mb-8 border border-emerald-500/20 group-hover:bg-emerald-500/20 transition-colors">
+                        <i data-lucide="search" class="w-7 h-7 text-emerald-400"></i>
+                    </div>
+                    <h3 class="h-card text-white mb-4 text-2xl group-hover:text-emerald-400 transition-colors">SEO & Content</h3>
+                    <p class="body-text text-neutral-400 text-sm">
+                        Long-term organic growth engines. We create authoritative content that search engines love and humans want to read.
+                    </p>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="group bg-[#0A0A0A] border border-white/10 rounded-[2.5rem] p-10 hover:border-fuchsia-500/50 transition-all duration-500 hover:-translate-y-2 shadow-xl animate-fade-up delay-100">
+                    <div class="w-14 h-14 rounded-2xl bg-fuchsia-500/10 flex items-center justify-center mb-8 border border-fuchsia-500/20 group-hover:bg-fuchsia-500/20 transition-colors">
+                        <i data-lucide="mail-open" class="w-7 h-7 text-fuchsia-400"></i>
+                    </div>
+                    <h3 class="h-card text-white mb-4 text-2xl group-hover:text-fuchsia-400 transition-colors">Email & Automation</h3>
+                    <p class="body-text text-neutral-400 text-sm">
+                        Nurture sequences, abandoned cart recoveries, and personalized drip campaigns that turn cold leads into warm buyers.
+                    </p>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="group bg-[#0A0A0A] border border-white/10 rounded-[2.5rem] p-10 hover:border-orange-500/50 transition-all duration-500 hover:-translate-y-2 shadow-xl animate-fade-up delay-200">
+                    <div class="w-14 h-14 rounded-2xl bg-orange-500/10 flex items-center justify-center mb-8 border border-orange-500/20 group-hover:bg-orange-500/20 transition-colors">
+                        <i data-lucide="video" class="w-7 h-7 text-orange-400"></i>
+                    </div>
+                    <h3 class="h-card text-white mb-4 text-2xl group-hover:text-orange-400 transition-colors">Video Marketing</h3>
+                    <p class="body-text text-neutral-400 text-sm">
+                        High-engagement visual storytelling optimized for YouTube, TikTok, and short-form ad placements to captivate viewers.
+                    </p>
+                </div>
+
+                <!-- Service 6 -->
+                <div class="group bg-[#0A0A0A] border border-white/10 rounded-[2.5rem] p-10 hover:border-cyan-500/50 transition-all duration-500 hover:-translate-y-2 shadow-xl animate-fade-up delay-300">
+                    <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 flex items-center justify-center mb-8 border border-cyan-500/20 group-hover:bg-cyan-500/20 transition-colors">
+                        <i data-lucide="bar-chart-3" class="w-7 h-7 text-cyan-400"></i>
+                    </div>
+                    <h3 class="h-card text-white mb-4 text-2xl group-hover:text-cyan-400 transition-colors">Analytics & CRO</h3>
+                    <p class="body-text text-neutral-400 text-sm">
+                        Continuous A/B testing, heatmapping, and data analysis to ensure your digital ecosystem is constantly improving.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- CTA SECTION                               -->
+    <!-- ========================================= -->
+    <section class="relative py-40 text-center overflow-hidden bg-black">
+        <div class="absolute inset-0 bg-gradient-to-b from-gray-900 via-black to-[#050505] z-0"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl bg-[#818CF8]/10 blur-[150px] rounded-full pointer-events-none z-0"></div>
+
+        <div class="max-w-[1600px] mx-auto w-full px-6 md:px-12 xl:px-[50px] relative z-10 animate-fade-up">
+            <h2 class="h-section text-white mb-10">
+                Ready for a <br>
+                <span class="text-gradient-omni">Holistic Approach?</span>
+            </h2>
+            <p class="body-lead text-neutral-400 mb-16 max-w-3xl mx-auto">
+                Stop operating in silos. Let Web Affino build a unified digital marketing strategy that drives compounding results across every channel.
+            </p>
+            
+            <div class="flex justify-center">
+                <a href="https://webaffino.com/contact-us" class="font-body group relative inline-flex items-center gap-4 px-12 py-5 bg-white text-black text-lg font-bold rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(168,85,247,0.3)]">
+                    <span class="relative z-10 flex items-center gap-2">
+                        Start Your Transformation
+                        <i data-lucide="arrow-right" class="w-6 h-6 transition-transform group-hover:translate-x-1"></i>
+                    </span>
+                    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-indigo-100 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+
+        });
+    </script>
+</body>
+</html>

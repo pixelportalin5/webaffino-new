@@ -1,0 +1,1650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Generation - Web Affino</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================
+           UNIFIED TYPOGRAPHY (matches main page)
+           ============================================ */
+        :root {
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            --fs-hero:        clamp(3.5rem, 8vw, 7.5rem);
+            --fs-section:     clamp(2.5rem, 5.5vw, 5rem);
+            --fs-card-title:  2.691rem;
+            --fs-body-lg:     1.863rem;
+            --fs-body:        1.656rem;
+            --fs-body-sm:     1.5525rem;
+            --fs-eyebrow:     0.75rem;
+
+            --lh-tight:       1.05;
+            --lh-snug:        1.25;
+            --lh-normal:      1.6;
+            --lh-relaxed:     1.7;
+
+            --ls-tight:       -0.02em;
+            --ls-widest:      0.2em;
+
+            /* Channel colors */
+            --meta-blue:      #1877F2;
+            --google-blue:    #4285F4;
+            --google-red:     #EA4335;
+            --google-yellow:  #FBBC05;
+            --google-green:   #34A853;
+            --linkedin:       #0A66C2;
+            --tiktok-pink:    #FE2C55;
+            --tiktok-cyan:    #25F4EE;
+            --youtube:        #FF0000;
+            --partner-purple: #C084FC;
+            --native-amber:   #F59E0B;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            font-family: var(--font-body);
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            font-size: var(--fs-body);
+            line-height: var(--lh-normal);
+        }
+
+        .font-heading { font-family: var(--font-heading); }
+        .font-body { font-family: var(--font-body); }
+        .font-mono { font-family: var(--font-mono); }
+
+        .h-hero {
+            font-family: var(--font-heading);
+            font-size: var(--fs-hero);
+            font-weight: 800;
+            line-height: var(--lh-tight);
+            letter-spacing: var(--ls-tight);
+        }
+
+        .h-section {
+            font-family: var(--font-heading);
+            font-size: var(--fs-section);
+            font-weight: 800;
+            line-height: var(--lh-snug);
+            letter-spacing: var(--ls-tight);
+        }
+
+        .h-card {
+            font-family: var(--font-heading);
+            font-size: var(--fs-card-title);
+            font-weight: 700;
+            line-height: 1.3;
+            letter-spacing: -0.01em;
+        }
+
+        .body-lead {
+            font-family: var(--font-body);
+            font-size: var(--fs-body-lg);
+            font-weight: 300;
+            line-height: var(--lh-relaxed);
+        }
+
+        .body-text {
+            font-family: var(--font-body);
+            font-size: var(--fs-body-sm);
+            font-weight: 400;
+            line-height: var(--lh-relaxed);
+        }
+
+        .eyebrow {
+            font-family: var(--font-body);
+            font-size: var(--fs-eyebrow);
+            font-weight: 600;
+            letter-spacing: var(--ls-widest);
+            text-transform: uppercase;
+        }
+
+        /* ============================================
+           ANIMATIONS
+           ============================================ */
+        @keyframes shimmer-text {
+            0% { background-position: 200% center; }
+            100% { background-position: -200% center; }
+        }
+        .animate-shimmer-text { animation: shimmer-text 8s linear infinite; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+        .animate-float { animation: float 8s ease-in-out infinite; }
+        .animate-float-delayed { animation: float 10s ease-in-out infinite 2s; }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+        .delay-400 { transition-delay: 400ms; }
+        .delay-500 { transition-delay: 500ms; }
+
+        /* ============================================
+           HERO - LIVE LEADS COUNTER
+           ============================================ */
+        .lead-pulse-line {
+            stroke-dasharray: 4 4;
+            animation: dash-flow 1.5s linear infinite;
+        }
+        @keyframes dash-flow {
+            to { stroke-dashoffset: -16; }
+        }
+
+        @keyframes lead-blip {
+            0% { transform: scale(0.5); opacity: 0; }
+            20% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+        .lead-blip {
+            transform-origin: center;
+            animation: lead-blip 2s ease-out infinite;
+        }
+
+        .channel-node {
+            transition: transform 0.3s ease, filter 0.3s ease;
+            cursor: pointer;
+        }
+        .channel-node:hover {
+            transform: scale(1.08);
+            filter: brightness(1.2);
+        }
+
+        /* Counter ticker */
+        .counter-digit {
+            display: inline-block;
+            min-width: 0.6em;
+            text-align: center;
+        }
+
+        /* ============================================
+           CHANNEL CARDS
+           ============================================ */
+        .channel-card {
+            position: relative;
+            background: rgba(17, 17, 17, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1.5rem;
+            transition: all 0.4s ease;
+            overflow: hidden;
+        }
+        .channel-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, transparent 50%, var(--card-accent, transparent));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        .channel-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 60px -15px var(--card-glow, rgba(66,133,244,0.3));
+        }
+        .channel-card:hover::before { opacity: 1; }
+
+        /* Platform-specific brand bars */
+        .brand-bar {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            border-radius: 1.5rem 1.5rem 0 0;
+        }
+
+        /* ============================================
+           LIVE DEMO - FORM POPUP
+           ============================================ */
+        .demo-stage {
+            position: relative;
+            min-height: 600px;
+            background:
+                radial-gradient(circle at 30% 20%, rgba(192,132,252,0.12), transparent 50%),
+                radial-gradient(circle at 70% 80%, rgba(66,133,244,0.12), transparent 50%),
+                #0a0a0a;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 2rem;
+            overflow: hidden;
+        }
+
+        /* Mock browser chrome */
+        .browser-chrome {
+            background: rgba(255,255,255,0.04);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        /* The CTA button being clicked */
+        .demo-cta {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        .demo-cta.clicking {
+            transform: scale(0.92);
+        }
+
+        /* Click ripple effect */
+        @keyframes ripple-out {
+            0% { transform: scale(0); opacity: 0.7; }
+            100% { transform: scale(4); opacity: 0; }
+        }
+        .click-ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            pointer-events: none;
+            animation: ripple-out 0.6s ease-out forwards;
+        }
+
+        /* Cursor pointer animation */
+        .demo-cursor {
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            pointer-events: none;
+            z-index: 50;
+            transition: top 1.5s cubic-bezier(0.5, 0, 0.5, 1), left 1.5s cubic-bezier(0.5, 0, 0.5, 1);
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+        }
+        .demo-cursor svg {
+            width: 100%;
+            height: 100%;
+        }
+        .demo-cursor.clicking { transform: scale(0.85); }
+
+        /* Form modal */
+        .demo-form-modal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.6);
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+            background: #fff;
+            border-radius: 1.25rem;
+            box-shadow:
+                0 40px 80px rgba(0,0,0,0.5),
+                0 0 0 1px rgba(0,0,0,0.05);
+            width: min(420px, calc(100% - 32px));
+            z-index: 30;
+        }
+        .demo-form-modal.visible {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .demo-input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 8px;
+            border: 1.5px solid #e5e7eb;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            color: #111;
+            background: #fafafa;
+            transition: border-color 0.2s ease, background 0.2s ease;
+        }
+        .demo-input.active {
+            border-color: var(--google-blue);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(66,133,244,0.15);
+        }
+        .demo-input.filled {
+            border-color: #d1d5db;
+            background: #f9fafb;
+        }
+
+        .demo-typing-cursor {
+            display: inline-block;
+            width: 1.5px;
+            height: 1em;
+            background: var(--google-blue);
+            margin-left: 1px;
+            vertical-align: text-bottom;
+            animation: blink-caret 0.8s step-end infinite;
+        }
+        @keyframes blink-caret {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Success celebration */
+        @keyframes success-pop {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+        .success-toast {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            background: linear-gradient(135deg, #34A853, #4285F4);
+            padding: 20px 32px;
+            border-radius: 999px;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 20px 60px rgba(52,168,83,0.4);
+            white-space: nowrap;
+            z-index: 40;
+        }
+        .success-toast.visible {
+            animation: success-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        /* Confetti dot */
+        @keyframes confetti-fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(400px) rotate(720deg); opacity: 0; }
+        }
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+            pointer-events: none;
+            animation: confetti-fall 1.5s ease-out forwards;
+        }
+
+        /* CRM notification */
+        @keyframes slide-in-right {
+            0% { transform: translateX(120%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        .crm-notification {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(52,168,83,0.4);
+            border-radius: 12px;
+            padding: 14px 18px;
+            min-width: 280px;
+            opacity: 0;
+            transform: translateX(120%);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            z-index: 35;
+        }
+        .crm-notification.visible {
+            animation: slide-in-right 0.5s ease-out forwards;
+        }
+
+        /* ============================================
+           FUNNEL CHART
+           ============================================ */
+        .funnel-bar {
+            transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s;
+            transform-origin: left center;
+        }
+
+        /* ============================================
+           QUALITY SCORE GAUGE
+           ============================================ */
+        .quality-arc {
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* ============================================
+           PROCESS TIMELINE
+           ============================================ */
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, transparent, rgba(192,132,252,0.4), rgba(66,133,244,0.4), transparent);
+            transform: translateX(-50%);
+        }
+        @media (max-width: 768px) {
+            .timeline-line { left: 24px; }
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 32px;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #C084FC, #4285F4);
+            box-shadow: 0 0 0 4px #000, 0 0 20px rgba(192,132,252,0.6);
+            z-index: 2;
+        }
+        @media (max-width: 768px) {
+            .timeline-dot { left: 24px; }
+        }
+
+        /* ============================================
+           FAQ
+           ============================================ */
+        .glass-card {
+            background: rgba(17, 17, 17, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1.5rem;
+        }
+
+        .faq-content {
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .faq-content.open { opacity: 1; }
+        .faq-icon { transition: transform 0.4s; }
+        .faq-btn[aria-expanded="true"] .faq-icon { transform: rotate(180deg); }
+
+        /* ============================================
+           BG PATTERNS
+           ============================================ */
+        .bg-grid-tech {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        ::selection {
+            background-color: var(--partner-purple);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div class="w-full min-h-screen bg-black relative overflow-hidden">
+
+    <div class="fixed inset-0 z-0 opacity-[0.04] pointer-events-none bg-grid-tech"></div>
+
+    <!-- ============================================
+         HERO - LIVE LEAD GENERATION VISUAL
+         ============================================ -->
+    <section class="relative z-10 min-h-[100vh] flex flex-col justify-center items-center px-6 md:px-12 lg:px-[50px] pt-24 pb-20 overflow-hidden">
+
+        <div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#C084FC]/15 blur-[150px] rounded-full pointer-events-none animate-float"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[#4285F4]/15 blur-[150px] rounded-full pointer-events-none animate-float-delayed"></div>
+
+        <div class="relative z-20 mx-auto text-center reveal active w-full" style="max-width: min(95vw, 1500px);">
+
+            <div class="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 mb-10 backdrop-blur-md">
+                <span class="relative flex h-2.5 w-2.5">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+                </span>
+                <span class="eyebrow text-neutral-300">Service · Lead Generation</span>
+            </div>
+
+            <h1 class="h-hero text-white mb-10">
+                Qualified leads,<br>
+                <span class="bg-gradient-to-r from-[#C084FC] via-[#4285F4] to-[#C084FC] bg-[length:200%_auto] bg-clip-text text-transparent animate-shimmer-text pb-4 inline-block">
+                    delivered on autopilot.
+                </span>
+            </h1>
+
+            <p class="body-lead text-neutral-400 mx-auto text-center mb-12" style="max-width: min(95vw, 1500px);">
+                End-to-end strategies to acquire qualified leads — from impression to inbox, across every channel that actually converts. Real humans, real intent, ready to buy.
+            </p>
+
+            <!-- Live Counter -->
+            <div class="inline-flex items-center gap-6 px-8 py-5 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-md mb-14">
+                <div class="flex items-center gap-2">
+                    <span class="relative flex h-3 w-3">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                    </span>
+                    <span class="font-mono text-xs text-green-400 tracking-wider">LIVE</span>
+                </div>
+                <div class="h-8 w-px bg-white/10"></div>
+                <div>
+                    <div class="font-heading font-extrabold text-white tabular-nums" style="font-size: 2rem; line-height: 1;">
+                        <span id="leads-counter">0</span>
+                    </div>
+                    <p class="font-mono text-xs text-neutral-500 mt-1 tracking-wider">LEADS GENERATED THIS MONTH</p>
+                </div>
+            </div>
+
+            <!-- Multi-channel hero diagram -->
+            <div class="relative max-w-4xl mx-auto mt-4 reveal active">
+                <svg viewBox="0 0 800 320" class="w-full h-auto">
+                    <!-- Define gradients -->
+                    <defs>
+                        <radialGradient id="centerGlow">
+                            <stop offset="0%" stop-color="#C084FC" stop-opacity="0.4"/>
+                            <stop offset="100%" stop-color="#C084FC" stop-opacity="0"/>
+                        </radialGradient>
+                        <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%" stop-color="rgba(255,255,255,0.05)"/>
+                            <stop offset="50%" stop-color="rgba(192,132,252,0.6)"/>
+                            <stop offset="100%" stop-color="rgba(255,255,255,0.05)"/>
+                        </linearGradient>
+                    </defs>
+
+                    <!-- Center glow -->
+                    <circle cx="400" cy="160" r="100" fill="url(#centerGlow)"/>
+
+                    <!-- Connection lines from sources to center -->
+                    <line x1="80" y1="80" x2="400" y2="160" stroke="url(#lineGrad)" stroke-width="1.5" class="lead-pulse-line"/>
+                    <line x1="80" y1="240" x2="400" y2="160" stroke="url(#lineGrad)" stroke-width="1.5" class="lead-pulse-line"/>
+                    <line x1="200" y1="40" x2="400" y2="160" stroke="url(#lineGrad)" stroke-width="1.5" class="lead-pulse-line"/>
+                    <line x1="200" y1="280" x2="400" y2="160" stroke="url(#lineGrad)" stroke-width="1.5" class="lead-pulse-line"/>
+                    <line x1="600" y1="40" x2="400" y2="160" stroke="url(#lineGrad)" stroke-width="1.5" class="lead-pulse-line"/>
+                    <line x1="600" y1="280" x2="400" y2="160" stroke="url(#lineGrad)" stroke-width="1.5" class="lead-pulse-line"/>
+                    <line x1="720" y1="80" x2="400" y2="160" stroke="url(#lineGrad)" stroke-width="1.5" class="lead-pulse-line"/>
+                    <line x1="720" y1="240" x2="400" y2="160" stroke="url(#lineGrad)" stroke-width="1.5" class="lead-pulse-line"/>
+
+                    <!-- Source nodes -->
+                    <!-- Meta -->
+                    <g class="channel-node">
+                        <circle cx="80" cy="80" r="22" fill="#1877F2" opacity="0.95"/>
+                        <text x="80" y="86" text-anchor="middle" font-family="Arial" font-weight="700" font-size="20" fill="white">f</text>
+                        <text x="80" y="120" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#9ca3af">Meta</text>
+                        <circle cx="80" cy="80" r="22" fill="none" stroke="#1877F2" stroke-width="1.5" class="lead-blip" style="animation-delay: 0s;"/>
+                    </g>
+                    <!-- Google -->
+                    <g class="channel-node">
+                        <circle cx="200" cy="40" r="22" fill="#fff"/>
+                        <text x="200" y="46" text-anchor="middle" font-family="Arial" font-weight="700" font-size="14"><tspan fill="#4285F4">G</tspan></text>
+                        <text x="200" y="80" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#9ca3af">Google Ads</text>
+                        <circle cx="200" cy="40" r="22" fill="none" stroke="#4285F4" stroke-width="1.5" class="lead-blip" style="animation-delay: 0.3s;"/>
+                    </g>
+                    <!-- LinkedIn -->
+                    <g class="channel-node">
+                        <rect x="58" y="218" width="44" height="44" rx="6" fill="#0A66C2"/>
+                        <text x="80" y="248" text-anchor="middle" font-family="Arial" font-weight="900" font-size="18" fill="white">in</text>
+                        <text x="80" y="280" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#9ca3af">LinkedIn</text>
+                        <rect x="58" y="218" width="44" height="44" rx="6" fill="none" stroke="#0A66C2" stroke-width="1.5" class="lead-blip" style="animation-delay: 0.6s; transform-origin: 80px 240px;"/>
+                    </g>
+                    <!-- TikTok -->
+                    <g class="channel-node">
+                        <circle cx="200" cy="280" r="22" fill="#000" stroke="#FE2C55" stroke-width="1"/>
+                        <text x="200" y="287" text-anchor="middle" font-family="Arial" font-weight="900" font-size="22" fill="#fff">♪</text>
+                        <text x="200" y="320" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#9ca3af">TikTok</text>
+                        <circle cx="200" cy="280" r="22" fill="none" stroke="#FE2C55" stroke-width="1.5" class="lead-blip" style="animation-delay: 0.9s;"/>
+                    </g>
+                    <!-- YouTube -->
+                    <g class="channel-node">
+                        <rect x="578" y="18" width="44" height="44" rx="10" fill="#FF0000"/>
+                        <polygon points="595,30 595,50 615,40" fill="white"/>
+                        <text x="600" y="80" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#9ca3af">YouTube</text>
+                        <rect x="578" y="18" width="44" height="44" rx="10" fill="none" stroke="#FF0000" stroke-width="1.5" class="lead-blip" style="animation-delay: 1.2s; transform-origin: 600px 40px;"/>
+                    </g>
+                    <!-- Native Ads -->
+                    <g class="channel-node">
+                        <rect x="578" y="258" width="44" height="44" rx="6" fill="#F59E0B"/>
+                        <text x="600" y="287" text-anchor="middle" font-family="Arial" font-weight="700" font-size="18" fill="white">N</text>
+                        <text x="600" y="320" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#9ca3af">Native Ads</text>
+                        <rect x="578" y="258" width="44" height="44" rx="6" fill="none" stroke="#F59E0B" stroke-width="1.5" class="lead-blip" style="animation-delay: 1.5s; transform-origin: 600px 280px;"/>
+                    </g>
+                    <!-- Owned Properties -->
+                    <g class="channel-node">
+                        <circle cx="720" cy="80" r="22" fill="#C084FC"/>
+                        <text x="720" y="86" text-anchor="middle" font-family="Montserrat" font-weight="800" font-size="14" fill="white">WA</text>
+                        <text x="720" y="120" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#9ca3af">Owned</text>
+                        <circle cx="720" cy="80" r="22" fill="none" stroke="#C084FC" stroke-width="1.5" class="lead-blip" style="animation-delay: 1.8s;"/>
+                    </g>
+                    <!-- Email/Newsletter -->
+                    <g class="channel-node">
+                        <rect x="698" y="218" width="44" height="44" rx="6" fill="#34A853"/>
+                        <path d="M 705 230 L 720 242 L 735 230 M 705 230 L 705 250 L 735 250 L 735 230" fill="none" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+                        <text x="720" y="280" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#9ca3af">Email</text>
+                        <rect x="698" y="218" width="44" height="44" rx="6" fill="none" stroke="#34A853" stroke-width="1.5" class="lead-blip" style="animation-delay: 2.1s; transform-origin: 720px 240px;"/>
+                    </g>
+
+                    <!-- Center Web Affino node -->
+                    <circle cx="400" cy="160" r="55" fill="#0a0a0a" stroke="url(#lineGrad)" stroke-width="2"/>
+                    <circle cx="400" cy="160" r="55" fill="none" stroke="#C084FC" stroke-width="1" opacity="0.6">
+                        <animate attributeName="r" from="55" to="70" dur="2s" repeatCount="indefinite"/>
+                        <animate attributeName="opacity" from="0.6" to="0" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                    <text x="400" y="158" text-anchor="middle" font-family="Montserrat" font-weight="800" font-size="14" fill="white">Web Affino</text>
+                    <text x="400" y="178" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#C084FC">CRM Pipeline</text>
+                </svg>
+            </div>
+
+            <p class="eyebrow text-neutral-500 mt-12">
+                One pipeline. Eight channels. Every lead is real, qualified, and yours.
+            </p>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SECTION 2 - CHANNEL MATRIX
+         ============================================ -->
+    <section class="relative z-10 py-32 px-6 md:px-12 lg:px-[50px] border-t border-white/5 bg-[#050505]">
+
+        <div class="absolute top-0 left-0 w-[600px] h-[600px] bg-[#1877F2]/8 blur-[150px] rounded-full pointer-events-none -translate-x-1/2"></div>
+
+        <div class="relative z-10 max-w-[1600px] mx-auto w-full">
+
+            <div class="text-center mb-20 reveal">
+                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md">
+                    <i data-lucide="grid-3x3" class="w-4 h-4 text-[#C084FC]"></i>
+                    <span class="eyebrow text-neutral-300">The Channel Matrix</span>
+                </div>
+                <h2 class="h-section text-white mb-6">
+                    Where your future<br>
+                    <span class="bg-gradient-to-r from-[#C084FC] to-[#4285F4] bg-clip-text text-transparent">customers actually live.</span>
+                </h2>
+                <p class="body-lead text-neutral-400 mx-auto text-center" style="max-width: min(95vw, 1500px);">
+                    We don't pick a channel and hope. We map your ideal buyer to where they actually spend time and engineer a presence at every touchpoint that matters.
+                </p>
+            </div>
+
+            <!-- Channel Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+
+                <!-- META -->
+                <div class="channel-card p-8 reveal delay-100" style="--card-accent: #1877F2; --card-glow: rgba(24,119,242,0.3);">
+                    <div class="brand-bar" style="background: #1877F2;"></div>
+                    <div class="flex items-start justify-between mb-6">
+                        <div class="w-14 h-14 rounded-xl flex items-center justify-center" style="background: #1877F2;">
+                            <span class="font-heading font-bold text-white" style="font-size: 1.8rem;">f</span>
+                        </div>
+                        <span class="font-mono eyebrow" style="color: #1877F2;">B2C · Volume</span>
+                    </div>
+                    <h3 class="h-card text-white mb-3">Meta Ads</h3>
+                    <p class="body-text text-neutral-400 mb-6">
+                        Facebook &amp; Instagram. Lookalike audiences, lead forms with auto-fill, dynamic creatives. Best for emotional, lifestyle-driven products.
+                    </p>
+                    <div class="space-y-2.5 pt-4 border-t border-white/5">
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-xs text-neutral-500">AVG CPL</span>
+                            <span class="font-heading font-bold text-white">$12–45</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-xs text-neutral-500">REACH</span>
+                            <span class="font-heading font-bold text-white">3.8B users</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-xs text-neutral-500">BEST FOR</span>
+                            <span class="font-mono text-xs text-neutral-300">D2C, Apps, Local</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GOOGLE -->
+                <div class="channel-card p-8 reveal delay-200" style="--card-accent: #4285F4; --card-glow: rgba(66,133,244,0.3);">
+                    <div class="brand-bar" style="background: linear-gradient(90deg, #4285F4, #EA4335, #FBBC05, #34A853);"></div>
+                    <div class="flex items-start justify-between mb-6">
+                        <div class="w-14 h-14 rounded-xl bg-white flex items-center justify-center">
+                            <span class="font-heading font-bold" style="font-size: 1.8rem; color: #4285F4;">G</span>
+                        </div>
+                        <span class="font-mono eyebrow" style="color: #4285F4;">High Intent</span>
+                    </div>
+                    <h3 class="h-card text-white mb-3">Google Ads</h3>
+                    <p class="body-text text-neutral-400 mb-6">
+                        Search, Display, Performance Max, YouTube. Capture demand the moment users type their problem. Highest-intent paid channel.
+                    </p>
+                    <div class="space-y-2.5 pt-4 border-t border-white/5">
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-xs text-neutral-500">AVG CPL</span>
+                            <span class="font-heading font-bold text-white">$25–120</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-xs text-neutral-500">QUERY VOLUME</span>
+                            <span class="font-heading font-bold text-white">8.5B/day</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-xs text-neutral-500">BEST FOR</span>
+                            <span class="font-mono text-xs text-neutral-300">B2B, Services</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LINKEDIN -->
+                <div class="channel-card p-8 reveal delay-300" style="--card-accent: #0A66C2; --card-glow: rgba(10,102,194,0.3);">
+                    <div class="brand-bar" style="background: #0A66C2;"></div>
+                    <div class="flex items-start justify-between mb-6">
+                        <div class="w-14 h-14 rounded-xl flex items-center justify-center" style="background: #0A66C2;">
+                            <span class="font-heading font-extrabold text-white" style="font-size: 1.5rem;">in</span>
+                        </div>
+                        <span class="font-mono eyebrow" style="color: #0A66C2;">B2B · Enterprise</span>
+                    </div>
+                    <h3 class="h-card text-white mb-3">LinkedIn Ads</h3>
+                    <p class="body-text text-neutral-400 mb-6">
+                        Sponsored Content, Lead Gen Forms, InMail. Target by job title, company size, and seniority. The only place to reach decision-makers at scale.
+                    </p>
+                    <div class="space-y-2.5 pt-4 border-t border-white/5">
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-xs text-neutral-500">AVG CPL</span>
+                            <span class="font-heading font-bold text-white">$80–250</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-xs text-neutral-500">DECISION MAKERS</span>
+                            <span class="font-heading font-bold text-white">65M+</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-xs text-neutral-500">BEST FOR</span>
+                            <span class="font-mono text-xs text-neutral-300">SaaS, B2B, Hi-AOV</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TIKTOK -->
+                <div class="channel-card p-8 reveal delay-100" style="--card-accent: #FE2C55; --card-glow: rgba(254,44,85,0.3);">
+                    <div class="brand-bar" style="background: linear-gradient(90deg, #25F4EE, #FE2C55);"></div>
+                    <div class="flex items-start justify-between mb-6">
+                        <div class="w-14 h-14 rounded-xl bg-black flex items-center justify-center border border-white/10">
+                            <span class="font-heading font-extrabold" style="font-size: 1.6rem; color: #FE2C55;">♪</span>
+                        </div>
+                        <span class="font-mono eyebrow" style="color: #FE2C55;">Gen Z · Discovery</span>
+                    </div>
+                    <h3 class="h-card text-white mb-3">TikTok Ads</h3>
+                    <p class="body-text text-neutral-400 mb-6">
+                        Spark Ads, In-Feed, TopView, Lead Gen Forms. UGC-driven creatives. The fastest-scaling channel for D2C brands targeting under-35.
+                    </p>
+                    <div class="space-y-2.5 pt-4 border-t border-white/5">
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-xs text-neutral-500">AVG CPL</span>
+                            <span class="font-heading font-bold text-white">$8–35</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-xs text-neutral-500">DAILY USERS</span>
+                            <span class="font-heading font-bold text-white">1.5B+</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-xs text-neutral-500">BEST FOR</span>
+                            <span class="font-mono text-xs text-neutral-300">D2C, Trendy, UGC</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NATIVE / PARTNER -->
+                <div class="channel-card p-8 reveal delay-200" style="--card-accent: #F59E0B; --card-glow: rgba(245,158,11,0.3);">
+                    <div class="brand-bar" style="background: linear-gradient(90deg, #F59E0B, #EF4444);"></div>
+                    <div class="flex items-start justify-between mb-6">
+                        <div class="w-14 h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #F59E0B, #EF4444);">
+                            <i data-lucide="newspaper" class="w-7 h-7 text-white"></i>
+                        </div>
+                        <span class="font-mono eyebrow" style="color: #F59E0B;">Editorial · Trust</span>
+                    </div>
+                    <h3 class="h-card text-white mb-3">Native &amp; Partner Ads</h3>
+                    <p class="body-text text-neutral-400 mb-6">
+                        Outbrain, Taboola, Revcontent, premium publisher partnerships. Sponsored editorial content that drives qualified discovery traffic.
+                    </p>
+                    <div class="space-y-2.5 pt-4 border-t border-white/5">
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-xs text-neutral-500">AVG CPL</span>
+                            <span class="font-heading font-bold text-white">$15–60</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-xs text-neutral-500">PUBLISHER NETWORK</span>
+                            <span class="font-heading font-bold text-white">10K+ sites</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-xs text-neutral-500">BEST FOR</span>
+                            <span class="font-mono text-xs text-neutral-300">Finance, Health</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OWNED PROPERTIES -->
+                <div class="channel-card p-8 reveal delay-300" style="--card-accent: #C084FC; --card-glow: rgba(192,132,252,0.4);">
+                    <div class="brand-bar" style="background: linear-gradient(90deg, #C084FC, #4285F4);"></div>
+                    <div class="flex items-start justify-between mb-6">
+                        <div class="w-14 h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #C084FC, #4285F4);">
+                            <span class="font-heading font-extrabold text-white" style="font-size: 1.2rem;">WA</span>
+                        </div>
+                        <span class="font-mono eyebrow" style="color: #C084FC;">★ Exclusive · Owned</span>
+                    </div>
+                    <h3 class="h-card text-white mb-3">Web Affino Properties</h3>
+                    <p class="body-text text-neutral-400 mb-6">
+                        Sportsresso, Content Delight, Sassy Strides. Our owned content network gives you exclusive access to high-intent traffic we control.
+                    </p>
+                    <div class="space-y-2.5 pt-4 border-t border-white/5">
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-xs text-neutral-500">AVG CPL</span>
+                            <span class="font-heading font-bold" style="color: #34A853;">40-60% lower</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-xs text-neutral-500">MONTHLY VISITORS</span>
+                            <span class="font-heading font-bold text-white">2M+</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-xs text-neutral-500">BRAND SAFETY</span>
+                            <span class="font-mono text-xs" style="color: #34A853;">100% Controlled</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ============================================
+         SECTION 3 - LIVE FORM DEMO
+         ============================================ -->
+    <section class="relative z-10 py-32 px-6 md:px-12 lg:px-[50px] border-t border-white/5">
+
+        <div class="absolute top-1/2 left-0 w-[600px] h-[600px] bg-[#34A853]/10 blur-[180px] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute top-1/2 right-0 w-[600px] h-[600px] bg-[#C084FC]/10 blur-[180px] rounded-full pointer-events-none translate-x-1/2 -translate-y-1/2"></div>
+
+        <div class="relative z-10 max-w-[1600px] mx-auto w-full">
+
+            <div class="text-center mb-16 reveal">
+                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md">
+                    <i data-lucide="play-circle" class="w-4 h-4 text-[#34A853]"></i>
+                    <span class="eyebrow text-neutral-300">Watch It Happen</span>
+                </div>
+                <h2 class="h-section text-white mb-6">
+                    Anatomy of a<br>
+                    <span class="bg-gradient-to-r from-[#34A853] via-[#C084FC] to-[#4285F4] bg-clip-text text-transparent">captured lead.</span>
+                </h2>
+                <p class="body-lead text-neutral-400 mx-auto text-center" style="max-width: min(95vw, 1500px);">
+                    Click → Form → Submit → CRM. The full journey, in 15 seconds. Watch the demo or click the CTA yourself to trigger it.
+                </p>
+            </div>
+
+            <!-- The Demo Stage -->
+            <div class="demo-stage max-w-5xl mx-auto reveal delay-200">
+                <!-- Browser chrome -->
+                <div class="browser-chrome flex items-center gap-2 px-5 py-3.5">
+                    <div class="flex gap-1.5">
+                        <span class="w-3 h-3 rounded-full bg-red-400/70"></span>
+                        <span class="w-3 h-3 rounded-full bg-yellow-400/70"></span>
+                        <span class="w-3 h-3 rounded-full bg-green-400/70"></span>
+                    </div>
+                    <div class="flex-1 mx-4 px-4 py-1.5 rounded-md bg-white/5 border border-white/10 flex items-center gap-2">
+                        <i data-lucide="lock" class="w-3 h-3 text-neutral-500"></i>
+                        <span class="font-mono text-xs text-neutral-400">webaffino.com/get-started</span>
+                    </div>
+                    <span class="font-mono text-xs text-neutral-500 hidden sm:inline">▼ ⊕ ⋮</span>
+                </div>
+
+                <!-- Demo content area -->
+                <div id="demo-canvas" class="relative px-6 md:px-12 py-16 md:py-20 min-h-[500px] flex flex-col items-center justify-center text-center">
+
+                    <!-- Page mock content -->
+                    <div id="demo-page-content">
+                        <p class="eyebrow text-neutral-500 mb-4">Get Started · Free</p>
+                        <h3 class="font-heading font-extrabold text-white mb-5" style="font-size: clamp(2rem, 4vw, 3rem); line-height: 1.15;">
+                            Ready to scale<br>your lead pipeline?
+                        </h3>
+                        <p class="body-text text-neutral-400 mb-8 max-w-md mx-auto" style="font-size: 1.2rem;">
+                            Talk to our team about a custom strategy for your business.
+                        </p>
+                        <button id="demo-cta" class="demo-cta inline-flex items-center gap-3 px-10 py-4 rounded-full font-heading font-bold transition-all" style="background: linear-gradient(90deg, #C084FC 0%, #4285F4 100%); color: white; font-size: 1.15rem;">
+                            Get a Custom Quote
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </button>
+                        <p class="font-mono text-xs text-neutral-500 mt-6" id="demo-instruction">
+                            ▶ Demo will start in 3s · or click the CTA to trigger it now
+                        </p>
+                    </div>
+
+                    <!-- Animated cursor -->
+                    <div id="demo-cursor" class="demo-cursor" style="top: 50%; left: 50%; opacity: 0;">
+                        <svg viewBox="0 0 24 24" fill="white" stroke="black" stroke-width="1">
+                            <path d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87a.5.5 0 0 0 .35-.85L6.35 2.85a.5.5 0 0 0-.85.36z"/>
+                        </svg>
+                    </div>
+
+                    <!-- The Form Modal -->
+                    <div id="demo-form" class="demo-form-modal">
+                        <div class="p-7">
+                            <div class="flex items-center justify-between mb-5">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #C084FC, #4285F4);">
+                                        <span class="font-heading font-extrabold text-white text-sm">WA</span>
+                                    </div>
+                                    <span class="font-heading font-bold text-gray-900" style="font-size: 1.05rem;">Get Your Quote</span>
+                                </div>
+                                <i data-lucide="x" class="w-5 h-5 text-gray-400"></i>
+                            </div>
+                            <p style="font-size: 0.85rem; color: #6b7280; margin-bottom: 18px;">Takes about 30 seconds. We'll respond within 1 business day.</p>
+
+                            <div class="space-y-3.5">
+                                <div>
+                                    <label style="display: block; font-size: 0.75rem; color: #374151; margin-bottom: 5px; font-weight: 600;">Full Name</label>
+                                    <div class="demo-input" id="field-name" style="display: flex; align-items: center; min-height: 42px;">
+                                        <span id="text-name"></span><span id="cursor-name" class="demo-typing-cursor" style="display: none;"></span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label style="display: block; font-size: 0.75rem; color: #374151; margin-bottom: 5px; font-weight: 600;">Work Email</label>
+                                    <div class="demo-input" id="field-email" style="display: flex; align-items: center; min-height: 42px;">
+                                        <span id="text-email"></span><span id="cursor-email" class="demo-typing-cursor" style="display: none;"></span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label style="display: block; font-size: 0.75rem; color: #374151; margin-bottom: 5px; font-weight: 600;">Company</label>
+                                    <div class="demo-input" id="field-company" style="display: flex; align-items: center; min-height: 42px;">
+                                        <span id="text-company"></span><span id="cursor-company" class="demo-typing-cursor" style="display: none;"></span>
+                                    </div>
+                                </div>
+
+                                <button id="demo-submit" class="w-full mt-2 py-3 rounded-lg font-heading font-bold transition-all" style="background: linear-gradient(90deg, #C084FC 0%, #4285F4 100%); color: white; font-size: 0.95rem;">
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Success Toast -->
+                    <div id="demo-success" class="success-toast">
+                        <div class="flex items-center gap-2.5">
+                            <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                            <span style="font-size: 1.1rem;">Lead Captured!</span>
+                        </div>
+                    </div>
+
+                    <!-- CRM notification -->
+                    <div id="demo-crm" class="crm-notification">
+                        <div class="flex items-start gap-3">
+                            <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style="background: rgba(52,168,83,0.2);">
+                                <i data-lucide="bell" class="w-4 h-4 text-green-400"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-heading font-bold text-white" style="font-size: 0.95rem;">New lead in CRM</p>
+                                <p class="font-mono text-xs text-neutral-400 mt-0.5">Sarah Chen · Acme Corp</p>
+                                <p class="font-mono text-xs text-green-400 mt-1.5">Score: 87 · Hot 🔥</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Confetti container -->
+                    <div id="confetti-container" style="position: absolute; inset: 0; pointer-events: none; overflow: hidden;"></div>
+                </div>
+            </div>
+
+            <!-- Demo restart button -->
+            <div class="text-center mt-8">
+                <button id="demo-restart" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/5 border border-white/10 text-neutral-300 hover:bg-white/10 transition-all font-mono text-sm">
+                    <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                    Replay Demo
+                </button>
+            </div>
+
+            <!-- Pipeline annotation -->
+            <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto reveal">
+                <div class="text-center p-5 rounded-xl glass-card">
+                    <p class="font-mono eyebrow text-[#C084FC] mb-2">STEP 1</p>
+                    <p class="font-heading font-bold text-white" style="font-size: 1.1rem;">CTA Clicked</p>
+                    <p class="font-mono text-xs text-neutral-500 mt-1">Tracked + attributed</p>
+                </div>
+                <div class="text-center p-5 rounded-xl glass-card">
+                    <p class="font-mono eyebrow text-[#4285F4] mb-2">STEP 2</p>
+                    <p class="font-heading font-bold text-white" style="font-size: 1.1rem;">Form Submitted</p>
+                    <p class="font-mono text-xs text-neutral-500 mt-1">Validated in real-time</p>
+                </div>
+                <div class="text-center p-5 rounded-xl glass-card">
+                    <p class="font-mono eyebrow text-[#FBBC05] mb-2">STEP 3</p>
+                    <p class="font-heading font-bold text-white" style="font-size: 1.1rem;">Lead Scored</p>
+                    <p class="font-mono text-xs text-neutral-500 mt-1">By intent &amp; fit</p>
+                </div>
+                <div class="text-center p-5 rounded-xl glass-card">
+                    <p class="font-mono eyebrow text-[#34A853] mb-2">STEP 4</p>
+                    <p class="font-heading font-bold text-white" style="font-size: 1.1rem;">Routed to CRM</p>
+                    <p class="font-mono text-xs text-neutral-500 mt-1">In your inbox in seconds</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ============================================
+         SECTION 4 - LEAD FUNNEL & QUALITY
+         ============================================ -->
+    <section class="relative z-10 py-32 px-6 md:px-12 lg:px-[50px] border-t border-white/5 bg-[#050505]">
+
+        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-[#C084FC]/10 blur-[150px] rounded-full pointer-events-none translate-x-1/3"></div>
+
+        <div class="relative z-10 max-w-[1600px] mx-auto w-full">
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+
+                <!-- LEFT: Funnel visualization -->
+                <div class="reveal">
+                    <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md">
+                        <i data-lucide="filter" class="w-4 h-4 text-[#C084FC]"></i>
+                        <span class="eyebrow text-neutral-300">The Lead Funnel</span>
+                    </div>
+                    <h2 class="h-section text-white mb-6">
+                        From 100K eyeballs<br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#C084FC] to-[#4285F4]">to your sales team.</span>
+                    </h2>
+                    <p class="body-lead text-neutral-400 mb-8">
+                        Every channel feeds the same funnel. Here's how raw impressions become a qualified meeting on your calendar.
+                    </p>
+
+                    <!-- Funnel bars -->
+                    <div class="space-y-5">
+                        <div>
+                            <div class="flex items-end justify-between mb-2">
+                                <div>
+                                    <p class="font-mono eyebrow text-neutral-500">01 / IMPRESSIONS</p>
+                                    <p class="font-heading font-bold text-white" style="font-size: 1.25rem;">100,000</p>
+                                </div>
+                                <p class="font-mono text-xs text-neutral-400">100%</p>
+                            </div>
+                            <div class="h-3 bg-white/5 rounded-full overflow-hidden">
+                                <div class="funnel-bar h-full rounded-full" style="width: 100%; background: linear-gradient(90deg, #1877F2, #4285F4);"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex items-end justify-between mb-2">
+                                <div>
+                                    <p class="font-mono eyebrow text-neutral-500">02 / CLICKS</p>
+                                    <p class="font-heading font-bold text-white" style="font-size: 1.25rem;">2,500</p>
+                                </div>
+                                <p class="font-mono text-xs text-neutral-400">2.5% CTR</p>
+                            </div>
+                            <div class="h-3 bg-white/5 rounded-full overflow-hidden">
+                                <div class="funnel-bar h-full rounded-full" style="width: 70%; background: linear-gradient(90deg, #4285F4, #C084FC);"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex items-end justify-between mb-2">
+                                <div>
+                                    <p class="font-mono eyebrow text-neutral-500">03 / FORM VIEWS</p>
+                                    <p class="font-heading font-bold text-white" style="font-size: 1.25rem;">1,750</p>
+                                </div>
+                                <p class="font-mono text-xs text-neutral-400">70% landing engagement</p>
+                            </div>
+                            <div class="h-3 bg-white/5 rounded-full overflow-hidden">
+                                <div class="funnel-bar h-full rounded-full" style="width: 50%; background: linear-gradient(90deg, #C084FC, #FE2C55);"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex items-end justify-between mb-2">
+                                <div>
+                                    <p class="font-mono eyebrow text-neutral-500">04 / SUBMISSIONS</p>
+                                    <p class="font-heading font-bold text-white" style="font-size: 1.25rem;">425</p>
+                                </div>
+                                <p class="font-mono text-xs text-neutral-400">24% form CVR</p>
+                            </div>
+                            <div class="h-3 bg-white/5 rounded-full overflow-hidden">
+                                <div class="funnel-bar h-full rounded-full" style="width: 32%; background: linear-gradient(90deg, #FE2C55, #FBBC05);"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex items-end justify-between mb-2">
+                                <div>
+                                    <p class="font-mono eyebrow text-green-400">05 / QUALIFIED LEADS ★</p>
+                                    <p class="font-heading font-extrabold text-white" style="font-size: 1.5rem;">340</p>
+                                </div>
+                                <p class="font-mono text-xs text-green-400 font-bold">80% pass quality</p>
+                            </div>
+                            <div class="h-4 bg-white/5 rounded-full overflow-hidden">
+                                <div class="funnel-bar h-full rounded-full" style="width: 25%; background: linear-gradient(90deg, #FBBC05, #34A853);"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="font-mono text-xs text-neutral-500 mt-8 leading-relaxed">
+                        Sample data from a real Q4 SaaS engagement · Numbers vary by industry &amp; channel mix
+                    </p>
+                </div>
+
+                <!-- RIGHT: Quality Score Card -->
+                <div class="reveal delay-200">
+                    <div class="glass-card p-10 md:p-12">
+                        <div class="text-center mb-8">
+                            <p class="font-mono eyebrow text-neutral-500 mb-2">LEAD QUALITY SCORE</p>
+                            <p class="font-heading font-bold text-white" style="font-size: 1.4rem;">How we filter junk from gold</p>
+                        </div>
+
+                        <!-- Score Gauge -->
+                        <div class="relative mx-auto mb-8" style="width: 240px; height: 240px;">
+                            <svg viewBox="0 0 200 200" class="w-full h-full -rotate-90">
+                                <circle cx="100" cy="100" r="85" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="14"/>
+                                <circle cx="100" cy="100" r="85" fill="none" stroke="url(#scoreGrad)" stroke-width="14" stroke-linecap="round" stroke-dasharray="534" stroke-dashoffset="80" class="quality-arc"/>
+                                <defs>
+                                    <linearGradient id="scoreGrad">
+                                        <stop offset="0%" stop-color="#34A853"/>
+                                        <stop offset="100%" stop-color="#4285F4"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                <p class="font-heading font-extrabold text-white" style="font-size: 3.5rem; line-height: 1;">85</p>
+                                <p class="font-mono text-xs text-neutral-400 mt-2">/ 100 avg</p>
+                            </div>
+                        </div>
+
+                        <!-- Scoring criteria -->
+                        <div class="space-y-3.5">
+                            <div class="flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/5">
+                                <div class="flex items-center gap-3">
+                                    <i data-lucide="user-check" class="w-5 h-5 text-[#4285F4]"></i>
+                                    <span class="body-text text-neutral-300" style="font-size: 1.15rem;">Real human (not bot)</span>
+                                </div>
+                                <span class="font-mono font-bold text-green-400">+25</span>
+                            </div>
+                            <div class="flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/5">
+                                <div class="flex items-center gap-3">
+                                    <i data-lucide="briefcase" class="w-5 h-5 text-[#C084FC]"></i>
+                                    <span class="body-text text-neutral-300" style="font-size: 1.15rem;">Fits ICP profile</span>
+                                </div>
+                                <span class="font-mono font-bold text-green-400">+30</span>
+                            </div>
+                            <div class="flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/5">
+                                <div class="flex items-center gap-3">
+                                    <i data-lucide="zap" class="w-5 h-5 text-[#FBBC05]"></i>
+                                    <span class="body-text text-neutral-300" style="font-size: 1.15rem;">Active intent signals</span>
+                                </div>
+                                <span class="font-mono font-bold text-green-400">+20</span>
+                            </div>
+                            <div class="flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/5">
+                                <div class="flex items-center gap-3">
+                                    <i data-lucide="mail-check" class="w-5 h-5 text-[#34A853]"></i>
+                                    <span class="body-text text-neutral-300" style="font-size: 1.15rem;">Verified contact info</span>
+                                </div>
+                                <span class="font-mono font-bold text-green-400">+10</span>
+                            </div>
+                            <div class="flex items-center justify-between p-4 rounded-xl bg-red-500/5 border border-red-500/20">
+                                <div class="flex items-center gap-3">
+                                    <i data-lucide="shield-x" class="w-5 h-5 text-red-400"></i>
+                                    <span class="body-text text-neutral-300" style="font-size: 1.15rem;">Junk / fraud auto-rejected</span>
+                                </div>
+                                <span class="font-mono font-bold text-red-400">-100</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SECTION 5 - PROCESS TIMELINE
+         ============================================ -->
+    <section class="relative z-10 py-32 px-6 md:px-12 lg:px-[50px] border-t border-white/5">
+
+        <div class="absolute top-1/2 right-0 w-[600px] h-[600px] bg-[#4285F4]/8 blur-[180px] rounded-full pointer-events-none translate-x-1/2 -translate-y-1/2"></div>
+
+        <div class="relative z-10 max-w-[1600px] mx-auto w-full">
+
+            <div class="text-center mb-20 reveal">
+                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md">
+                    <i data-lucide="git-branch" class="w-4 h-4 text-[#C084FC]"></i>
+                    <span class="eyebrow text-neutral-300">The Engagement</span>
+                </div>
+                <h2 class="h-section text-white mb-6">
+                    From kickoff<br>
+                    <span class="bg-gradient-to-r from-[#C084FC] to-[#4285F4] bg-clip-text text-transparent">to first qualified lead.</span>
+                </h2>
+                <p class="body-lead text-neutral-400 mx-auto text-center" style="max-width: min(95vw, 1500px);">
+                    Most lead programs go live in week 3. By week 6, the pipeline is filling daily. Here's the playbook.
+                </p>
+            </div>
+
+            <div class="relative max-w-5xl mx-auto">
+                <div class="timeline-line"></div>
+
+                <div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 mb-16 reveal delay-100">
+                    <div class="timeline-dot"></div>
+                    <div class="md:text-right md:pr-12 pl-12 md:pl-0">
+                        <span class="font-mono eyebrow" style="color: #C084FC;">Week 01</span>
+                        <h3 class="h-card text-white mt-2 mb-3">ICP &amp; channel strategy</h3>
+                        <p class="body-text text-neutral-400" style="font-size: 1.2rem;">
+                            Define ideal customer. Map the buying committee. Audit existing data. Pick the 2–3 channels that match your funnel economics.
+                        </p>
+                    </div>
+                    <div class="hidden md:block"></div>
+                </div>
+
+                <div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 mb-16 reveal delay-100">
+                    <div class="timeline-dot"></div>
+                    <div class="hidden md:block"></div>
+                    <div class="md:pl-12 pl-12">
+                        <span class="font-mono eyebrow" style="color: #4285F4;">Week 02</span>
+                        <h3 class="h-card text-white mt-2 mb-3">Creative &amp; landing build</h3>
+                        <p class="body-text text-neutral-400" style="font-size: 1.2rem;">
+                            Variant ad creatives shot/designed. Landing pages built and CRO-tested. Forms instrumented. Tracking pixels validated end-to-end.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 mb-16 reveal delay-100">
+                    <div class="timeline-dot"></div>
+                    <div class="md:text-right md:pr-12 pl-12 md:pl-0">
+                        <span class="font-mono eyebrow" style="color: #FBBC05;">Week 03</span>
+                        <h3 class="h-card text-white mt-2 mb-3">Soft launch</h3>
+                        <p class="body-text text-neutral-400" style="font-size: 1.2rem;">
+                            Limited budget across all chosen channels. Statistical signal collected on creatives, audiences, and offers. First leads land in CRM.
+                        </p>
+                    </div>
+                    <div class="hidden md:block"></div>
+                </div>
+
+                <div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 mb-16 reveal delay-100">
+                    <div class="timeline-dot"></div>
+                    <div class="hidden md:block"></div>
+                    <div class="md:pl-12 pl-12">
+                        <span class="font-mono eyebrow" style="color: #FE2C55;">Weeks 04–05</span>
+                        <h3 class="h-card text-white mt-2 mb-3">Optimize &amp; scale winners</h3>
+                        <p class="body-text text-neutral-400" style="font-size: 1.2rem;">
+                            Kill losers ruthlessly. 10× budget on winning combinations. Audience expansion. Creative iteration based on actual conversion data.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 reveal delay-100">
+                    <div class="timeline-dot"></div>
+                    <div class="md:text-right md:pr-12 pl-12 md:pl-0">
+                        <span class="font-mono eyebrow" style="color: #34A853;">Week 06+</span>
+                        <h3 class="h-card text-white mt-2 mb-3">Pipeline at scale</h3>
+                        <p class="body-text text-neutral-400" style="font-size: 1.2rem;">
+                            Predictable daily lead volume hitting your CRM. CAC trending down monthly. Sales team has more leads than they can call.
+                        </p>
+                    </div>
+                    <div class="hidden md:block"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SECTION 6 - FAQ
+         ============================================ -->
+    <section class="relative z-10 py-32 px-6 md:px-12 lg:px-[50px] border-t border-white/5 bg-[#050505]">
+
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-[#C084FC]/10 blur-[180px] rounded-full pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-[1600px] mx-auto w-full">
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+
+                <div class="lg:col-span-5 lg:sticky lg:top-32 reveal">
+                    <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md">
+                        <i data-lucide="help-circle" class="w-4 h-4 text-[#C084FC]"></i>
+                        <span class="eyebrow text-neutral-300">Common Questions</span>
+                    </div>
+
+                    <h2 class="h-section text-white mb-6">
+                        Things people<br>
+                        <span class="bg-gradient-to-r from-[#C084FC] to-[#4285F4] bg-clip-text text-transparent">always ask first.</span>
+                    </h2>
+
+                    <p class="body-lead text-neutral-400">
+                        Honest answers — no agency fluff.
+                    </p>
+                </div>
+
+                <div class="lg:col-span-7 flex flex-col gap-4 reveal delay-200">
+
+                    <div class="glass-card overflow-hidden">
+                        <button class="faq-btn w-full flex items-center justify-between p-7 text-left focus:outline-none group" aria-expanded="false">
+                            <span class="font-heading font-bold text-white group-hover:text-[#C084FC] transition-colors pr-4" style="font-size: 1.5rem;">What's the minimum budget I should commit?</span>
+                            <i data-lucide="chevron-down" class="w-7 h-7 text-neutral-500 faq-icon shrink-0"></i>
+                        </button>
+                        <div class="faq-content">
+                            <div class="pb-7 px-7 body-text text-neutral-400">
+                                For meaningful statistical signal, $5K–10K/month in media spend (per channel) is the practical floor. Below that, you can't run enough variants to actually learn what works. Our service fee sits on top of media — typically $3K–8K/month depending on channel count and volume.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card overflow-hidden">
+                        <button class="faq-btn w-full flex items-center justify-between p-7 text-left focus:outline-none group" aria-expanded="false">
+                            <span class="font-heading font-bold text-white group-hover:text-[#4285F4] transition-colors pr-4" style="font-size: 1.5rem;">How fast will I see leads?</span>
+                            <i data-lucide="chevron-down" class="w-7 h-7 text-neutral-500 faq-icon shrink-0"></i>
+                        </button>
+                        <div class="faq-content">
+                            <div class="pb-7 px-7 body-text text-neutral-400">
+                                First leads in week 3. Predictable daily volume by week 6. Profitable unit economics typically by month 3 once we've optimized creative and audience. Lead-gen is faster than SEO but slower than turning on a faucet — anyone promising "leads tomorrow" is selling list scraping.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card overflow-hidden">
+                        <button class="faq-btn w-full flex items-center justify-between p-7 text-left focus:outline-none group" aria-expanded="false">
+                            <span class="font-heading font-bold text-white group-hover:text-[#34A853] transition-colors pr-4" style="font-size: 1.5rem;">Do you guarantee a number of leads?</span>
+                            <i data-lucide="chevron-down" class="w-7 h-7 text-neutral-500 faq-icon shrink-0"></i>
+                        </button>
+                        <div class="faq-content">
+                            <div class="pb-7 px-7 body-text text-neutral-400">
+                                We can guarantee CPL targets after a learning phase, but only because we've done diligence on your offer first. Anyone promising guaranteed lead volume on day one is either lying or planning to deliver junk leads to hit a number. We'd rather be honest than oversold.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card overflow-hidden">
+                        <button class="faq-btn w-full flex items-center justify-between p-7 text-left focus:outline-none group" aria-expanded="false">
+                            <span class="font-heading font-bold text-white group-hover:text-[#FE2C55] transition-colors pr-4" style="font-size: 1.5rem;">What if my leads are low quality?</span>
+                            <i data-lucide="chevron-down" class="w-7 h-7 text-neutral-500 faq-icon shrink-0"></i>
+                        </button>
+                        <div class="faq-content">
+                            <div class="pb-7 px-7 body-text text-neutral-400">
+                                Quality is our job, not yours. Every lead is automatically scored against your ICP. Sub-threshold leads are flagged before they ever hit your CRM. If a quality issue persists, we tighten audience targeting, raise form friction, or pause the channel — all before you have to ask.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card overflow-hidden">
+                        <button class="faq-btn w-full flex items-center justify-between p-7 text-left focus:outline-none group" aria-expanded="false">
+                            <span class="font-heading font-bold text-white group-hover:text-[#FBBC05] transition-colors pr-4" style="font-size: 1.5rem;">Which channel should I start with?</span>
+                            <i data-lucide="chevron-down" class="w-7 h-7 text-neutral-500 faq-icon shrink-0"></i>
+                        </button>
+                        <div class="faq-content">
+                            <div class="pb-7 px-7 body-text text-neutral-400">
+                                Depends on your ICP. B2B SaaS with $20K+ ACV: LinkedIn + Google Search. D2C consumer brand: Meta + TikTok. High-AOV finance/health: Native + our owned properties. We'll tell you exactly where to start in the first call — and where not to waste money.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SECTION 7 - CTA
+         ============================================ -->
+    <section class="relative z-10 py-32 px-6 md:px-12 lg:px-[50px] border-t border-white/5 bg-[#020202] overflow-hidden">
+
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-5xl bg-gradient-to-r from-[#C084FC]/15 via-[#4285F4]/15 to-[#34A853]/15 blur-[150px] pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-5xl mx-auto text-center reveal">
+            <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-md">
+                <i data-lucide="rocket" class="w-4 h-4 text-[#C084FC]"></i>
+                <span class="eyebrow text-neutral-300">Ready to fill the pipeline?</span>
+            </div>
+
+            <h2 class="h-section text-white mb-8">
+                Your sales team is<br>
+                <span class="bg-gradient-to-r from-[#C084FC] via-[#4285F4] to-[#34A853] bg-[length:200%_auto] bg-clip-text text-transparent animate-shimmer-text">
+                    waiting for leads.
+                </span>
+            </h2>
+
+            <p class="body-lead text-neutral-400 mx-auto mb-12" style="max-width: min(95vw, 1500px);">
+                30-minute strategy call. We'll model your CAC, recommend the best channel mix, and tell you honestly whether we should work together — or whether you should fix something else first.
+            </p>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="https://webaffino.com/contact-us/" class="group relative inline-flex items-center justify-center gap-3 px-10 py-5 rounded-full font-heading font-bold transition-all hover:scale-105 active:scale-95" style="background: linear-gradient(90deg, #C084FC 0%, #4285F4 100%); color: white; font-size: 1.15rem;">
+                    Book my strategy call
+                    <i data-lucide="arrow-right" class="w-5 h-5 transition-transform group-hover:translate-x-1"></i>
+                </a>
+                <a href="https://webaffino.com/our-media-properties" class="group inline-flex items-center justify-center gap-3 px-10 py-5 rounded-full font-heading font-bold border border-white/20 text-white transition-all hover:bg-white/10 hover:scale-105 active:scale-95" style="font-size: 1.15rem;">
+                    See live case studies
+                    <i data-lucide="external-link" class="w-5 h-5"></i>
+                </a>
+            </div>
+
+            <p class="font-mono text-xs text-neutral-500 mt-12 tracking-wider">
+                NO SETUP FEES · NO LONG-TERM CONTRACTS · CANCEL ANYTIME
+            </p>
+        </div>
+    </section>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+
+        // ============================================
+        // LIVE LEADS COUNTER
+        // ============================================
+        const counter = document.getElementById('leads-counter');
+        let count = 12847;
+        function updateCounter() {
+            counter.textContent = count.toLocaleString();
+            count += Math.floor(Math.random() * 3) + 1;
+            setTimeout(updateCounter, Math.random() * 1500 + 800);
+        }
+        updateCounter();
+
+        // ============================================
+        // SCROLL REVEAL
+        // ============================================
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // ============================================
+        // FAQ ACCORDION
+        // ============================================
+        const faqButtons = document.querySelectorAll('.faq-btn');
+        faqButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                const content = this.nextElementSibling;
+                faqButtons.forEach(otherBtn => {
+                    if (otherBtn !== btn) {
+                        otherBtn.setAttribute('aria-expanded', 'false');
+                        otherBtn.nextElementSibling.style.maxHeight = null;
+                        otherBtn.nextElementSibling.classList.remove('open');
+                    }
+                });
+                if (isExpanded) {
+                    this.setAttribute('aria-expanded', 'false');
+                    content.style.maxHeight = null;
+                    content.classList.remove('open');
+                } else {
+                    this.setAttribute('aria-expanded', 'true');
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    content.classList.add('open');
+                }
+            });
+        });
+
+        // ============================================
+        // FORM DEMO ANIMATION
+        // ============================================
+        const demoCanvas = document.getElementById('demo-canvas');
+        const demoCta = document.getElementById('demo-cta');
+        const demoCursor = document.getElementById('demo-cursor');
+        const demoForm = document.getElementById('demo-form');
+        const demoSuccess = document.getElementById('demo-success');
+        const demoCrm = document.getElementById('demo-crm');
+        const demoRestart = document.getElementById('demo-restart');
+        const demoInstruction = document.getElementById('demo-instruction');
+        const confettiContainer = document.getElementById('confetti-container');
+
+        const fields = {
+            name: { text: 'Sarah Chen', el: document.getElementById('text-name'), cursor: document.getElementById('cursor-name'), field: document.getElementById('field-name') },
+            email: { text: 'sarah@acmecorp.io', el: document.getElementById('text-email'), cursor: document.getElementById('cursor-email'), field: document.getElementById('field-email') },
+            company: { text: 'Acme Corp', el: document.getElementById('text-company'), cursor: document.getElementById('cursor-company'), field: document.getElementById('field-company') }
+        };
+
+        const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+        function moveCursorTo(x, y) {
+            return new Promise(resolve => {
+                demoCursor.style.opacity = '1';
+                demoCursor.style.left = x + 'px';
+                demoCursor.style.top = y + 'px';
+                setTimeout(resolve, 1500);
+            });
+        }
+
+        function getRelativeCenter(el) {
+            const canvasRect = demoCanvas.getBoundingClientRect();
+            const elRect = el.getBoundingClientRect();
+            return {
+                x: elRect.left - canvasRect.left + elRect.width / 2,
+                y: elRect.top - canvasRect.top + elRect.height / 2
+            };
+        }
+
+        function spawnRipple(target) {
+            const rect = target.getBoundingClientRect();
+            const canvasRect = demoCanvas.getBoundingClientRect();
+            const ripple = document.createElement('span');
+            ripple.className = 'click-ripple';
+            ripple.style.width = ripple.style.height = '40px';
+            ripple.style.left = (rect.left - canvasRect.left + rect.width/2 - 20) + 'px';
+            ripple.style.top = (rect.top - canvasRect.top + rect.height/2 - 20) + 'px';
+            demoCanvas.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        }
+
+        function spawnConfetti() {
+            const colors = ['#C084FC', '#4285F4', '#34A853', '#FBBC05', '#FE2C55', '#1877F2'];
+            for (let i = 0; i < 30; i++) {
+                const c = document.createElement('span');
+                c.className = 'confetti';
+                c.style.background = colors[Math.floor(Math.random() * colors.length)];
+                c.style.left = (45 + Math.random() * 10) + '%';
+                c.style.top = '50%';
+                c.style.animationDelay = (Math.random() * 0.3) + 's';
+                c.style.transform = `translateX(${(Math.random() - 0.5) * 300}px)`;
+                confettiContainer.appendChild(c);
+                setTimeout(() => c.remove(), 2000);
+            }
+        }
+
+        async function typeIntoField(fieldKey) {
+            const f = fields[fieldKey];
+            f.field.classList.add('active');
+            f.cursor.style.display = 'inline-block';
+            for (let i = 0; i < f.text.length; i++) {
+                f.el.textContent = f.text.substring(0, i + 1);
+                await sleep(50 + Math.random() * 60);
+            }
+            f.cursor.style.display = 'none';
+            f.field.classList.remove('active');
+            f.field.classList.add('filled');
+        }
+
+        function resetDemo() {
+            // Clear all fields
+            Object.values(fields).forEach(f => {
+                f.el.textContent = '';
+                f.field.classList.remove('active', 'filled');
+                f.cursor.style.display = 'none';
+            });
+            demoForm.classList.remove('visible');
+            demoSuccess.classList.remove('visible');
+            demoCrm.classList.remove('visible');
+            demoCursor.style.opacity = '0';
+            confettiContainer.innerHTML = '';
+        }
+
+        let demoRunning = false;
+        async function runDemo() {
+            if (demoRunning) return;
+            demoRunning = true;
+            resetDemo();
+            await sleep(300);
+
+            // 1. Move cursor to CTA
+            const ctaPos = getRelativeCenter(demoCta);
+            await moveCursorTo(ctaPos.x, ctaPos.y);
+
+            // 2. Click CTA
+            demoCursor.classList.add('clicking');
+            demoCta.classList.add('clicking');
+            spawnRipple(demoCta);
+            await sleep(200);
+            demoCursor.classList.remove('clicking');
+            demoCta.classList.remove('clicking');
+
+            // 3. Show form
+            demoForm.classList.add('visible');
+            await sleep(700);
+
+            // 4. Click first field & type
+            for (const fieldKey of ['name', 'email', 'company']) {
+                const fieldPos = getRelativeCenter(fields[fieldKey].field);
+                await moveCursorTo(fieldPos.x, fieldPos.y);
+                await sleep(200);
+                await typeIntoField(fieldKey);
+                await sleep(250);
+            }
+
+            // 5. Click submit
+            const submitBtn = document.getElementById('demo-submit');
+            const submitPos = getRelativeCenter(submitBtn);
+            await moveCursorTo(submitPos.x, submitPos.y);
+            demoCursor.classList.add('clicking');
+            spawnRipple(submitBtn);
+            await sleep(300);
+            demoCursor.classList.remove('clicking');
+
+            // 6. Hide form, show success
+            demoForm.classList.remove('visible');
+            demoCursor.style.opacity = '0';
+            await sleep(300);
+            demoSuccess.classList.add('visible');
+            spawnConfetti();
+            await sleep(1500);
+            demoSuccess.classList.remove('visible');
+
+            // 7. Show CRM notification
+            await sleep(300);
+            demoCrm.classList.add('visible');
+            await sleep(3000);
+
+            demoRunning = false;
+        }
+
+        // Auto-trigger after first scroll into view
+        let demoTriggered = false;
+        const demoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !demoTriggered) {
+                    demoTriggered = true;
+                    setTimeout(runDemo, 2500);
+                }
+            });
+        }, { threshold: 0.4 });
+        demoObserver.observe(demoCanvas);
+
+        // Manual trigger
+        demoCta.addEventListener('click', (e) => {
+            e.preventDefault();
+            demoTriggered = true;
+            if (demoInstruction) demoInstruction.style.display = 'none';
+            runDemo();
+        });
+
+        demoRestart.addEventListener('click', () => {
+            if (demoInstruction) demoInstruction.style.display = 'none';
+            runDemo();
+        });
+    });
+</script>
+
+</body>
+</html>

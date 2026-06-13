@@ -1,0 +1,919 @@
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+    /* ============================================
+       UNIFIED TYPOGRAPHY SYSTEM
+       ============================================ */
+    :root {
+        --font-heading: 'Montserrat', sans-serif;
+        --font-body: 'Inter', sans-serif;
+
+        /* Type Scale */
+        --fs-hero:        clamp(3.5rem, 8vw, 7.5rem);
+        --fs-section:     clamp(2.5rem, 5.5vw, 5rem);
+        --fs-card-title:  2.691rem;     /* 43px */
+        --fs-body-lg:     1.863rem;     /* 29.8px */
+        --fs-body:        1.656rem;     /* 26.5px */
+        --fs-body-sm:     1.5525rem;    /* 24.8px */
+        --fs-eyebrow:     0.75rem;      /* 12px */
+
+        --lh-tight:       1.05;
+        --lh-snug:        1.25;
+        --lh-normal:      1.6;
+        --lh-relaxed:     1.7;
+
+        --ls-tight:       -0.02em;
+        --ls-widest:      0.2em;
+
+        /* Orbit colors */
+        --text-main: #ffffff;
+        --text-muted: #94a3b8;
+        --accent-red: #dc2626;
+        --border-navy: #1e3a8a;
+        --node-bg: #ffffff;
+        --node-text: #0f172a;
+        --spoke-color: rgba(255, 255, 255, 0.15);
+        --orbit-radius: 250px;
+    }
+
+    /* Scoped Wrapper Styles to protect Elementor */
+    .wa-custom-wrapper {
+        font-family: var(--font-body);
+        background-color: #000;
+        color: #fff;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-size: var(--fs-body);
+        line-height: var(--lh-normal);
+        position: relative;
+        width: 100%;
+    }
+    
+    .wa-custom-wrapper * { 
+        box-sizing: border-box; 
+    }
+
+    .wa-custom-wrapper ::selection {
+        background-color: #C084FC;
+        color: white;
+    }
+
+    /* Unified typography classes */
+    .font-heading { font-family: var(--font-heading); }
+    .font-body { font-family: var(--font-body); }
+
+    .h-hero { font-family: var(--font-heading); font-size: var(--fs-hero); font-weight: 800; line-height: var(--lh-tight); letter-spacing: var(--ls-tight); }
+    .h-section { font-family: var(--font-heading); font-size: var(--fs-section); font-weight: 800; line-height: var(--lh-snug); letter-spacing: var(--ls-tight); }
+    .h-card { font-family: var(--font-heading); font-size: var(--fs-card-title); font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; }
+    .body-lead { font-family: var(--font-body); font-size: var(--fs-body-lg); font-weight: 300; line-height: var(--lh-relaxed); }
+    .body-text { font-family: var(--font-body); font-size: var(--fs-body-sm); font-weight: 400; line-height: var(--lh-relaxed); }
+    .eyebrow { font-family: var(--font-body); font-size: var(--fs-eyebrow); font-weight: 600; letter-spacing: var(--ls-widest); text-transform: uppercase; }
+
+    /* ============================================
+       SHARED ANIMATIONS
+       ============================================ */
+    @keyframes marketing-shimmer { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
+    .animate-marketing-shimmer { animation: marketing-shimmer 8s linear infinite; }
+    @keyframes float { 0%, 100% { transform: translateY(0px) scale(1); } 50% { transform: translateY(-20px) scale(1.05); } }
+    .animate-float { animation: float 8s ease-in-out infinite; }
+    .animate-float-delayed { animation: float 10s ease-in-out infinite 2s; }
+
+    /* Scroll Reveal */
+    .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: opacity, transform; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    .delay-100 { transition-delay: 100ms; } .delay-200 { transition-delay: 200ms; } .delay-300 { transition-delay: 300ms; } .delay-400 { transition-delay: 400ms; }
+
+    /* Cursor Trail */
+    #cursor-trail {
+        position: fixed; top: 0; left: 0; width: 40px; height: 40px; border-radius: 50%;
+        background: radial-gradient(circle, rgba(192,132,252,0.4) 0%, rgba(96,165,250,0) 70%);
+        pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: transform 0.2s; mix-blend-mode: screen;
+    }
+
+    /* ============================================
+       ORBIT DIAGRAM
+       ============================================ */
+    .orbit-container-wrapper { font-family: var(--font-heading); width: 100%; display: flex; align-items: center; justify-content: center; }
+    .orbit-container { display: flex; flex-wrap: wrap; width: 100%; align-items: center; justify-content: space-between; gap: 60px; }
+    .orbit-text-section { flex: 1; min-width: 350px; max-width: 540px; }
+    .orbit-eyebrow { font-family: var(--font-body); font-weight: 300; font-size: 1.75rem; color: var(--text-muted); margin-bottom: 8px; letter-spacing: 0; }
+    .orbit-title { font-family: var(--font-heading); font-weight: 800; font-size: 3.5rem; line-height: 1.1; margin: 0 0 30px 0; color: var(--text-main); letter-spacing: -1px; }
+    .orbit-divider { border: none; border-top: 2px dashed var(--spoke-color); margin: 30px 0; width: 100%; }
+    .orbit-subtitle { font-family: var(--font-heading); font-weight: 600; font-size: 1.85rem; margin: 0 0 20px 0; color: var(--text-main); line-height: 1.25; }
+    .orbit-acronyms { font-family: var(--font-heading); font-weight: 800; font-size: 2.1rem; color: var(--accent-red); letter-spacing: 2px; }
+
+    .diagram-section { position: relative; width: 600px; height: 600px; flex-shrink: 0; display: flex; justify-content: center; align-items: center; margin: 0 auto; }
+    .spokes {
+        position: absolute; width: calc(var(--orbit-radius) * 2); height: calc(var(--orbit-radius) * 2); border-radius: 50%;
+        background: linear-gradient(0deg, transparent calc(50% - 1px), var(--spoke-color) calc(50% - 1px), var(--spoke-color) calc(50% + 1px), transparent calc(50% + 1px)),
+                    linear-gradient(90deg, transparent calc(50% - 1px), var(--spoke-color) calc(50% - 1px), var(--spoke-color) calc(50% + 1px), transparent calc(50% + 1px)),
+                    linear-gradient(45deg, transparent calc(50% - 1px), var(--spoke-color) calc(50% - 1px), var(--spoke-color) calc(50% + 1px), transparent calc(50% + 1px)),
+                    linear-gradient(135deg, transparent calc(50% - 1px), var(--spoke-color) calc(50% - 1px), var(--spoke-color) calc(50% + 1px), transparent calc(50% + 1px));
+        z-index: 1; animation: spinBg 40s linear infinite;
+    }
+
+    .center-node {
+        position: absolute; width: 200px; height: 200px; background: var(--node-bg); border: 5px solid var(--accent-red);
+        border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+        font-family: var(--font-heading); font-weight: 700; font-size: 1.4rem; line-height: 1.2; color: var(--node-text);
+        box-shadow: 0 10px 30px rgba(220, 38, 38, 0.25); z-index: 10; padding: 0 16px;
+    }
+
+    .orbit-node {
+        position: absolute; width: 140px; height: 140px; background: var(--node-bg); border: 2.5px solid var(--border-navy); border-radius: 50%;
+        display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 15px; z-index: 5;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2); transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        animation: orbit 40s linear infinite; animation-delay: calc(-40s * var(--i) / 8);
+    }
+    .orbit-node:hover { border-color: var(--accent-red); box-shadow: 0 12px 25px rgba(220, 38, 38, 0.4); cursor: pointer; z-index: 20; }
+    .orbit-node i { font-size: 26px; color: var(--accent-red); margin-bottom: 12px; transition: transform 0.3s ease; }
+    .orbit-node:hover i { transform: scale(1.15); }
+    .orbit-node p { font-family: var(--font-body); font-size: 0.78rem; font-weight: 600; line-height: 1.3; color: var(--node-text); margin: 0; }
+    .diagram-section:hover .orbit-node, .diagram-section:hover .spokes { animation-play-state: paused; }
+
+    @keyframes spinBg { 100% { transform: rotate(360deg); } }
+    @keyframes orbit {
+        0% { transform: rotate(0deg) translateY(calc(var(--orbit-radius) * -1)) rotate(0deg); }
+        100% { transform: rotate(360deg) translateY(calc(var(--orbit-radius) * -1)) rotate(-360deg); }
+    }
+
+    @media (max-width: 1100px) {
+        .orbit-container { justify-content: center; }
+        .orbit-text-section { align-items: center; display: flex; flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 650px) {
+        .diagram-section { transform: scale(0.6); margin-top: -80px; margin-bottom: -80px; }
+        .orbit-title { font-size: 2.8rem; }
+        .orbit-eyebrow { font-size: 1.5rem; }
+        .orbit-subtitle { font-size: 1.5rem; }
+        .orbit-acronyms { font-size: 1.6rem; }
+    }
+
+    /* Background patterns & FX */
+    .bg-grid-overlay { background-image: linear-gradient(#222 1px, transparent 1px), linear-gradient(90deg, #222 1px, transparent 1px); background-size: 40px 40px; }
+    .bg-grid-tech { background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px); background-size: 30px 30px; }
+    .wa-brand-img { max-width: none !important; max-height: none !important; width: auto !important; flex-shrink: 0 !important; object-fit: contain !important; display: block !important; margin: 0 !important; background: transparent !important; }
+
+    /* Compliance Glow Border */
+    .glow-border-box { position: relative; background: #0a0a0a; border-radius: 2rem; z-index: 1; }
+    .glow-border-box::before { content: ""; position: absolute; inset: -2px; border-radius: 2.1rem; background: conic-gradient(from var(--angle), transparent 20%, #60A5FA, #C084FC, transparent 50%); z-index: -1; animation: spin-border 4s linear infinite; }
+    @property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+    @keyframes spin-border { from { --angle: 0deg; } to { --angle: 360deg; } }
+
+    @keyframes scanner { 0% { top: 0; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+    .animate-scanner { position: absolute; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, #60A5FA, #C084FC, transparent); box-shadow: 0 0 15px #60A5FA; animation: scanner 3s ease-in-out infinite; z-index: 10; }
+
+    .glass-panel { background: rgba(10, 10, 10, 0.6); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.05); }
+
+    /* FAQ Accordion */
+    .faq-content { transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease; max-height: 0; opacity: 0; overflow: hidden; }
+    .faq-content.open { opacity: 1; }
+    .faq-icon { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .faq-btn[aria-expanded="true"] .faq-icon { transform: rotate(180deg); }
+    @keyframes spin-slow { to { transform: rotate(360deg); } }
+    .animate-spin-slow { animation: spin-slow 6s linear infinite; }
+</style>
+
+<div class="wa-custom-wrapper">
+
+    <div id="cursor-trail"></div>
+
+    <div id="spotlight-glow" class="pointer-events-none absolute inset-0 transition-opacity duration-300 z-0 opacity-0 mix-blend-screen"></div>
+    <div class="absolute inset-0 z-0 opacity-[0.08] pointer-events-none" style="background-image: linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px); background-size: 50px 50px;"></div>
+
+    <section class="w-full relative overflow-hidden pt-10 pb-16 min-h-[85vh] flex flex-col justify-center items-center">
+        <div class="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-[#60A5FA]/20 blur-[120px] rounded-full pointer-events-none animate-float z-0"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[#C084FC]/15 blur-[150px] rounded-full pointer-events-none animate-float-delayed z-0"></div>
+
+        <div class="max-w-[1600px] mx-auto w-full px-6 md:px-12 xl:px-[50px] relative z-10 text-center reveal active">
+            
+            <div class="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 mb-10 backdrop-blur-md">
+                <span class="relative flex h-3 w-3">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#C084FC] opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-[#60A5FA]"></span>
+                </span>
+                <span class="eyebrow text-neutral-300">About Web Affino</span>
+            </div>
+
+            <h1 class="h-hero text-white mb-8">
+                High-Intent Traffic.<br>
+                <span class="bg-gradient-to-r from-[#60A5FA] via-[#C084FC] to-[#60A5FA] bg-[length:200%_auto] bg-clip-text text-transparent animate-marketing-shimmer pb-4 inline-block">
+                    Content-Led Scale.
+                </span>
+            </h1>
+
+            <p class="body-lead text-neutral-400 mx-auto mt-6 text-center max-w-4xl">
+                Web Affino is a performance-driven digital publishing platform built to deliver high-intent traffic through content-led strategies.
+            </p>
+
+            <div class="mt-12 flex flex-wrap justify-center gap-4">
+                <a href="/performance-marketing" class="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-white font-body font-medium backdrop-blur-sm cursor-pointer no-underline transition-colors hover:border-white/20 hover:bg-white/10" style="font-size: 1.05rem;">
+                    <i data-lucide="trending-up" class="inline w-5 h-5 mr-2 text-[#60A5FA]"></i> Performance Marketing
+                </a>
+                <a href="/digital-marketing" class="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-white font-body font-medium backdrop-blur-sm cursor-pointer no-underline transition-colors hover:border-white/20 hover:bg-white/10" style="font-size: 1.05rem;">
+                    <i data-lucide="feather" class="inline w-5 h-5 mr-2 text-[#C084FC]"></i> Strategic Branding
+                </a>
+                <a href="/lead-generation" class="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-white font-body font-medium backdrop-blur-sm cursor-pointer no-underline transition-colors hover:border-white/20 hover:bg-white/10" style="font-size: 1.05rem;">
+                    <i data-lucide="users" class="inline w-5 h-5 mr-2 text-[#60A5FA]"></i> Conversion-Focused Acquisition
+                </a>
+            </div>
+
+            <p class="eyebrow text-neutral-500 mt-10">
+                Our partnerships are built on trust, compliance, and measurable performance.
+            </p>
+
+            <div class="mt-14 flex justify-center">
+                <a href="#orbit" class="group flex flex-col items-center gap-5 text-neutral-500 hover:text-white transition-colors">
+                    <div class="p-4 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/10 transition-colors">
+                        <i data-lucide="arrow-down" class="w-6 h-6 animate-bounce"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="orbit" class="w-full relative py-20 bg-transparent border-t border-white/5 overflow-hidden reveal">
+        <div class="max-w-[1600px] mx-auto w-full px-6 md:px-12 xl:px-[50px] relative z-10">
+            <div class="orbit-container-wrapper">
+                <div class="orbit-container">
+                    <div class="orbit-text-section">
+                        <h3 class="orbit-eyebrow">How to do</h3>
+                        <h2 class="orbit-title">PERFORMANCE<br>MARKETING</h2>
+                        <hr class="orbit-divider">
+                        <h3 class="orbit-subtitle">Key Models in<br>Performance Marketing</h3>
+                        <div class="orbit-acronyms">
+                            CPS <span style="color:var(--text-muted)">/</span>
+                            CPI <span style="color:var(--text-muted)">/</span>
+                            CPR <span style="color:var(--text-muted)">/</span>
+                            CPL
+                        </div>
+                    </div>
+
+                    <div class="diagram-section">
+                        <div class="spokes"></div>
+                        <div class="center-node">Performance<br>Marketing</div>
+
+                        <div class="orbit-node" style="--i: 0;">
+                            <i class="fa-solid fa-bullhorn"></i>
+                            <p>Advertisers set goals & budgets</p>
+                        </div>
+                        <div class="orbit-node" style="--i: 1;">
+                            <i class="fa-solid fa-desktop"></i>
+                            <p>Ads are shown on platforms</p>
+                        </div>
+                        <div class="orbit-node" style="--i: 2;">
+                            <i class="fa-solid fa-users"></i>
+                            <p>Audience clicks or engages with ads</p>
+                        </div>
+                        <div class="orbit-node" style="--i: 3;">
+                            <i class="fa-regular fa-window-maximize"></i>
+                            <p>Visitors land on landing page or website</p>
+                        </div>
+                        <div class="orbit-node" style="--i: 4;">
+                            <i class="fa-solid fa-filter"></i>
+                            <p>Users take desired action (lead, sale, signup)</p>
+                        </div>
+                        <div class="orbit-node" style="--i: 5;">
+                            <i class="fa-solid fa-chart-line"></i>
+                            <p>Conversions are tracked in real-time</p>
+                        </div>
+
+                       <div class="orbit-node" style="--i: 6;">
+                            <i class="fa-solid fa-bullseye"></i>
+                            <p>Track, analyze & optimize performance</p>
+                        </div>
+
+                        <div class="orbit-node" style="--i: 7;">
+                            <i class="fa-solid fa-hand-holding-dollar"></i>
+                            <p>Advertiser pays only for actual results</p>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="w-full relative py-24 md:py-32 bg-[#050505] border-t border-white/5 overflow-hidden">
+        <div class="max-w-[1600px] mx-auto w-full px-6 md:px-12 xl:px-[50px] relative z-10">
+
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-20 gap-8 reveal">
+                <div class="max-w-2xl">
+                    <h3 class="eyebrow text-[#C084FC] mb-4">Our Integrity</h3>
+                    <h2 class="h-section text-white">How we maintain the standard.</h2>
+                </div>
+                <p class="body-lead text-neutral-400 max-w-md">
+                    We build ecosystems that provide genuine value to the user before a conversion ever happens.
+                </p>
+                </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="relative h-full rounded-[2rem] border border-white/10 bg-[#111] p-10 hover:border-white/30 transition-all duration-500 group overflow-hidden reveal delay-100">
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-[#60A5FA]/10 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-150"></div>
+                    <i data-lucide="shield-alert" class="text-[#60A5FA] w-12 h-12 mb-8 relative z-10"></i>
+                    <h3 class="h-card text-white mb-5 relative z-10">Promotion Standards</h3>
+                    <p class="body-text text-neutral-400 mb-5 relative z-10">Our goal is always to provide value before conversion. We strictly prohibit:</p>
+                    <ul class="space-y-3 text-neutral-300 body-text relative z-10">
+                        <li class="flex items-center gap-3"><i data-lucide="x-circle" class="w-5 h-5 text-red-400 shrink-0"></i> Incentivized traffic</li>
+                        <li class="flex items-center gap-3"><i data-lucide="x-circle" class="w-5 h-5 text-red-400 shrink-0"></i> Misleading claims & Clickbait</li>
+                        <li class="flex items-center gap-3"><i data-lucide="x-circle" class="w-5 h-5 text-red-400 shrink-0"></i> Cookie stuffing</li>
+                        <li class="flex items-center gap-3"><i data-lucide="x-circle" class="w-5 h-5 text-red-400 shrink-0"></i> Forced redirects</li>
+                    </ul>
+                </div>
+
+                <div class="relative h-full rounded-[2rem] border border-white/10 bg-[#111] p-10 hover:border-white/30 transition-all duration-500 group overflow-hidden reveal delay-200">
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-[#C084FC]/10 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-150"></div>
+                    <i data-lucide="file-check-2" class="text-[#C084FC] w-12 h-12 mb-8 relative z-10"></i>
+                    <h3 class="h-card text-white mb-5 relative z-10">Content Integrity</h3>
+                    <p class="body-text text-neutral-400 mb-5 relative z-10">Our editorial line is never compromised for a quick sale.</p>
+                    <ul class="space-y-3 text-neutral-300 body-text relative z-10">
+                        <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-[#C084FC] shrink-0 mt-1.5"></i> Content is based on research and analysis</li>
+                        <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-[#C084FC] shrink-0 mt-1.5"></i> Information is balanced and accurate</li>
+                        <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-[#C084FC] shrink-0 mt-1.5"></i> Affiliate relationships do not influence factual accuracy</li>
+                    </ul>
+                </div>
+
+                <div class="relative h-full rounded-[2rem] border border-white/10 bg-[#111] p-10 hover:border-white/30 transition-all duration-500 group overflow-hidden reveal delay-100">
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-[#C084FC]/10 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-150"></div>
+                    <i data-lucide="bar-chart-3" class="text-[#C084FC] w-12 h-12 mb-8 relative z-10"></i>
+                    <h3 class="h-card text-white mb-5 relative z-10">Data & Tracking</h3>
+                    <p class="body-text text-neutral-400 mb-5 relative z-10">We use industry-standard tools to:</p>
+                    <ul class="space-y-3 text-neutral-300 body-text relative z-10">
+                        <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-[#C084FC] shrink-0"></i> Measure campaign performance</li>
+                        <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-[#C084FC] shrink-0"></i> Understand user behaviour</li>
+                        <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-[#C084FC] shrink-0"></i> Improve user experience</li>
+                    </ul>
+                </div>
+
+                <div class="relative h-full rounded-[2rem] border border-white/10 bg-[#111] p-10 hover:border-white/30 transition-all duration-500 group overflow-hidden reveal delay-200">
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-[#60A5FA]/10 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-150"></div>
+                    <i data-lucide="lock" class="text-[#60A5FA] w-12 h-12 mb-8 relative z-10"></i>
+                    <h3 class="h-card text-white mb-5 relative z-10">Brand Safety & Compliance</h3>
+                    <p class="body-text text-neutral-400 mb-5 relative z-10">All campaigns launched under our ecosystem:</p>
+                    <ul class="space-y-3 text-neutral-300 body-text relative z-10">
+                        <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-[#60A5FA] shrink-0"></i> Align with advertiser guidelines</li>
+                        <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-[#60A5FA] shrink-0"></i> Follow applicable laws and regulations</li>
+                        <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-[#60A5FA] shrink-0"></i> Maintain a safe and trustworthy environment</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="w-full relative py-16 bg-gray-900 border-y border-gray-800 overflow-hidden reveal z-20">
+        <div class="absolute inset-0 bg-gradient-to-b from-gray-900 via-gray-900 to-black/80 pointer-events-none"></div>
+
+        <div class="max-w-[1600px] mx-auto w-full px-6 md:px-12 xl:px-[50px] relative z-10 mb-12 text-center">
+            <p class="eyebrow text-transparent bg-clip-text bg-gradient-to-r from-gray-400 via-white to-gray-400">Trusted by Top Brands</p>
+        </div>
+
+        <div id="logo-slider-container" class="relative w-full overflow-hidden max-w-[100vw]">
+            <div class="absolute z-30 top-0 left-0 h-full w-20 md:w-32 bg-gradient-to-r from-gray-900 to-transparent pointer-events-none"></div>
+            <div class="absolute z-30 top-0 right-0 h-full w-20 md:w-32 bg-gradient-to-l from-gray-900 to-transparent pointer-events-none"></div>
+
+            <div id="logo-track" class="flex items-center w-max gap-12 md:gap-20 cursor-grab active:cursor-grabbing will-change-transform opacity-80 hover:opacity-100 transition-opacity duration-300">
+                <img src="https://webaffino.com/wp-content/uploads/2025/11/12-1024x1024-1.png" alt="Brand Logo" class="wa-brand-img h-[70px] transition-all duration-300 hover:scale-110" style="height: 70px !important;">
+                <img src="https://webaffino.com/wp-content/uploads/2025/11/9-1-1024x1024-1.png" alt="Brand Logo" class="wa-brand-img h-[70px] transition-all duration-300 hover:scale-110" style="height: 70px !important;">
+                <img src="https://webaffino.com/wp-content/uploads/2025/11/8-1-1024x1024-1.png" alt="Brand Logo" class="wa-brand-img h-[70px] transition-all duration-300 hover:scale-110" style="height: 70px !important;">
+                <img src="https://webaffino.com/wp-content/uploads/2025/11/6-1-1024x1024-1.png" alt="Brand Logo" class="wa-brand-img h-[70px] transition-all duration-300 hover:scale-110" style="height: 70px !important;">
+                <img src="https://webaffino.com/wp-content/uploads/2025/11/5-1-1024x1024-1.png" alt="Brand Logo" class="wa-brand-img h-[70px] transition-all duration-300 hover:scale-110" style="height: 70px !important;">
+                <img src="https://webaffino.com/wp-content/uploads/2025/11/3-1-1024x1024-1.png" alt="Brand Logo" class="wa-brand-img h-[70px] transition-all duration-300 hover:scale-110" style="height: 70px !important;">
+                <img src="https://webaffino.com/wp-content/uploads/2025/11/13-1024x1024-1.png" alt="Brand Logo" class="wa-brand-img h-[70px] transition-all duration-300 hover:scale-110" style="height: 70px !important;">
+                <img src="https://webaffino.com/wp-content/uploads/2025/11/14-1024x1024-1.png" alt="Brand Logo" class="wa-brand-img h-[70px] transition-all duration-300 hover:scale-110" style="height: 70px !important;">
+                <img src="https://webaffino.com/wp-content/uploads/2025/11/15-1024x1024-1.png" alt="Brand Logo" class="wa-brand-img h-[70px] transition-all duration-300 hover:scale-110" style="height: 70px !important;">
+                <img src="https://webaffino.com/wp-content/uploads/2025/11/Amazon-Logo-2000-scaled.png" alt="Amazon" class="wa-brand-img h-[60px] transition-all duration-300 hover:scale-110" style="height: 60px !important;">
+                <img src="https://webaffino.com/wp-content/uploads/2025/11/dhgate-logo-png_seeklogo-335536-1.png" alt="DHGate" class="wa-brand-img h-[50px] transition-all duration-300 hover:scale-110" style="height: 50px !important;">
+                <img src="https://webaffino.com/wp-content/uploads/2025/11/Temu_logo_icon.svg.png" alt="Temu" class="wa-brand-img h-[70px] transition-all duration-300 hover:scale-110" style="height: 70px !important;">
+                <div class="wa-brand-img h-[70px] w-40 rounded overflow-hidden transition-all duration-300 hover:scale-110" style="height: 70px !important; width: 160px !important; display: block !important;">
+                    <img src="https://webaffino.com/wp-content/uploads/2025/11/OOJO_meta_image.jpg" alt="OOJO" class="w-full h-full object-cover" style="height: 100% !important; width: 100% !important; object-fit: cover !important;">
+                </div>
+                <img src="https://webaffino.com/wp-content/uploads/2025/11/Hostinger_Logo.png" alt="Hostinger" class="wa-brand-img h-[60px] transition-all duration-300 hover:scale-110" style="height: 60px !important;">
+                <img src="https://webaffino.com/wp-content/uploads/2025/11/Preply_Logo.png" alt="Preply" class="wa-brand-img h-[60px] transition-all duration-300 hover:scale-110" style="height: 60px !important;">
+                <img src="https://webaffino.com/wp-content/uploads/2025/11/Godaddy-logo-scaled.png" alt="GoDaddy" class="wa-brand-img h-[50px] transition-all duration-300 hover:scale-110" style="height: 50px !important;">
+            </div>
+        </div>
+    </section>
+
+    <section class="w-full relative py-24 md:py-32 bg-[#020202] border-t border-white/5 overflow-hidden">
+        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-[#60A5FA]/10 blur-[150px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/4 z-0"></div>
+        <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#C084FC]/10 blur-[150px] rounded-full pointer-events-none translate-y-1/4 -translate-x-1/4 z-0"></div>
+        <div class="absolute inset-0 z-0 opacity-[0.1] pointer-events-none bg-grid-overlay mix-blend-overlay"></div>
+
+        <div class="max-w-[1600px] mx-auto w-full px-6 md:px-12 xl:px-[50px] relative z-10">
+
+            <div class="flex flex-col xl:flex-row justify-between items-start xl:items-end gap-10 mb-20 reveal">
+                <div class="max-w-3xl">
+                    <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#60A5FA] opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-[#60A5FA]"></span>
+                        </span>
+                        <span class="eyebrow text-neutral-300">The Web Affino Advantage</span>
+                    </div>
+                    <h2 class="h-section text-white">
+                        Why Brands <br>
+                        <span class="bg-gradient-to-r from-[#60A5FA] via-[#C084FC] to-[#60A5FA] bg-[length:200%_auto] bg-clip-text text-transparent animate-marketing-shimmer">
+                            Trust Web Affino.
+                        </span>
+                    </h2>
+                </div>
+                <div class="max-w-lg xl:pb-4 border-l-2 border-white/10 pl-6 xl:pl-8">
+                    <p class="body-lead text-neutral-400">
+                        In a crowded digital space, brands need more than visibility—they need performance they can rely on. Here is what sets us apart:
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+                <div class="group relative h-full rounded-[2.5rem] border border-white/10 bg-gradient-to-b from-[#111] to-[#0a0a0a] p-10 hover:border-white/30 transition-all duration-500 overflow-hidden reveal delay-100">
+                    <div class="absolute top-0 right-0 w-48 h-48 bg-[#60A5FA]/10 rounded-bl-full -mr-10 -mt-10 transition-transform duration-700 group-hover:scale-[1.5]"></div>
+                    <div class="flex flex-col h-full relative z-10">
+                        <div class="mb-8 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-[#60A5FA]/10 text-[#60A5FA] ring-1 ring-[#60A5FA]/20 group-hover:bg-[#60A5FA] group-hover:text-white transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(96,165,250,0.4)]">
+                            <i data-lucide="layers" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="h-card text-white mb-4">Controlled Media Environment</h3>
+                        <p class="body-text text-neutral-400 mt-auto">
+                            We own our platforms, ensuring consistent quality and messaging across every touchpoint of the user journey.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="group relative h-full rounded-[2.5rem] border border-white/10 bg-gradient-to-b from-[#111] to-[#0a0a0a] p-10 hover:border-white/30 transition-all duration-500 overflow-hidden reveal delay-200">
+                    <div class="absolute top-0 right-0 w-48 h-48 bg-[#C084FC]/10 rounded-bl-full -mr-10 -mt-10 transition-transform duration-700 group-hover:scale-[1.5]"></div>
+                    <div class="flex flex-col h-full relative z-10">
+                        <div class="mb-8 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-[#C084FC]/10 text-[#C084FC] ring-1 ring-[#C084FC]/20 group-hover:bg-[#C084FC] group-hover:text-white transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(192,132,252,0.4)]">
+                            <i data-lucide="mouse-pointer-click" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="h-card text-white mb-4">Intent-Driven Traffic</h3>
+                        <p class="body-text text-neutral-400 mt-auto">
+                            We don't buy blind clicks. We precisely target users who are actively searching and comparing products in your specific niche.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="group relative h-full rounded-[2.5rem] border border-white/10 bg-gradient-to-b from-[#111] to-[#0a0a0a] p-10 hover:border-white/30 transition-all duration-500 overflow-hidden reveal delay-100">
+                    <div class="absolute top-0 right-0 w-48 h-48 bg-[#C084FC]/10 rounded-bl-full -mr-10 -mt-10 transition-transform duration-700 group-hover:scale-[1.5]"></div>
+                    <div class="flex flex-col h-full relative z-10">
+                        <div class="mb-8 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-[#C084FC]/10 text-[#C084FC] ring-1 ring-[#C084FC]/20 group-hover:bg-[#C084FC] group-hover:text-white transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(192,132,252,0.4)]">
+                            <i data-lucide="eye" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="h-card text-white mb-4">Transparent Execution</h3>
+                        <p class="body-text text-neutral-400 mt-auto">
+                            No black boxes. We provide full visibility into traffic sources, live campaigns, and the actual results driving your ROI.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="group relative h-full rounded-[2.5rem] border border-white/10 bg-gradient-to-b from-[#111] to-[#0a0a0a] p-10 hover:border-white/30 transition-all duration-500 overflow-hidden reveal delay-200">
+                    <div class="absolute top-0 right-0 w-48 h-48 bg-[#60A5FA]/10 rounded-bl-full -mr-10 -mt-10 transition-transform duration-700 group-hover:scale-[1.5]"></div>
+                    <div class="flex flex-col h-full relative z-10">
+                        <div class="mb-8 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-[#60A5FA]/10 text-[#60A5FA] ring-1 ring-[#60A5FA]/20 group-hover:bg-[#60A5FA] group-hover:text-white transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(96,165,250,0.4)]">
+                            <i data-lucide="trending-up" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="h-card text-white mb-4">Sustainable Growth</h3>
+                        <p class="body-text text-neutral-400 mt-auto">
+                            We avoid flash-in-the-pan tactics. We prioritize long-term, scalable value over unreliable, short-term traffic spikes.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 relative rounded-[2.5rem] border border-[#60A5FA]/30 bg-gradient-to-r from-[#111] via-[#1a1a2e] to-[#111] p-12 md:p-16 overflow-hidden reveal delay-300 group">
+                <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#C084FC] to-transparent opacity-50"></div>
+                <div class="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#60A5FA] to-transparent opacity-50"></div>
+
+                <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+                    <div class="flex items-center justify-center w-20 h-20 rounded-full bg-white/5 border border-white/10 shrink-0 shadow-[0_0_50px_rgba(192,132,252,0.2)]">
+                        <i data-lucide="check-check" class="w-10 h-10 text-[#C084FC]"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="h-section text-white" style="font-size: clamp(1.75rem, 3.5vw, 3rem); line-height: 1.2;">
+                            We don't just deliver traffic—<br class="hidden md:block">
+                            we deliver <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#60A5FA] to-[#C084FC]">decision-ready users.</span>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="w-full relative py-24 md:py-32 bg-[#020202] border-t border-white/5 overflow-hidden">
+        <div class="absolute inset-0 bg-grid-tech pointer-events-none opacity-50 z-0"></div>
+        <div class="absolute top-1/4 left-0 w-[600px] h-[600px] bg-[#60A5FA]/10 blur-[150px] rounded-full pointer-events-none -translate-x-1/2 z-0"></div>
+        <div class="absolute bottom-1/4 right-0 w-[600px] h-[600px] bg-[#C084FC]/10 blur-[150px] rounded-full pointer-events-none translate-x-1/2 z-0"></div>
+
+        <div class="max-w-[1600px] mx-auto w-full px-6 md:px-12 xl:px-[50px] relative z-10 flex flex-col gap-32">
+
+            <div>
+                <div class="text-center max-w-4xl mx-auto mb-20 reveal">
+                    <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#60A5FA] opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-[#60A5FA]"></span>
+                        </span>
+                        <span class="eyebrow text-neutral-300">The Ecosystem</span>
+                    </div>
+                    <h2 class="h-section text-white mb-6">
+                        Who We <br class="hidden md:block">
+                        <span class="bg-gradient-to-r from-[#60A5FA] via-[#C084FC] to-[#60A5FA] bg-[length:200%_auto] bg-clip-text text-transparent animate-marketing-shimmer">
+                            Work With.
+                        </span>
+                    </h2>
+                    <p class="body-lead text-neutral-400 mx-auto text-center" style="max-width: min(95vw, 1500px);">
+                        We partner with industry-leading brands across high-growth verticals to engineer scalable, performance-driven acquisition channels.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                    <div class="group relative bg-[#0a0a0a] border border-white/10 rounded-[2rem] p-8 hover:bg-[#111] transition-all duration-500 overflow-hidden reveal delay-100">
+                        <div class="absolute inset-0 bg-gradient-to-br from-[#60A5FA]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="relative z-10">
+                            <div class="w-14 h-14 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 mb-6 group-hover:scale-110 transition-transform duration-500 group-hover:border-[#60A5FA]/50 group-hover:shadow-[0_0_20px_rgba(96,165,250,0.3)]">
+                                <i data-lucide="cloud" class="w-7 h-7 text-white group-hover:text-[#60A5FA] transition-colors"></i>
+                            </div>
+                            <h3 class="h-card text-white mb-3" style="font-size: 1.875rem;">Technology & SaaS</h3>
+                            <p class="body-text text-neutral-500" style="font-size: 1.25rem;">Driving subscriptions, trials, and high-LTV user acquisition.</p>
+                        </div>
+                    </div>
+                    <div class="group relative bg-[#0a0a0a] border border-white/10 rounded-[2rem] p-8 hover:bg-[#111] transition-all duration-500 overflow-hidden reveal delay-200">
+                        <div class="absolute inset-0 bg-gradient-to-br from-[#C084FC]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="relative z-10">
+                            <div class="w-14 h-14 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 mb-6 group-hover:scale-110 transition-transform duration-500 group-hover:border-[#C084FC]/50 group-hover:shadow-[0_0_20px_rgba(192,132,252,0.3)]">
+                                <i data-lucide="line-chart" class="w-7 h-7 text-white group-hover:text-[#C084FC] transition-colors"></i>
+                            </div>
+                            <h3 class="h-card text-white mb-3" style="font-size: 1.875rem;">Finance & FinTech</h3>
+                            <p class="body-text text-neutral-500" style="font-size: 1.25rem;">Scaling leads for banking, trading platforms, and financial apps.</p>
+                        </div>
+                    </div>
+                    <div class="group relative bg-[#0a0a0a] border border-white/10 rounded-[2rem] p-8 hover:bg-[#111] transition-all duration-500 overflow-hidden reveal delay-300">
+                        <div class="absolute inset-0 bg-gradient-to-br from-[#60A5FA]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="relative z-10">
+                            <div class="w-14 h-14 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 mb-6 group-hover:scale-110 transition-transform duration-500 group-hover:border-[#60A5FA]/50 group-hover:shadow-[0_0_20px_rgba(96,165,250,0.3)]">
+                                <i data-lucide="shopping-bag" class="w-7 h-7 text-white group-hover:text-[#60A5FA] transition-colors"></i>
+                            </div>
+                            <h3 class="h-card text-white mb-3" style="font-size: 1.875rem;">E-commerce & D2C</h3>
+                            <p class="body-text text-neutral-500" style="font-size: 1.25rem;">Directing high-intent buyers to consumer products and retail.</p>
+                        </div>
+                    </div>
+                    <div class="group relative bg-[#0a0a0a] border border-white/10 rounded-[2rem] p-8 hover:bg-[#111] transition-all duration-500 overflow-hidden reveal delay-400">
+                        <div class="absolute inset-0 bg-gradient-to-br from-[#C084FC]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="relative z-10">
+                            <div class="w-14 h-14 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 mb-6 group-hover:scale-110 transition-transform duration-500 group-hover:border-[#C084FC]/50 group-hover:shadow-[0_0_20px_rgba(192,132,252,0.3)]">
+                                <i data-lucide="plane-takeoff" class="w-7 h-7 text-white group-hover:text-[#C084FC] transition-colors"></i>
+                            </div>
+                            <h3 class="h-card text-white mb-3" style="font-size: 1.875rem;">Travel & Transport</h3>
+                            <p class="body-text text-neutral-500" style="font-size: 1.25rem;">Maximizing bookings, reservations, and ticketing conversions.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-y border-white/10 bg-white/[0.02] backdrop-blur-md py-12 px-8 reveal rounded-3xl">
+                    <h3 class="eyebrow text-neutral-500 text-center mb-10">The Perfect Match: We work best with brands that</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                        <div class="flex items-start gap-4">
+                            <i data-lucide="heart-handshake" class="w-8 h-8 text-[#C084FC] shrink-0 mt-1"></i>
+                            <div>
+                                <h4 class="h-card text-white mb-2" style="font-size: 1.6rem;">Value Ethical Marketing</h4>
+                                <p class="body-text text-neutral-400" style="font-size: 1.2rem;">Brands that prioritize compliant, honest, and transparent communication.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <i data-lucide="database-zap" class="w-8 h-8 text-[#60A5FA] shrink-0 mt-1"></i>
+                            <div>
+                                <h4 class="h-card text-white mb-2" style="font-size: 1.6rem;">Rely on Data</h4>
+                                <p class="body-text text-neutral-400" style="font-size: 1.2rem;">Partners who make decisions based on analytics, tracking, and hard numbers.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <i data-lucide="target" class="w-8 h-8 text-[#C084FC] shrink-0 mt-1"></i>
+                            <div>
+                                <h4 class="h-card text-white mb-2" style="font-size: 1.6rem;">Focus on ROI</h4>
+                                <p class="body-text text-neutral-400" style="font-size: 1.2rem;">Brands that look beyond vanity metrics and demand measurable bottom-line growth.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal">
+                <div class="text-center max-w-4xl mx-auto mb-16">
+                    <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-red-500/10 border border-red-500/20 mb-6 backdrop-blur-md text-red-400">
+                        <i data-lucide="shield-check" class="w-4 h-4"></i>
+                        <span class="eyebrow">Brand Safety First</span>
+                    </div>
+                    <h2 class="h-section text-white mb-6">
+                        Our Compliance <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-orange-500">
+                            Commitment.
+                        </span>
+                    </h2>
+                </div>
+
+                <div class="max-w-5xl mx-auto glow-border-box p-1 relative overflow-hidden group">
+                    <div class="bg-[#050505] rounded-[1.9rem] p-10 md:p-16 relative overflow-hidden h-full z-10">
+                        <div class="animate-scanner"></div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 relative z-20">
+                            <div class="flex items-start gap-5">
+                                <div class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                                    <i data-lucide="eye" class="w-5 h-5 text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="h-card text-white mb-2" style="font-size: 1.75rem;">Clear Disclosures</h4>
+                                    <p class="body-text text-neutral-400" style="font-size: 1.25rem;">We ensure absolute transparency with clear affiliate and sponsored content disclosures across all our media assets.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-5">
+                                <div class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                                    <i data-lucide="shield-alert" class="w-5 h-5 text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="h-card text-white mb-2" style="font-size: 1.75rem;">No Misleading Claims</h4>
+                                    <p class="body-text text-neutral-400" style="font-size: 1.25rem;">We prohibit clickbait, false promises, and hyperbole. Our content protects your brand's integrity at all times.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-5">
+                                <div class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                                    <i data-lucide="lock" class="w-5 h-5 text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="h-card text-white mb-2" style="font-size: 1.75rem;">No Unauthorized Tracking</h4>
+                                    <p class="body-text text-neutral-400" style="font-size: 1.25rem;">We respect user privacy. No cookie stuffing, no forced redirects, and strict compliance with global data laws.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-5">
+                                <div class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                                    <i data-lucide="file-check-2" class="w-5 h-5 text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="h-card text-white mb-2" style="font-size: 1.75rem;">Strict Guideline Adherence</h4>
+                                    <p class="body-text text-neutral-400" style="font-size: 1.25rem;">We follow brand guidelines to the letter, ensuring every asset aligns with your precise visual and verbal identity.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-12 pt-8 border-t border-white/10 flex items-center justify-center gap-4 text-center">
+                            <i data-lucide="refresh-cw" class="w-5 h-5 text-[#60A5FA] animate-spin-slow"></i>
+                            <p class="body-text text-neutral-300" style="font-size: 1.25rem;">
+                                We continuously align with evolving standards across all affiliate platforms.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="w-full relative py-24 md:py-32 bg-[#020202] border-t border-white/5 overflow-hidden">
+        <div class="absolute inset-0 bg-grid-tech pointer-events-none opacity-40 z-0"></div>
+        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-[#60A5FA]/10 blur-[150px] rounded-full pointer-events-none translate-x-1/3 -translate-y-1/3 z-0"></div>
+        <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#C084FC]/10 blur-[150px] rounded-full pointer-events-none -translate-x-1/3 translate-y-1/3 z-0"></div>
+
+        <div class="max-w-[1600px] mx-auto w-full px-6 md:px-12 xl:px-[50px] relative z-10">
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
+                <div class="lg:col-span-5 lg:sticky lg:top-32 reveal">
+                    <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md">
+                        <i data-lucide="help-circle" class="w-4 h-4 text-[#60A5FA]"></i>
+                        <span class="eyebrow text-neutral-300">Knowledge Base</span>
+                    </div>
+                    <h2 class="h-section text-white mb-6">
+                        Frequently <br>
+                        <span class="bg-gradient-to-r from-[#60A5FA] via-[#C084FC] to-[#60A5FA] bg-[length:200%_auto] bg-clip-text text-transparent animate-marketing-shimmer">
+                            Asked Questions.
+                        </span>
+                    </h2>
+                    <p class="body-lead text-neutral-400 mb-12">
+                        Everything you need to know about our process, traffic generation, and strict compliance standards.
+                    </p>
+
+                    <div class="glass-panel rounded-3xl p-8 relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-gradient-to-br from-[#60A5FA]/5 to-[#C084FC]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="relative z-10">
+                            <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-6">
+                                <i data-lucide="message-square-plus" class="w-6 h-6 text-white group-hover:text-[#C084FC] transition-colors"></i>
+                            </div>
+                            <h3 class="h-card text-white mb-3" style="font-size: 1.875rem;">Still have questions?</h3>
+                            <p class="body-text text-neutral-400 mb-8">We're here to help. Reach out to our team to discuss your specific goals and requirements.</p>
+
+                            <a href="https://webaffino.com/contact-us" class="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-black rounded-full font-body font-bold transition-all hover:bg-neutral-200 hover:scale-105 active:scale-95 w-full sm:w-auto" style="font-size: 1.05rem;">
+                                Contact Us <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 flex flex-col gap-4 reveal delay-200">
+                    <div class="glass-panel rounded-3xl overflow-hidden faq-item transition-colors duration-300 hover:border-white/20">
+                        <button class="faq-btn w-full flex items-center justify-between p-8 text-left focus:outline-none group" aria-expanded="false">
+                            <div class="flex items-center gap-6">
+                                <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0 group-hover:bg-[#60A5FA]/10 group-hover:border-[#60A5FA]/30 group-hover:shadow-[0_0_15px_rgba(96,165,250,0.3)] transition-all duration-300">
+                                    <i data-lucide="layers" class="w-6 h-6 text-neutral-400 group-hover:text-[#60A5FA] transition-colors"></i>
+                                </div>
+                                <span class="font-heading font-bold text-white group-hover:text-[#60A5FA] transition-colors" style="font-size: 1.5rem;">What does Web Affino offer?</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-7 h-7 text-neutral-500 faq-icon shrink-0 ml-4 group-hover:text-white"></i>
+                        </button>
+                        <div class="faq-content">
+                            <div class="pb-8 pl-[6.5rem] pr-8 body-text text-neutral-400">
+                                A performance-driven platform that connects brands with high-intent users through content, SEO, and targeted campaigns.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel rounded-3xl overflow-hidden faq-item transition-colors duration-300 hover:border-white/20">
+                        <button class="faq-btn w-full flex items-center justify-between p-8 text-left focus:outline-none group" aria-expanded="false">
+                            <div class="flex items-center gap-6">
+                                <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0 group-hover:bg-[#C084FC]/10 group-hover:border-[#C084FC]/30 group-hover:shadow-[0_0_15px_rgba(192,132,252,0.3)] transition-all duration-300">
+                                    <i data-lucide="activity" class="w-6 h-6 text-neutral-400 group-hover:text-[#C084FC] transition-colors"></i>
+                                </div>
+                                <span class="font-heading font-bold text-white group-hover:text-[#C084FC] transition-colors" style="font-size: 1.5rem;">How do you generate traffic?</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-7 h-7 text-neutral-500 faq-icon shrink-0 ml-4 group-hover:text-white"></i>
+                        </button>
+                        <div class="faq-content">
+                            <div class="pb-8 pl-[6.5rem] pr-8 body-text text-neutral-400">
+                                Through SEO, editorial content, and organic + paid channels targeting users actively researching.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel rounded-3xl overflow-hidden faq-item transition-colors duration-300 hover:border-white/20">
+                        <button class="faq-btn w-full flex items-center justify-between p-8 text-left focus:outline-none group" aria-expanded="false">
+                            <div class="flex items-center gap-6">
+                                <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0 group-hover:bg-red-500/10 group-hover:border-red-500/30 group-hover:shadow-[0_0_15px_rgba(239,68,68,0.3)] transition-all duration-300">
+                                    <i data-lucide="shield-alert" class="w-6 h-6 text-neutral-400 group-hover:text-red-400 transition-colors"></i>
+                                </div>
+                                <span class="font-heading font-bold text-white group-hover:text-red-400 transition-colors" style="font-size: 1.5rem;">Do you use incentivized traffic?</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-7 h-7 text-neutral-500 faq-icon shrink-0 ml-4 group-hover:text-white"></i>
+                        </button>
+                        <div class="faq-content">
+                            <div class="pb-8 pl-[6.5rem] pr-8 body-text text-neutral-400">
+                                No. We strictly avoid it along with any misleading or manipulative practices. Our focus is entirely on genuine, high-quality user engagement.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel rounded-3xl overflow-hidden faq-item transition-colors duration-300 hover:border-white/20">
+                        <button class="faq-btn w-full flex items-center justify-between p-8 text-left focus:outline-none group" aria-expanded="false">
+                            <div class="flex items-center gap-6">
+                                <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0 group-hover:bg-[#60A5FA]/10 group-hover:border-[#60A5FA]/30 group-hover:shadow-[0_0_15px_rgba(96,165,250,0.3)] transition-all duration-300">
+                                    <i data-lucide="file-check-2" class="w-6 h-6 text-neutral-400 group-hover:text-[#60A5FA] transition-colors"></i>
+                                </div>
+                                <span class="font-heading font-bold text-white group-hover:text-[#60A5FA] transition-colors" style="font-size: 1.5rem;">How do you ensure compliance?</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-7 h-7 text-neutral-500 faq-icon shrink-0 ml-4 group-hover:text-white"></i>
+                        </button>
+                        <div class="faq-content">
+                            <div class="pb-8 pl-[6.5rem] pr-8 body-text text-neutral-400">
+                                By following strict internal guidelines and continuously aligning with industry standards and partner requirements to guarantee a brand-safe environment.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Lucide Icons
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+
+        // Cursor Trail
+        const cursor = document.getElementById('cursor-trail');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.15;
+            cursorY += (mouseY - cursorY) * 0.15;
+            if (cursor) cursor.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`;
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Mouse Spotlight
+        const spotlight = document.getElementById('spotlight-glow');
+        window.addEventListener('mousemove', (e) => {
+            if (spotlight) {
+                spotlight.style.opacity = '1';
+                spotlight.style.background = `radial-gradient(800px circle at ${e.clientX}px ${e.clientY}px, rgba(96, 165, 250, 0.05), rgba(192, 132, 252, 0.02) 30%, transparent 50%)`;
+            }
+        });
+        window.addEventListener('mouseleave', () => {
+            if (spotlight) spotlight.style.opacity = '0';
+        });
+
+        // Scroll Reveal
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        });
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Logo Scroller
+        const track = document.getElementById('logo-track');
+        if (track) {
+            const originalContent = track.innerHTML;
+            const speed = 0.5;
+            let pos = 0;
+            let singleSetWidth = 0;
+            let isRunning = true;
+
+            function setupScroller() {
+                track.innerHTML = originalContent;
+                const tempDiv = document.createElement('div');
+                tempDiv.style.display = 'flex';
+                tempDiv.style.gap = window.getComputedStyle(track).gap;
+                tempDiv.style.position = 'absolute';
+                tempDiv.style.visibility = 'hidden';
+                tempDiv.innerHTML = originalContent;
+                document.body.appendChild(tempDiv);
+                const gapValue = parseFloat(window.getComputedStyle(track).gap || 0);
+                singleSetWidth = tempDiv.offsetWidth + gapValue;
+                document.body.removeChild(tempDiv);
+
+                const clonesNeeded = Math.ceil((window.innerWidth * 2) / singleSetWidth) + 1;
+                let html = originalContent;
+                for (let i = 0; i < clonesNeeded; i++) html += originalContent;
+                track.innerHTML = html;
+                pos = -singleSetWidth;
+            }
+
+            function animateScroller() {
+                if (!isRunning) {
+                    requestAnimationFrame(animateScroller);
+                    return;
+                }
+                pos += speed;
+                if (pos >= 0) pos = -singleSetWidth;
+                track.style.transform = `translate3d(${pos}px, 0, 0)`;
+                requestAnimationFrame(animateScroller);
+            }
+
+            track.addEventListener('mouseenter', () => isRunning = false);
+            track.addEventListener('mouseleave', () => isRunning = true);
+            window.addEventListener('resize', () => {
+                setupScroller();
+                pos = -singleSetWidth;
+            });
+
+            setTimeout(() => {
+                setupScroller();
+                requestAnimationFrame(animateScroller);
+            }, 500);
+        }
+
+        // FAQ Accordion
+        const faqButtons = document.querySelectorAll('.faq-btn');
+        faqButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                const content = this.nextElementSibling;
+                const parentCard = this.parentElement;
+
+                faqButtons.forEach(otherBtn => {
+                    if (otherBtn !== btn) {
+                        otherBtn.setAttribute('aria-expanded', 'false');
+                        otherBtn.nextElementSibling.style.maxHeight = null;
+                        otherBtn.nextElementSibling.classList.remove('open');
+                        otherBtn.parentElement.classList.remove('border-white/30', 'bg-white/[0.04]');
+                    }
+                });
+
+                if (isExpanded) {
+                    this.setAttribute('aria-expanded', 'false');
+                    content.style.maxHeight = null;
+                    content.classList.remove('open');
+                    parentCard.classList.remove('border-white/30', 'bg-white/[0.04]');
+                } else {
+                    this.setAttribute('aria-expanded', 'true');
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    content.classList.add('open');
+                    parentCard.classList.add('border-white/30', 'bg-white/[0.04]');
+                }
+            });
+        });
+    });
+</script>

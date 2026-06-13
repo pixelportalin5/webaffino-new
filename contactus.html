@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Web Affino</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Unified Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================
+           UNIFIED TYPOGRAPHY SYSTEM (Matches Home & About)
+           ============================================ */
+        :root {
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Inter', sans-serif;
+
+            /* Type Scale */
+            --fs-hero:        clamp(3.5rem, 8vw, 7.5rem);
+            --fs-section:     clamp(2.5rem, 5.5vw, 5rem);
+            --fs-card-title:  2.691rem;     /* 43px */
+            --fs-body-lg:     1.863rem;     /* 29.8px */
+            --fs-body:        1.656rem;     /* 26.5px */
+            --fs-body-sm:     1.5525rem;    /* 24.8px */
+            --fs-eyebrow:     0.75rem;      /* 12px */
+
+            --lh-tight:       1.05;
+            --lh-snug:        1.25;
+            --lh-normal:      1.6;
+            --lh-relaxed:     1.7;
+
+            --ls-tight:       -0.02em;
+            --ls-widest:      0.2em;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-body);
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-size: var(--fs-body);
+            line-height: var(--lh-normal);
+        }
+
+        ::selection {
+            background-color: #C084FC;
+            color: white;
+        }
+
+        /* Unified typography classes */
+        .font-heading { font-family: var(--font-heading); }
+        .font-body { font-family: var(--font-body); }
+
+        .h-hero { font-family: var(--font-heading); font-size: var(--fs-hero); font-weight: 800; line-height: var(--lh-tight); letter-spacing: var(--ls-tight); }
+        .h-section { font-family: var(--font-heading); font-size: var(--fs-section); font-weight: 800; line-height: var(--lh-snug); letter-spacing: var(--ls-tight); }
+        .h-card { font-family: var(--font-heading); font-size: var(--fs-card-title); font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; }
+        .body-lead { font-family: var(--font-body); font-size: var(--fs-body-lg); font-weight: 300; line-height: var(--lh-relaxed); }
+        .body-text { font-family: var(--font-body); font-size: var(--fs-body-sm); font-weight: 400; line-height: var(--lh-relaxed); }
+        .eyebrow { font-family: var(--font-body); font-size: var(--fs-eyebrow); font-weight: 600; letter-spacing: var(--ls-widest); text-transform: uppercase; }
+
+        /* Shared Animations */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-up { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+        .delay-100 { animation-delay: 0.1s; } .delay-200 { animation-delay: 0.2s; } .delay-300 { animation-delay: 0.3s; }
+
+        /* Contact page content must stay visible (avoid GSAP/CSS hiding) */
+        .legacy-page-root[data-legacy-page="contactus"] .animate-fade-up,
+        .legacy-page-root[data-legacy-page="contactus"] > section {
+            opacity: 1 !important;
+            transform: none !important;
+            animation: none !important;
+            visibility: visible !important;
+        }
+
+        /* Background Pattern */
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        }
+        
+        /* Contact Gradient Text */
+        .text-gradient-blue {
+            background: linear-gradient(to right, #60A5FA, #C084FC, #3B82F6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ============================================
+           FORMINATOR FORM PREMIUM OVERRIDES
+           ============================================ */
+        
+        /* Contact page layout compaction for laptop viewports */
+        .contact-page-hero {
+            padding-top: 6.5rem;
+            padding-bottom: 1.5rem;
+            min-height: 0;
+        }
+
+        @media (min-width: 1024px) {
+            .contact-page-hero {
+                padding-top: 5.75rem;
+                padding-bottom: 1.25rem;
+            }
+
+            #contact-section {
+                padding-top: 1.25rem;
+                padding-bottom: 1.25rem;
+            }
+
+            #contact-section .contact-info-card {
+                padding: 1.25rem;
+            }
+
+            #contact-section .contact-info-card h3 {
+                font-size: 1.25rem;
+                margin-bottom: 0.35rem;
+            }
+
+            #contact-section .contact-info-card p,
+            #contact-section .contact-info-card address,
+            #contact-section .contact-hours p {
+                font-size: 0.95rem;
+                line-height: 1.5;
+            }
+
+            #contact-section .contact-info-icon {
+                width: 2.75rem;
+                height: 2.75rem;
+            }
+
+            #contact-section .contact-info-icon i {
+                width: 1.25rem;
+                height: 1.25rem;
+            }
+        }
+
+        #contact-section .forminator-custom-form,
+        #contact-section .forminator-ui,
+        #contact-section form,
+        #contact-section .forminator-row,
+        #contact-section .forminator-col,
+        #contact-section .forminator-field {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        #contact-section .forminator-custom-form {
+            text-align: left !important;
+        }
+
+        #contact-section .forminator-row {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            margin-bottom: 0.5rem !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+
+        #contact-section .forminator-col {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            flex: 0 0 100% !important;
+        }
+
+        #contact-section .forminator-label {
+            color: #ffffff !important;
+            font-size: 0.95rem !important;
+            font-weight: 500 !important;
+            margin-bottom: 0.35rem !important;
+            font-family: 'Inter', sans-serif !important;
+            display: block !important;
+        }
+
+        #contact-section .forminator-input,
+        #contact-section .forminator-textarea {
+            font-size: 1rem !important;
+            padding: 10px 14px !important;
+            background-color: #111111 !important;
+            border: 1px solid rgba(255, 255, 255, 0.12) !important;
+            border-radius: 12px !important;
+            color: #ffffff !important;
+            font-family: 'Inter', sans-serif !important;
+            transition: all 0.3s ease !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+            display: block !important;
+        }
+
+        #contact-section .forminator-textarea {
+            min-height: 120px !important;
+            max-height: 160px !important;
+            height: 120px !important;
+            resize: vertical !important;
+        }
+
+        #contact-section .forminator-input:focus,
+        #contact-section .forminator-textarea:focus {
+            border-color: #60A5FA !important;
+            box-shadow: 0 0 15px rgba(96, 165, 250, 0.2) !important;
+            outline: none !important;
+            background-color: rgba(255, 255, 255, 0.08) !important;
+        }
+
+        #contact-section .forminator-button-submit {
+            background: linear-gradient(90deg, #60A5FA 0%, #C084FC 100%) !important;
+            color: #ffffff !important;
+            font-family: 'Montserrat', sans-serif !important;
+            font-size: 1rem !important;
+            font-weight: 700 !important;
+            padding: 12px 24px !important;
+            border-radius: 9999px !important;
+            border: none !important;
+            box-shadow: 0 10px 25px rgba(192, 132, 252, 0.3) !important;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+            margin-top: 0.5rem !important;
+            cursor: pointer !important;
+            text-transform: none !important;
+        }
+
+        #contact-section .forminator-button-submit:hover {
+            transform: translateY(-4px) scale(1.02) !important;
+            box-shadow: 0 15px 35px rgba(96, 165, 250, 0.5) !important;
+        }
+
+        .contact-form-embed-host {
+            width: 100%;
+            max-width: 100%;
+            min-height: 0;
+            overflow: visible;
+            flex: 0 0 auto;
+        }
+
+        .contact-form-embed-frame {
+            width: 100%;
+            max-width: 100%;
+            min-height: 520px;
+            height: 520px;
+            border: 0;
+            display: block;
+            background: transparent;
+            overflow: hidden;
+        }
+
+        #contact-section .contact-form-card {
+            overflow: visible;
+        }
+    </style>
+</head>
+<body class="bg-[#020202] text-white antialiased overflow-x-hidden min-h-screen">
+
+    <!-- ========================================= -->
+    <!-- HERO SECTION                              -->
+    <!-- ========================================= -->
+    <section class="contact-page-hero relative overflow-hidden flex flex-col justify-center">
+        
+        <!-- Ambient Background -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl bg-blue-900/20 blur-[150px] rounded-full pointer-events-none z-0"></div>
+        <div class="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none z-0"></div>
+
+        <!-- Strict Container Constraints -->
+        <div class="max-w-[1600px] mx-auto w-full px-6 md:px-12 xl:px-[50px] relative z-10">
+            
+            <!-- Breadcrumb / Tag -->
+            <div class="flex justify-center mb-4 animate-fade-up">
+                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 backdrop-blur-md">
+                    <i data-lucide="message-square" class="w-4 h-4 text-blue-400"></i>
+                    <span class="eyebrow text-blue-300">Get In Touch</span>
+                </div>
+            </div>
+
+            <!-- Headline -->
+            <div class="text-center max-w-4xl mx-auto animate-fade-up delay-100">
+                <h1 class="h-hero text-white mb-3" style="font-size: clamp(2rem, 5vw, 3.25rem); line-height: 1.1;">
+                    Let’s Build Something <br>
+                    <span class="text-gradient-blue">Legendary.</span>
+                </h1>
+                <p class="body-lead text-neutral-300 max-w-2xl mx-auto" style="font-size: clamp(1rem, 2vw, 1.125rem); line-height: 1.6;">
+                    Ready to scale your digital presence? Reach out to Web Affino today. Whether you have a question or need a custom strategy, our team is here to help.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- CONTACT GRID                              -->
+    <!-- ========================================= -->
+    <section id="contact-section" class="relative py-8 md:py-6 lg:py-5 bg-black z-20">
+        <!-- Strict Container Constraints -->
+        <div class="max-w-[1600px] mx-auto w-full px-6 md:px-12 xl:px-[50px] relative z-10">
+            
+            <div class="contact-grid grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-8 items-start">
+                
+                <!-- Left Column: Contact Info Cards -->
+                <div class="contact-info-column space-y-4 min-w-0 animate-fade-up delay-200">
+                    
+                    <!-- Email Card -->
+                    <div class="contact-info-card group relative rounded-[2rem] bg-[#0A0A0A] border border-white/10 p-5 md:p-6 hover:border-blue-500/50 transition-all duration-500 shadow-2xl overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[2rem]"></div>
+                        <div class="relative z-10 flex items-start gap-4">
+                            <div class="contact-info-icon w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-500/20 transition-colors border border-blue-500/20">
+                                <i data-lucide="mail" class="w-6 h-6 text-blue-400"></i>
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <h3 class="font-heading font-bold text-white text-xl mb-1">Email Us</h3>
+                                <p class="body-text text-neutral-400 mb-2">For general inquiries and support.</p>
+                                <a href="mailto:affiliate@webaffino.com" aria-label="Email Web Affino" class="font-body font-medium text-white text-base md:text-lg hover:text-blue-400 hover:underline transition-colors tracking-wide break-all cursor-pointer">affiliate@webaffino.com</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Address Card -->
+                    <div class="contact-info-card group relative rounded-[2rem] bg-[#0A0A0A] border border-white/10 p-5 md:p-6 hover:border-purple-500/50 transition-all duration-500 shadow-2xl overflow-hidden">
+                        <!-- Miami Map Background Effect -->
+                        <div class="absolute inset-0 opacity-20 pointer-events-none group-hover:opacity-30 transition-opacity duration-500" 
+                             style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Miami_skyline_%2826646823%29.jpeg/640px-Miami_skyline_%2826646823%29.jpeg'); background-size: cover; background-position: center; filter: grayscale(100%) contrast(150%);">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/80"></div>
+
+                        <div class="relative z-10 flex items-start gap-4">
+                            <div class="contact-info-icon w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center flex-shrink-0 group-hover:bg-purple-500/20 transition-colors border border-purple-500/20">
+                                <i data-lucide="map-pin" class="w-6 h-6 text-purple-400"></i>
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <h3 class="font-heading font-bold text-white text-xl mb-1">Visit Us</h3>
+                                <p class="body-text text-neutral-400 mb-2">Web Affino LLC</p>
+                                <address class="body-text text-white not-italic leading-relaxed">
+                                    89225, 111 NE 1st St, 8th Floor<br>
+                                    Miami, FL, Miami-Dade<br>
+                                    United States, 33132
+                                </address>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Info / Hours -->
+                    <div class="contact-hours p-4 md:p-5 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-3">
+                        <i data-lucide="clock" class="w-5 h-5 text-neutral-400 shrink-0"></i>
+                        <p class="body-text text-neutral-400">Response time: Usually within 24 hours.</p>
+                    </div>
+
+                </div>
+
+                <!-- RIGHT COLUMN: FORMINATOR SHORTCODE -->
+                <div class="contact-form-column relative group w-full min-w-0 animate-fade-up delay-300">
+                    <!-- Form Glow Background -->
+                    <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-[2.5rem] blur-[40px] opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-500 pointer-events-none"></div>
+                    
+                    <!-- Shortcode Placement Container -->
+                    <div class="contact-form-card relative bg-[#0A0A0A] border border-white/10 rounded-[2rem] p-5 md:p-6 lg:p-7 shadow-2xl flex flex-col justify-start w-full max-w-full box-border">
+                        
+                        <div class="contact-form-card-header text-center w-full mb-4 shrink-0">
+                            <h3 class="font-heading text-2xl lg:text-[28px] font-bold text-white mb-1">Send a Message</h3>
+                            <p class="body-text text-neutral-400 text-sm md:text-base">Fill out the form below to get started.</p>
+                        </div>
+                        
+                        <div class="w-full max-w-full relative z-10 contact-form-embed-host box-border">
+                            <iframe
+                                title="Send us a message"
+                                src="/api/contact-form-embed"
+                                class="contact-form-embed-frame"
+                                loading="lazy"
+                                scrolling="no"
+                                referrerpolicy="no-referrer-when-downgrade"
+                            ></iframe>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- MAP SECTION                               -->
+    <!-- ========================================= -->
+    <section class="w-full h-[500px] relative border-t border-white/10 overflow-hidden z-10">
+        <!-- 
+            Dark Mode Map Effect:
+            Using CSS filters to invert the standard light map into a dark theme.
+        -->
+        <iframe 
+            src="https://maps.google.com/maps?q=111+NE+1st+St,+Miami,+FL+33132&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+            class="w-full h-full object-cover"
+            style="border:0; filter: grayscale(100%) invert(92%) contrast(83%);" 
+            allowfullscreen="" 
+            loading="lazy">
+        </iframe>
+        
+        <!-- Strict Container Constraints for Overlay -->
+        <div class="max-w-[1600px] mx-auto w-full px-6 md:px-12 xl:px-[50px] h-full absolute inset-0 pointer-events-none">
+            <!-- Location Card Overlay -->
+            <div class="absolute bottom-10 left-6 md:left-12 xl:left-[50px] bg-[#0A0A0A] border border-white/10 p-6 rounded-2xl shadow-2xl flex items-center gap-5 max-w-sm backdrop-blur-md pointer-events-auto">
+                <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center border border-purple-500/20 shrink-0">
+                    <i data-lucide="navigation" class="w-6 h-6 text-purple-400"></i>
+                </div>
+                <div>
+                    <h4 class="font-heading font-bold text-white text-lg">Find Us Here</h4>
+                    <p class="body-text text-neutral-400 mt-1" style="font-size: 1rem;">111 NE 1st St, Miami, FL</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Script to Initialize Icons -->
+    <script>
+        (function () {
+            var contactFormFrame = document.querySelector('.contact-form-embed-frame');
+            var latestContentHeight = 520;
+
+            function resizeContactFormFrame(height) {
+                if (!contactFormFrame || !height || height < 400) {
+                    return;
+                }
+
+                latestContentHeight = Math.min(Math.ceil(height), 720);
+                contactFormFrame.style.height = latestContentHeight + 'px';
+            }
+
+            window.addEventListener('message', function(event) {
+                if (!event.data || event.data.type !== 'contact-form-height') {
+                    return;
+                }
+
+                resizeContactFormFrame(event.data.height);
+            });
+
+            if (contactFormFrame) {
+                contactFormFrame.addEventListener('load', function () {
+                    resizeContactFormFrame(520);
+                });
+
+                if (contactFormFrame.contentDocument && contactFormFrame.contentDocument.readyState === 'complete') {
+                    resizeContactFormFrame(520);
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

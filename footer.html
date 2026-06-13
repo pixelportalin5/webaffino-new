@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Affino Footer - Premium Design</title>
+    
+    <!-- Unified Google Fonts: Inter & Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* CSS Variables Matching the New Global Palette */
+        :root {
+            --bg-dark: #020202;
+            --bg-gradient: radial-gradient(circle at 50% 100%, rgba(96, 165, 250, 0.08) 0%, #020202 60%);
+            --text-muted: #94a3b8; /* Tailwind neutral-400 */
+            --text-light: #ffffff;
+            --accent-blue: #60A5FA; 
+            --accent-purple: #C084FC;
+            --accent-gradient: linear-gradient(90deg, #60A5FA, #C084FC);
+            --border-subtle: rgba(255, 255, 255, 0.1);
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Footer Container */
+        .site-footer {
+            background: var(--bg-gradient);
+            color: var(--text-muted);
+            font-family: 'Inter', sans-serif;
+            padding: 100px 5% 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Glowing Top Border (Updated to Blue/Purple) */
+        .site-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-gradient);
+            box-shadow: 0 0 20px 2px rgba(192, 132, 252, 0.4), 
+                        0 0 40px 2px rgba(96, 165, 250, 0.2);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 70px;
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Column 1: Brand */
+        .footer-brand .footer-logo {
+            max-width: 200px;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+            transition: var(--transition-smooth);
+        }
+
+        .footer-brand .footer-logo:hover {
+            transform: scale(1.02);
+            filter: drop-shadow(0 4px 15px rgba(96, 165, 250, 0.2));
+        }
+
+        .footer-brand p {
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 35px;
+            font-weight: 300;
+            max-width: 90%;
+            color: #d4d4d8;
+        }
+
+        /* Social Icons */
+        .social-icons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-light);
+            border-radius: 50%;
+            text-decoration: none;
+            font-size: 18px;
+            border: 1px solid var(--border-subtle);
+            position: relative;
+            z-index: 1;
+            transition: var(--transition-smooth);
+            overflow: hidden;
+        }
+
+        /* Gradient Background Hover Effect */
+        .social-icons a::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--accent-gradient);
+            z-index: -1;
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .social-icons a:hover {
+            color: #fff;
+            border-color: transparent;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(192, 132, 252, 0.3);
+        }
+
+        .social-icons a:hover::before {
+            opacity: 1;
+        }
+
+        /* Headings (Updated to Montserrat) */
+        .footer-heading {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-light);
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 35px;
+            letter-spacing: -0.5px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        /* Small underline for headings */
+        .footer-heading::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 40px;
+            height: 2px;
+            background: var(--accent-gradient);
+            border-radius: 2px;
+        }
+
+        /* Column 2 & 3: Links */
+        .footer-links ul,
+        .footer-services ul {
+            list-style: none;
+        }
+
+        .footer-links li,
+        .footer-services li {
+            margin-bottom: 20px;
+        }
+
+        .footer-links a,
+        .footer-services a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 400;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .footer-links a::before,
+        .footer-services a::before {
+            content: '→';
+            font-family: 'Inter', sans-serif;
+            color: var(--accent-blue);
+            opacity: 0;
+            margin-right: -15px;
+            transform: translateX(-10px);
+            transition: var(--transition-smooth);
+        }
+
+        .footer-links a:hover,
+        .footer-services a:hover {
+            color: var(--text-light);
+            transform: translateX(5px);
+        }
+
+        .footer-links a:hover::before,
+        .footer-services a:hover::before {
+            opacity: 1;
+            margin-right: 8px;
+            transform: translateX(0);
+        }
+
+        /* Column 3: Contact */
+        .footer-contact ul {
+            list-style: none;
+        }
+
+        .footer-contact li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 28px;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 1.7;
+            color: var(--text-muted);
+            transition: var(--transition-smooth);
+        }
+
+        .footer-contact li:hover {
+            transform: translateX(5px);
+            color: var(--text-light);
+        }
+
+        /* Gradient Icons */
+        .footer-contact i {
+            font-size: 20px;
+            margin-right: 18px;
+            margin-top: 4px;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .footer-contact a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+
+        .footer-contact a:hover {
+            color: var(--text-light);
+        }
+
+        /* Footer Bottom */
+        .footer-bottom {
+            max-width: 1280px;
+            margin: 80px auto 0;
+            padding-top: 35px;
+            border-top: 1px solid var(--border-subtle);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .footer-bottom p {
+            font-size: 14px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+
+        .footer-bottom p span {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+            .site-footer {
+                padding: 80px 5% 40px;
+            }
+            .footer-brand .footer-logo {
+                margin: 0 auto 30px;
+                display: block;
+            }
+            .footer-brand p {
+                text-align: center;
+                max-width: 100%;
+            }
+            .social-icons {
+                justify-content: center;
+            }
+            .footer-heading::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .footer-links, .footer-services, .footer-contact {
+                text-align: center;
+            }
+            .footer-contact li {
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            .footer-contact i {
+                margin-right: 0;
+                margin-top: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            
+            <div class="footer-brand">
+                <img src="https://webaffino.com/wp-content/uploads/2025/11/web-affino-new-logo.png" alt="Web Affino Logo" class="footer-logo" width="220" height="60">
+                <p>Web Affino transforms high-intent traffic into measurable revenue, scaling your brand through performance-driven strategies and absolute precision.</p>
+                <div class="social-icons">
+                    <a href="https://www.linkedin.com/company/web-affino/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.instagram.com/webaffino" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h3 class="footer-heading">Explore</h3>
+                <ul>
+                    <li><a href="https://webaffino.com/">Home</a></li>
+                    <li><a href="https://webaffino.com/about-company/">About Us</a></li>
+                    <li><a href="/blogs">Blogs</a></li>
+                    <li><a href="https://webaffino.com/our-media-properties/">Media Properties</a></li>
+                    <li><a href="https://webaffino.com/contact-us/">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-services">
+                <h3 class="footer-heading">Services</h3>
+                <ul>
+                    <li><a href="https://webaffino.com/performance-marketing/">Performance Marketing</a></li>
+                    <li><a href="https://webaffino.com/seo-content-strategy/">SEO &amp; Content Strategy</a></li>
+                    <li><a href="https://webaffino.com/leads-generation/">Lead Generation</a></li>
+                    <li><a href="https://webaffino.com/site-optimisation/">Site Optimization</a></li>
+                    <li><a href="https://webaffino.com/digital-marketing-2/">Digital Marketing</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-contact">
+                <h3 class="footer-heading">Get in Touch</h3>
+                <ul>
+                    <li>
+                        <i class="fa-regular fa-envelope"></i>
+                        <a href="mailto:affiliate@webaffino.com">affiliate@webaffino.com</a>
+                    </li>
+                    <li>
+                        <i class="fa-regular fa-building"></i>
+                        <span>Web Affino LLC</span>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>89225, 111 NE 1st St, 8th Floor,<br>Miami, FL, Miami-Dade, US, 33132</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 <span>Web Affino LLC</span>. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

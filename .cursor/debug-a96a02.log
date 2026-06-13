@@ -1,0 +1,2 @@
+{"sessionId":"a96a02","runId":"verify-final","hypothesisId":"A","location":"scripts/start-dev.mjs:init","message":"starting dev orchestration","data":{"maxAttempts":3},"timestamp":1781093489082}
+{"sessionId":"a96a02","runId":"verify-final","hypothesisId":"B","location":"scripts/start-dev.mjs:attempt","message":"launching next dev","data":{"attempt":1},"timestamp":1781093489410}

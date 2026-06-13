@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Media Properties - Web Affino</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #030303;
+            color: #fff;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Smooth reveal animation for cards */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-up {
+            animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0; 
+        }
+        
+        /* Staggered Animation Delays */
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-500 { animation-delay: 0.5s; }
+
+        /* Custom Pattern Backgrounds */
+        .bg-grid-pattern {
+            background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        
+        /* Noise Texture for Premium Feel */
+        .bg-noise {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+        }
+
+        /* Reusable Glass Panel */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        .glass-panel:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Custom Scrollbar for inner elements if needed */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+    </style>
+</head>
+<body class="bg-[#030303] text-white antialiased overflow-x-hidden">
+
+    <section class="relative py-24 md:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden border-t border-white/5">
+        
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-full max-w-7xl bg-indigo-900/10 blur-[200px] rounded-[100%] pointer-events-none"></div>
+
+        <div class="relative z-10 mx-auto w-full max-w-[1400px]">
+            
+            <div class="text-center mb-20 md:mb-32 relative animate-fade-up">
+                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-sm shadow-xl">
+                    <span class="relative flex h-2.5 w-2.5">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-500"></span>
+                    </span>
+                    <span class="text-blue-200 font-mono text-[11px] font-bold tracking-[0.2em] uppercase">Owned & Operated By Web Affino</span>
+                </div>
+                
+                <h2 class="text-5xl md:text-7xl lg:text-8xl font-extrabold text-white tracking-tight mb-8 leading-tight">
+                    Our Media <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-500">Properties</span>
+                </h2>
+                <p class="text-lg md:text-2xl text-neutral-400 max-w-3xl mx-auto font-light leading-relaxed mb-16">
+                    We don’t just drive traffic—we own the destination. Explore our exclusive, high-engagement digital publishing brands dominating their respective verticals.
+                </p>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
+                    <div class="glass-panel rounded-2xl p-6 text-center">
+                        <div class="text-3xl lg:text-4xl font-bold font-mono text-white mb-2">50M+</div>
+                        <div class="text-sm text-neutral-400 uppercase tracking-wider">Monthly Impressions</div>
+                    </div>
+                    <div class="glass-panel rounded-2xl p-6 text-center">
+                        <div class="text-3xl lg:text-4xl font-bold font-mono text-white mb-2">3</div>
+                        <div class="text-sm text-neutral-400 uppercase tracking-wider">Core Verticals</div>
+                    </div>
+                    <div class="glass-panel rounded-2xl p-6 text-center">
+                        <div class="text-3xl lg:text-4xl font-bold font-mono text-white mb-2">Top 1</div>
+                        <div class="text-sm text-neutral-400 uppercase tracking-wider">Tier Geos Focus</div>
+                    </div>
+                    <div class="glass-panel rounded-2xl p-6 text-center">
+                        <div class="text-3xl lg:text-4xl font-bold font-mono text-white mb-2">100%</div>
+                        <div class="text-sm text-neutral-400 uppercase tracking-wider">Brand Safe</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-24 lg:gap-32">
+                
+                <div class="group relative rounded-[2.5rem] bg-gradient-to-br from-orange-950/20 to-[#0A0A0A] border border-white/10 overflow-hidden hover:border-orange-500/30 transition-all duration-700 animate-fade-up delay-100 shadow-2xl">
+                    <div class="absolute inset-0 bg-noise opacity-40 pointer-events-none"></div>
+                    <div class="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none group-hover:opacity-20 transition-opacity duration-700"></div>
+                    <div class="absolute -top-40 -left-40 w-[800px] h-[800px] bg-orange-600/10 blur-[150px] rounded-full pointer-events-none group-hover:bg-orange-600/20 transition-all duration-700 ease-in-out"></div>
+
+                    <div class="relative z-10 p-8 md:p-12 lg:p-16 flex flex-col gap-12">
+                        
+                        <div class="flex flex-col xl:flex-row gap-12 items-start">
+                            <div class="w-full xl:w-5/12 flex flex-col space-y-8">
+                                <div class="media-card-logo-wrap media-card-logo-wrap--wide rounded-3xl bg-black/40 border border-white/5 shadow-inner group-hover:border-orange-500/30 transition-colors duration-500 relative overflow-hidden">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-orange-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                    <img src="https://webaffino.com/wp-content/uploads/2025/11/Gemini_Generated_Image_32nq8m32nq8m32nq-removebg-preview-e1764337765365.png" 
+                                         alt="Sportsresso Logo" 
+                                         class="media-card-logo-img filter brightness-0 invert opacity-90 group-hover:opacity-100 transition-opacity group-hover:scale-105 duration-500 relative z-10">
+                                </div>
+                                <div>
+                                    <h3 class="text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">Sportsresso</h3>
+                                    <p class="text-orange-400 font-mono text-sm tracking-widest uppercase mb-6 font-semibold flex items-center gap-2">
+                                        <i data-lucide="activity" class="w-4 h-4"></i> Global Sports & Analytics Hub
+                                    </p>
+                                    <p class="text-neutral-400 text-lg leading-relaxed font-light">
+                                        The ultimate digital arena for hardcore fans. Sportsresso goes beyond the final whistle, delivering real-time match tracking, deep-dive tactical analytics, transfer market intelligence, and breaking news across international cricket, football, and major sporting events. We turn casual viewers into highly engaged communities.
+                                    </p>
+                                </div>
+                                <a href="https://sportsresso.com/" target="_blank" class="inline-flex items-center justify-center gap-3 px-8 py-4 bg-orange-600/10 border border-orange-500/30 rounded-2xl text-orange-50 font-semibold transition-all hover:bg-orange-600 hover:text-white hover:border-orange-500 w-full lg:w-auto self-start">
+                                    Explore Sportsresso <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
+                                </a>
+                            </div>
+
+                            <div class="w-full xl:w-7/12 grid grid-cols-2 gap-4 lg:gap-6 mt-4 xl:mt-0">
+                                <div class="glass-panel rounded-2xl p-6 lg:p-8 flex flex-col justify-center">
+                                    <i data-lucide="bar-chart-2" class="w-8 h-8 text-orange-400 mb-4 opacity-50"></i>
+                                    <div class="text-3xl lg:text-4xl font-bold font-mono text-white mb-2">15M+</div>
+                                    <div class="text-sm text-neutral-400 uppercase tracking-wider">Monthly Pageviews</div>
+                                </div>
+                                <div class="glass-panel rounded-2xl p-6 lg:p-8 flex flex-col justify-center">
+                                    <i data-lucide="clock" class="w-8 h-8 text-orange-400 mb-4 opacity-50"></i>
+                                    <div class="text-3xl lg:text-4xl font-bold font-mono text-white mb-2">4m 20s</div>
+                                    <div class="text-sm text-neutral-400 uppercase tracking-wider">Avg Session Duration</div>
+                                </div>
+                                <div class="glass-panel rounded-2xl p-6 lg:p-8 flex flex-col justify-center">
+                                    <i data-lucide="smartphone" class="w-8 h-8 text-orange-400 mb-4 opacity-50"></i>
+                                    <div class="text-3xl lg:text-4xl font-bold font-mono text-white mb-2">82%</div>
+                                    <div class="text-sm text-neutral-400 uppercase tracking-wider">Mobile Traffic</div>
+                                </div>
+                                <div class="glass-panel rounded-2xl p-6 lg:p-8 flex flex-col justify-center">
+                                    <i data-lucide="share-2" class="w-8 h-8 text-orange-400 mb-4 opacity-50"></i>
+                                    <div class="text-3xl lg:text-4xl font-bold font-mono text-white mb-2">8M+</div>
+                                    <div class="text-sm text-neutral-400 uppercase tracking-wider">Social Reach</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            
+                            <div class="glass-panel rounded-3xl p-8">
+                                <h4 class="text-white font-bold text-xl mb-6 flex items-center gap-3">
+                                    <div class="p-2 bg-orange-500/20 rounded-lg text-orange-400"><i data-lucide="target" class="w-5 h-5"></i></div>
+                                    Editorial Pillars
+                                </h4>
+                                <ul class="space-y-5 text-neutral-300">
+                                    <li class="flex items-start gap-4">
+                                        <i data-lucide="zap" class="w-5 h-5 text-orange-500 shrink-0 mt-0.5"></i>
+                                        <div><strong class="text-white block mb-1">Live Match Tracking</strong> Minute-by-minute updates, interactive scorecards, and live commentary.</div>
+                                    </li>
+                                    <li class="flex items-start gap-4">
+                                        <i data-lucide="trending-up" class="w-5 h-5 text-orange-500 shrink-0 mt-0.5"></i>
+                                        <div><strong class="text-white block mb-1">Fantasy & Betting Insights</strong> Data-driven player stats, odds analysis, and predictive modeling for fans.</div>
+                                    </li>
+                                    <li class="flex items-start gap-4">
+                                        <i data-lucide="repeat" class="w-5 h-5 text-orange-500 shrink-0 mt-0.5"></i>
+                                        <div><strong class="text-white block mb-1">Transfer Market</strong> Verified news, rumors, and club financial insights during transfer windows.</div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="glass-panel rounded-3xl p-8">
+                                <h4 class="text-white font-bold text-xl mb-6 flex items-center gap-3">
+                                    <div class="p-2 bg-orange-500/20 rounded-lg text-orange-400"><i data-lucide="users" class="w-5 h-5"></i></div>
+                                    Audience Profile
+                                </h4>
+                                <div class="space-y-6">
+                                    <div>
+                                        <div class="flex justify-between text-sm mb-2"><span class="text-neutral-300">Male Demographic</span> <span class="text-white font-mono font-bold">75%</span></div>
+                                        <div class="w-full bg-white/5 rounded-full h-2 overflow-hidden"><div class="bg-orange-500 h-full rounded-full" style="width: 75%"></div></div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between text-sm mb-2"><span class="text-neutral-300">Ages 18-34 (Core Fanatics)</span> <span class="text-white font-mono font-bold">68%</span></div>
+                                        <div class="w-full bg-white/5 rounded-full h-2 overflow-hidden"><div class="bg-orange-400 h-full rounded-full" style="width: 68%"></div></div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between text-sm mb-2"><span class="text-neutral-300">High Engagement (Return Visitors)</span> <span class="text-white font-mono font-bold">55%</span></div>
+                                        <div class="w-full bg-white/5 rounded-full h-2 overflow-hidden"><div class="bg-orange-300 h-full rounded-full" style="width: 55%"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="glass-panel rounded-3xl p-8 flex flex-col justify-between border-t-4 border-t-orange-500 lg:border-t-0 lg:border-l-4 lg:border-l-orange-500">
+                                <div>
+                                    <h4 class="text-white font-bold text-xl mb-6 flex items-center gap-3">
+                                        <div class="p-2 bg-orange-500/20 rounded-lg text-orange-400"><i data-lucide="layout" class="w-5 h-5"></i></div>
+                                        Advertising Solutions
+                                    </h4>
+                                    <p class="text-neutral-400 mb-6">Perfectly optimized for sports betting, merchandise, ticketing, and male-centric D2C brands.</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-sm text-neutral-300">High-Impact Display</span>
+                                        <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-sm text-neutral-300">Native Takeovers</span>
+                                        <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-sm text-neutral-300">Sponsored Live Blogs</span>
+                                        <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-sm text-neutral-300">Pre-Roll Video</span>
+                                    </div>
+                                </div>
+                                <div class="mt-8 pt-6 border-t border-white/10">
+                                    <div class="text-sm text-neutral-500 uppercase tracking-widest mb-1">Intent Level</div>
+                                    <div class="text-2xl font-mono font-bold text-orange-400">Extremely High</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative rounded-[2.5rem] bg-gradient-to-br from-teal-950/20 to-[#0A0A0A] border border-white/10 overflow-hidden hover:border-teal-500/30 transition-all duration-700 animate-fade-up delay-300 shadow-2xl">
+                    <div class="absolute inset-0 bg-noise opacity-40 pointer-events-none"></div>
+                    <div class="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none group-hover:opacity-20 transition-opacity duration-700"></div>
+                    <div class="absolute -bottom-40 -right-40 w-[800px] h-[800px] bg-teal-600/10 blur-[150px] rounded-full pointer-events-none group-hover:bg-teal-600/20 transition-all duration-700 ease-in-out"></div>
+
+                    <div class="relative z-10 p-8 md:p-12 lg:p-16 flex flex-col gap-12">
+                        
+                        <div class="flex flex-col xl:flex-row-reverse gap-12 items-start">
+                            <div class="w-full xl:w-5/12 flex flex-col space-y-8">
+                                <div class="media-card-logo-wrap media-card-logo-wrap--wide rounded-3xl bg-black/40 border border-white/5 shadow-inner group-hover:border-teal-500/30 transition-colors duration-500 relative overflow-hidden">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-teal-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                    <img src="https://webaffino.com/wp-content/uploads/2025/11/Untitled20Image.webp" 
+                                         alt="Content Delight Logo" 
+                                         class="media-card-logo-img filter brightness-0 invert opacity-90 group-hover:opacity-100 transition-opacity group-hover:scale-105 duration-500 relative z-10">
+                                </div>
+                                <div class="xl:text-right">
+                                    <h3 class="text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">Content Delight</h3>
+                                    <p class="text-teal-400 font-mono text-sm tracking-widest uppercase mb-6 font-semibold flex items-center xl:justify-end gap-2">
+                                        <i data-lucide="sparkles" class="w-4 h-4"></i> Modern Lifestyle & Wellness
+                                    </p>
+                                    <p class="text-neutral-400 text-lg leading-relaxed font-light">
+                                        A premium digital sanctuary curating modern living. Content Delight brings together holistic wellness, sustainable travel, interior aesthetics, and lifestyle tech. We create immersive storytelling that inspires everyday life, attracting an affluent audience seeking high-quality recommendations and experiences.
+                                    </p>
+                                </div>
+                                <a href="https://contentdelight.com/" target="_blank" class="inline-flex items-center justify-center gap-3 px-8 py-4 bg-teal-600/10 border border-teal-500/30 rounded-2xl text-teal-50 font-semibold transition-all hover:bg-teal-600 hover:text-white hover:border-teal-500 w-full lg:w-auto self-start xl:self-end">
+                                    Explore Content Delight <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
+                                </a>
+                            </div>
+
+                            <div class="w-full xl:w-7/12 grid grid-cols-2 gap-4 lg:gap-6 mt-4 xl:mt-0">
+                                <div class="glass-panel rounded-2xl p-6 lg:p-8 flex flex-col justify-center">
+                                    <i data-lucide="eye" class="w-8 h-8 text-teal-400 mb-4 opacity-50"></i>
+                                    <div class="text-3xl lg:text-4xl font-bold font-mono text-white mb-2">12M+</div>
+                                    <div class="text-sm text-neutral-400 uppercase tracking-wider">Monthly Readers</div>
+                                </div>
+                                <div class="glass-panel rounded-2xl p-6 lg:p-8 flex flex-col justify-center">
+                                    <i data-lucide="mail" class="w-8 h-8 text-teal-400 mb-4 opacity-50"></i>
+                                    <div class="text-3xl lg:text-4xl font-bold font-mono text-white mb-2">65%</div>
+                                    <div class="text-sm text-neutral-400 uppercase tracking-wider">Newsletter Open Rate</div>
+                                </div>
+                                <div class="glass-panel rounded-2xl p-6 lg:p-8 flex flex-col justify-center">
+                                    <i data-lucide="image" class="w-8 h-8 text-teal-400 mb-4 opacity-50"></i>
+                                    <div class="text-3xl lg:text-4xl font-bold font-mono text-white mb-2">10M+</div>
+                                    <div class="text-sm text-neutral-400 uppercase tracking-wider">Pinterest Reach</div>
+                                </div>
+                                <div class="glass-panel rounded-2xl p-6 lg:p-8 flex flex-col justify-center">
+                                    <i data-lucide="book-open" class="w-8 h-8 text-teal-400 mb-4 opacity-50"></i>
+                                    <div class="text-3xl lg:text-4xl font-bold font-mono text-white mb-2">3.5</div>
+                                    <div class="text-sm text-neutral-400 uppercase tracking-wider">Pages Per Session</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            
+                            <div class="glass-panel rounded-3xl p-8 flex flex-col justify-between border-t-4 border-t-teal-500 lg:border-t-0 lg:border-r-4 lg:border-r-teal-500 order-3 lg:order-1 text-left xl:text-right">
+                                <div>
+                                    <h4 class="text-white font-bold text-xl mb-6 flex items-center xl:justify-end gap-3">
+                                        <div class="p-2 bg-teal-500/20 rounded-lg text-teal-400"><i data-lucide="shopping-bag" class="w-5 h-5"></i></div>
+                                        Partnership Ops
+                                    </h4>
+                                    <p class="text-neutral-400 mb-6">A brand-safe haven ideal for premium lifestyle, travel, wellness, and D2C brands.</p>
+                                    <div class="flex flex-wrap xl:justify-end gap-2">
+                                        <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-sm text-neutral-300">Shoppable Editorials</span>
+                                        <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-sm text-neutral-300">Dedicated Mailers</span>
+                                        <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-sm text-neutral-300">Brand Storytelling</span>
+                                        <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-sm text-neutral-300">Contextual Video</span>
+                                    </div>
+                                </div>
+                                <div class="mt-8 pt-6 border-t border-white/10">
+                                    <div class="text-sm text-neutral-500 uppercase tracking-widest mb-1">Reader Behavior</div>
+                                    <div class="text-2xl font-mono font-bold text-teal-400">High Purchase Intent</div>
+                                </div>
+                            </div>
+
+                            <div class="glass-panel rounded-3xl p-8 order-2">
+                                <h4 class="text-white font-bold text-xl mb-6 flex items-center gap-3">
+                                    <div class="p-2 bg-teal-500/20 rounded-lg text-teal-400"><i data-lucide="pie-chart" class="w-5 h-5"></i></div>
+                                    Audience Profile
+                                </h4>
+                                <div class="space-y-6">
+                                    <div>
+                                        <div class="flex justify-between text-sm mb-2"><span class="text-neutral-300">Female Demographic</span> <span class="text-white font-mono font-bold">65%</span></div>
+                                        <div class="w-full bg-white/5 rounded-full h-2 overflow-hidden"><div class="bg-teal-500 h-full rounded-full" style="width: 65%"></div></div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between text-sm mb-2"><span class="text-neutral-300">High Disposable Income</span> <span class="text-white font-mono font-bold">58%</span></div>
+                                        <div class="w-full bg-white/5 rounded-full h-2 overflow-hidden"><div class="bg-teal-400 h-full rounded-full" style="width: 58%"></div></div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between text-sm mb-2"><span class="text-neutral-300">Ages 25-45 (Core Readers)</span> <span class="text-white font-mono font-bold">72%</span></div>
+                                        <div class="w-full bg-white/5 rounded-full h-2 overflow-hidden"><div class="bg-teal-300 h-full rounded-full" style="width: 72%"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="glass-panel rounded-3xl p-8 order-1 lg:order-3">
+                                <h4 class="text-white font-bold text-xl mb-6 flex items-center gap-3">
+                                    <div class="p-2 bg-teal-500/20 rounded-lg text-teal-400"><i data-lucide="heart" class="w-5 h-5"></i></div>
+                                    Content Pillars
+                                </h4>
+                                <ul class="space-y-5 text-neutral-300">
+                                    <li class="flex items-start gap-4">
+                                        <i data-lucide="leaf" class="w-5 h-5 text-teal-500 shrink-0 mt-0.5"></i>
+                                        <div><strong class="text-white block mb-1">Holistic Wellness</strong> Deep dives into mental health, nutrition, and sustainable routines.</div>
+                                    </li>
+                                    <li class="flex items-start gap-4">
+                                        <i data-lucide="map-pin" class="w-5 h-5 text-teal-500 shrink-0 mt-0.5"></i>
+                                        <div><strong class="text-white block mb-1">Global Escapes</strong> Premium travel guides, boutique hospitality reviews, and hidden gems.</div>
+                                    </li>
+                                    <li class="flex items-start gap-4">
+                                        <i data-lucide="home" class="w-5 h-5 text-teal-500 shrink-0 mt-0.5"></i>
+                                        <div><strong class="text-white block mb-1">Home & Aesthetics</strong> Interior design trends, smart home tech, and organizational living.</div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative rounded-[2.5rem] bg-gradient-to-br from-fuchsia-950/20 to-[#0A0A0A] border border-white/10 overflow-hidden hover:border-fuchsia-500/30 transition-all duration-700 animate-fade-up delay-500 shadow-2xl mb-12">
+                    <div class="absolute inset-0 bg-noise opacity-40 pointer-events-none"></div>
+                    <div class="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none group-hover:opacity-20 transition-opacity duration-700"></div>
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-fuchsia-600/10 blur-[150px] rounded-full pointer-events-none group-hover:bg-fuchsia-600/20 transition-all duration-700 ease-in-out"></div>
+
+                    <div class="relative z-10 p-8 md:p-12 lg:p-16 flex flex-col gap-12">
+                        
+                        <div class="flex flex-col xl:flex-row gap-12 items-start">
+                            <div class="w-full xl:w-5/12 flex flex-col space-y-8">
+                                <div class="media-card-logo-wrap media-card-logo-wrap--wide rounded-3xl bg-black/40 border border-white/5 shadow-inner group-hover:border-fuchsia-500/30 transition-colors duration-500 relative overflow-hidden">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-fuchsia-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                    <img src="https://sassystrides.com/wp-content/uploads/2026/03/cropped-Maha-Utsav-Instagram-Post-3.png" 
+                                         alt="Sassy Strides Logo" 
+                                         class="media-card-logo-img filter brightness-0 invert opacity-90 group-hover:opacity-100 transition-opacity group-hover:scale-105 duration-500 relative z-10">
+                                </div>
+                                <div>
+                                    <h3 class="text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">Sassy Strides</h3>
+                                    <p class="text-fuchsia-400 font-mono text-sm tracking-widest uppercase mb-6 font-semibold flex items-center gap-2">
+                                        <i data-lucide="flame" class="w-4 h-4"></i> Disruptive Culture & Style
+                                    </p>
+                                    <p class="text-neutral-400 text-lg leading-relaxed font-light">
+                                        Walk with unapologetic confidence. Sassy Strides is the vibrant, Gen Z-focused destination for bold streetwear fashion, disruptive beauty trends, and cultural commentary. Built for the modern trailblazer, we create viral, social-first content that dictates the next big trend rather than just reporting on it.
+                                    </p>
+                                </div>
+                                <a href="https://sassystrides.com/" target="_blank" class="inline-flex items-center justify-center gap-3 px-8 py-4 bg-fuchsia-600/10 border border-fuchsia-500/30 rounded-2xl text-fuchsia-50 font-semibold transition-all hover:bg-fuchsia-600 hover:text-white hover:border-fuchsia-500 w-full lg:w-auto self-start">
+                                    Explore Sassy Strides <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
+                                </a>
+                            </div>
+
+                            <div class="w-full xl:w-7/12 grid grid-cols-2 gap-4 lg:gap-6 mt-4 xl:mt-0">
+                                <div class="glass-panel rounded-2xl p-6 lg:p-8 flex flex-col justify-center">
+                                    <i data-lucide="play-circle" class="w-8 h-8 text-fuchsia-400 mb-4 opacity-50"></i>
+                                    <div class="text-3xl lg:text-4xl font-bold font-mono text-white mb-2">20M+</div>
+                                    <div class="text-sm text-neutral-400 uppercase tracking-wider">Monthly Video Views</div>
+                                </div>
+                                <div class="glass-panel rounded-2xl p-6 lg:p-8 flex flex-col justify-center">
+                                    <i data-lucide="thumbs-up" class="w-8 h-8 text-fuchsia-400 mb-4 opacity-50"></i>
+                                    <div class="text-3xl lg:text-4xl font-bold font-mono text-white mb-2">12%</div>
+                                    <div class="text-sm text-neutral-400 uppercase tracking-wider">Social Engagement Rate</div>
+                                </div>
+                                <div class="glass-panel rounded-2xl p-6 lg:p-8 flex flex-col justify-center">
+                                    <i data-lucide="instagram" class="w-8 h-8 text-fuchsia-400 mb-4 opacity-50"></i>
+                                    <div class="text-3xl lg:text-4xl font-bold font-mono text-white mb-2">1.5M</div>
+                                    <div class="text-sm text-neutral-400 uppercase tracking-wider">Active Followers</div>
+                                </div>
+                                <div class="glass-panel rounded-2xl p-6 lg:p-8 flex flex-col justify-center">
+                                    <i data-lucide="zap" class="w-8 h-8 text-fuchsia-400 mb-4 opacity-50"></i>
+                                    <div class="text-3xl lg:text-4xl font-bold font-mono text-white mb-2">60%</div>
+                                    <div class="text-sm text-neutral-400 uppercase tracking-wider">Organic Viral Reach</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            
+                            <div class="glass-panel rounded-3xl p-8">
+                                <h4 class="text-white font-bold text-xl mb-6 flex items-center gap-3">
+                                    <div class="p-2 bg-fuchsia-500/20 rounded-lg text-fuchsia-400"><i data-lucide="scissors" class="w-5 h-5"></i></div>
+                                    Culture Pillars
+                                </h4>
+                                <ul class="space-y-5 text-neutral-300">
+                                    <li class="flex items-start gap-4">
+                                        <i data-lucide="shirt" class="w-5 h-5 text-fuchsia-500 shrink-0 mt-0.5"></i>
+                                        <div><strong class="text-white block mb-1">Streetwear & Couture</strong> Lookbooks, sneaker drop coverage, and sustainable fashion insights.</div>
+                                    </li>
+                                    <li class="flex items-start gap-4">
+                                        <i data-lucide="sparkles" class="w-5 h-5 text-fuchsia-500 shrink-0 mt-0.5"></i>
+                                        <div><strong class="text-white block mb-1">Beauty Breakdowns</strong> Honest skincare reviews, makeup tutorials, and indie brand spotlights.</div>
+                                    </li>
+                                    <li class="flex items-start gap-4">
+                                        <i data-lucide="music" class="w-5 h-5 text-fuchsia-500 shrink-0 mt-0.5"></i>
+                                        <div><strong class="text-white block mb-1">Pop Culture & Music</strong> Viral moment analysis, artist interviews, and festival aesthetics.</div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="glass-panel rounded-3xl p-8">
+                                <h4 class="text-white font-bold text-xl mb-6 flex items-center gap-3">
+                                    <div class="p-2 bg-fuchsia-500/20 rounded-lg text-fuchsia-400"><i data-lucide="users" class="w-5 h-5"></i></div>
+                                    Audience Profile
+                                </h4>
+                                <div class="space-y-6">
+                                    <div>
+                                        <div class="flex justify-between text-sm mb-2"><span class="text-neutral-300">Gen Z & Millennials</span> <span class="text-white font-mono font-bold">82%</span></div>
+                                        <div class="w-full bg-white/5 rounded-full h-2 overflow-hidden"><div class="bg-fuchsia-500 h-full rounded-full" style="width: 82%"></div></div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between text-sm mb-2"><span class="text-neutral-300">Mobile-First Traffic</span> <span class="text-white font-mono font-bold">91%</span></div>
+                                        <div class="w-full bg-white/5 rounded-full h-2 overflow-hidden"><div class="bg-fuchsia-400 h-full rounded-full" style="width: 91%"></div></div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between text-sm mb-2"><span class="text-neutral-300">Early Adopters</span> <span class="text-white font-mono font-bold">78%</span></div>
+                                        <div class="w-full bg-white/5 rounded-full h-2 overflow-hidden"><div class="bg-fuchsia-300 h-full rounded-full" style="width: 78%"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="glass-panel rounded-3xl p-8 flex flex-col justify-between border-t-4 border-t-fuchsia-500 lg:border-t-0 lg:border-l-4 lg:border-l-fuchsia-500">
+                                <div>
+                                    <h4 class="text-white font-bold text-xl mb-6 flex items-center gap-3">
+                                        <div class="p-2 bg-fuchsia-500/20 rounded-lg text-fuchsia-400"><i data-lucide="megaphone" class="w-5 h-5"></i></div>
+                                        Campaign Formats
+                                    </h4>
+                                    <p class="text-neutral-400 mb-6">Highly reactive audience primed for fashion drops, beauty launches, and trend-focused CPA campaigns.</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-sm text-neutral-300">Social Commerce Links</span>
+                                        <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-sm text-neutral-300">Influencer Seeding</span>
+                                        <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-sm text-neutral-300">Trend Sponsorships</span>
+                                        <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-sm text-neutral-300">Vertical Video Integration</span>
+                                    </div>
+                                </div>
+                                <div class="mt-8 pt-6 border-t border-white/10">
+                                    <div class="text-sm text-neutral-500 uppercase tracking-widest mb-1">Conversion Potential</div>
+                                    <div class="text-2xl font-mono font-bold text-fuchsia-400">Viral / Explosive</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>

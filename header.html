@@ -1,0 +1,432 @@
+<!-- Premium Fonts: Inter for reading, Montserrat for headings -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+        /* General Reset specific to the header area to prevent conflicts */
+        header *, header *::before, header *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif; /* Switched to Inter */
+        }
+
+        /* Gradient Definitions */
+        :root {
+            --theme-gradient: linear-gradient(45deg, #8e2de2, #ff0044, #ffffff);
+            --hover-gradient: linear-gradient(45deg, #8e2de2, #ff0044);
+        }
+
+        /* Header Styling */
+        header {
+            /* Black to Dark Blue Gradient Background */
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.95), rgba(3, 5, 16, 0.95));
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed; /* Keeps it at the top of the viewport */
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9999; /* High z-index to stay above your page content */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Logo */
+        header .logo img {
+            height: 50px;
+            transition: transform 0.4s ease;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2));
+            display: block; /* Prevents weird spacing under images */
+        }
+
+        header .logo img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Navigation */
+        header nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 35px;
+            margin: 0;
+            padding: 0;
+        }
+
+        header nav ul li {
+            position: relative;
+        }
+
+        /* Top Level Links */
+        header nav > ul > li > a {
+            text-decoration: none;
+            color: #ffffff !important; 
+            font-size: 14px;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            padding: 10px 0;
+        }
+
+        /* Inline SVG Icon Styling */
+        header nav ul li a svg {
+            transition: all 0.3s ease;
+            color: #ffffff !important; 
+        }
+
+        /* Gradient Text Hover Effect */
+        header nav > ul > li > a:hover {
+            background: var(--theme-gradient);
+            -webkit-background-clip: text;
+            color: transparent !important; 
+            -webkit-text-fill-color: transparent !important;
+            transform: translateY(-2px);
+        }
+
+        /* SVG Color change on hover */
+        header nav > ul > li > a:hover svg {
+            color: #ff0044 !important; 
+            transform: translateY(-2px);
+        }
+
+        /* =========================================
+           MEGA MENU STYLING 
+           ========================================= */
+        header .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            /* Centered and then shifted exactly 25px to the left */
+            left: calc(50% - 25px); 
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            width: 700px; /* Mega Menu Width */
+            border-radius: 16px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Invisible bridge to prevent menu from closing when moving mouse */
+        header .dropdown::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 25px;
+        }
+
+        /* Show Dropdown on Hover */
+        header .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(10px);
+        }
+
+        /* Mega Menu Items */
+        header .dropdown-menu li {
+            width: 100%;
+        }
+
+        /* Centered bottom row (Digital Marketing) */
+        header .dropdown-menu li.full-width {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: center;
+            margin-top: -7px;
+        }
+
+        header .dropdown-menu li.full-width a {
+            width: calc((100% - 15px) / 2);
+            flex: 0 0 calc((100% - 15px) / 2);
+        }
+
+        header .dropdown-menu li a {
+            text-decoration: none;
+            display: flex;
+            align-items: flex-start;
+            padding: 15px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        header .dropdown-menu li a:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Mega Menu Icons */
+        header .dropdown-menu .icon-box {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        header .dropdown-menu li a:hover .icon-box {
+            background: rgba(142, 45, 226, 0.2);
+            border-color: rgba(255, 0, 68, 0.3);
+            transform: scale(1.1);
+        }
+
+        header .dropdown-menu li a:hover .icon-box svg {
+            color: #ff0044 !important;
+        }
+
+        /* Mega Menu Text */
+        header .dropdown-menu .text-box {
+            display: flex;
+            flex-direction: column;
+        }
+
+        header .dropdown-menu .title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            color: #ffffff;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+        }
+
+        header .dropdown-menu li a:hover .title {
+            background: var(--theme-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header .dropdown-menu .desc {
+            font-size: 12px;
+            color: #94a3b8;
+            line-height: 1.4;
+            font-weight: 300;
+        }
+
+        /* =========================================
+           CONTACT BUTTON 
+           ========================================= */
+        header .contact-btn {
+            position: relative;
+            background: transparent;
+            padding: 8px 24px !important;
+            border-radius: 30px;
+            color: #ffffff !important;
+            font-weight: 400 !important;
+            letter-spacing: 1px;
+            transition: all 0.4s ease !important;
+            z-index: 1;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        header .contact-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 30px;
+            padding: 2px;
+            background: var(--theme-gradient);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            z-index: -1;
+            transition: all 0.4s ease;
+        }
+
+        header .contact-btn:hover {
+            background: var(--hover-gradient) !important;
+            -webkit-background-clip: border-box !important; 
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important; 
+            box-shadow: 0 0 20px rgba(142, 45, 226, 0.6), 0 0 40px rgba(255, 0, 68, 0.4);
+            transform: scale(1.05);
+        }
+
+        header .contact-btn:hover::before {
+            opacity: 0;
+        }
+
+        header .contact-btn svg {
+            color: #ffffff !important;
+        }
+
+        header nav > ul > li > a.nav-active,
+        header nav > ul > li > a[aria-current="page"] {
+            background: var(--theme-gradient);
+            -webkit-background-clip: text;
+            color: transparent !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+
+        header nav > ul > li > a.nav-active svg,
+        header nav > ul > li > a[aria-current="page"] svg {
+            color: #ff0044 !important;
+        }
+
+        @media (max-width: 768px) {
+            header .dropdown-menu {
+                width: min(700px, calc(100vw - 32px));
+            }
+
+            header .dropdown-menu li.full-width a {
+                width: 100%;
+                flex: 1 1 100%;
+            }
+        }
+</style>
+
+<header>
+    <div class="logo">
+        <a href="/">
+            <img src="https://webaffino.com/wp-content/uploads/2025/11/web-affino-new-logo.png" alt="Web Affino Logo" width="220" height="60">
+        </a>
+    </div>
+    <nav>
+        <ul>
+            <li>
+                <a href="https://webaffino.com/">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    Home
+                </a>
+            </li>
+            <li>
+                <a href="https://webaffino.com/about-company/">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    About us
+                </a>
+            </li>
+            
+            <li class="dropdown">
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                    Services 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 3px;"><path d="m6 9 6 6 6-6"/></svg>
+                </a>
+                
+                <!-- MEGA MENU -->
+                <ul class="dropdown-menu">
+                    <!-- 1. Performance Marketing -->
+                    <li>
+                        <a href="https://webaffino.com/performance-marketing/">
+                            <div class="icon-box">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                            </div>
+                            <div class="text-box">
+                                <span class="title">Performance Marketing</span>
+                                <span class="desc">Campaigns across search, social, and display focused on measurable results.</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    <!-- 2. SEO & Content Strategy -->
+                    <li>
+                        <a href="https://webaffino.com/seo-content-strategy/">
+                            <div class="icon-box">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                            </div>
+                            <div class="text-box">
+                                <span class="title">SEO & Content Strategy</span>
+                                <span class="desc">Search-optimized content that attracts high-intent users.</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    <!-- 3. Lead Generation -->
+                    <li>
+                        <a href="https://webaffino.com/leads-generation/">
+                            <div class="icon-box">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg>
+                            </div>
+                            <div class="text-box">
+                                <span class="title">Lead Generation</span>
+                                <span class="desc">End-to-end strategies to acquire qualified leads.</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    <!-- 4. Site Optimization -->
+                    <li>
+                        <a href="https://webaffino.com/site-optimisation/">
+                            <div class="icon-box">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>
+                            </div>
+                            <div class="text-box">
+                                <span class="title">Site Optimization</span>
+                                <span class="desc">Get the best tools for your website that are compelling enough to grab viewer’s attention.</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    <!-- 5. Digital Marketing (Full Width) -->
+                    <li class="full-width">
+                        <a href="https://webaffino.com/digital-marketing-2/">
+                            <div class="icon-box" style="background: rgba(142, 45, 226, 0.1); border-color: rgba(142, 45, 226, 0.3);">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                            </div>
+                            <div class="text-box">
+                                <span class="title">Digital Marketing</span>
+                                <span class="desc">Holistic strategies to improve user journeys, engagement, and revenue.</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- NEW: Blogs -->
+            <li>
+                <a href="/blogs">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                    Blogs
+                </a>
+            </li>
+
+            <!-- NEW: Media Properties -->
+            <li>
+                <a href="https://webaffino.com/our-media-properties/">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                    Media Properties
+                </a>
+            </li>
+
+            <li>
+                <a href="/advertise">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+                    Advertise
+                </a>
+            </li>
+            
+            <li>
+                <a href="https://webaffino.com/contact-us/" class="contact-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    Contact Us
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>

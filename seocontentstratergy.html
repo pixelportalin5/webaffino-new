@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO & Content Strategy - Web Affino</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Unified Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================
+           UNIFIED TYPOGRAPHY SYSTEM
+           ============================================ */
+        :root {
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Inter', sans-serif;
+
+            /* Type Scale */
+            --fs-hero:        clamp(3.5rem, 8vw, 7.5rem);
+            --fs-section:     clamp(2.5rem, 5.5vw, 5rem);
+            --fs-card-title:  2.691rem;     /* 43px */
+            --fs-body-lg:     1.863rem;     /* 29.8px */
+            --fs-body:        1.656rem;     /* 26.5px */
+            --fs-body-sm:     1.5525rem;    /* 24.8px */
+            --fs-eyebrow:     0.75rem;      /* 12px */
+
+            --lh-tight:       1.05;
+            --lh-snug:        1.25;
+            --lh-normal:      1.6;
+            --lh-relaxed:     1.7;
+            --ls-tight:       -0.02em;
+            --ls-widest:      0.2em;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-body);
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-size: var(--fs-body);
+            line-height: var(--lh-normal);
+        }
+
+        ::selection { background-color: #C084FC; color: white; }
+
+        /* Unified typography classes */
+        .font-heading { font-family: var(--font-heading); }
+        .font-body { font-family: var(--font-body); }
+
+        .h-hero { font-family: var(--font-heading); font-size: var(--fs-hero); font-weight: 800; line-height: var(--lh-tight); letter-spacing: var(--ls-tight); }
+        .h-section { font-family: var(--font-heading); font-size: var(--fs-section); font-weight: 800; line-height: var(--lh-snug); letter-spacing: var(--ls-tight); }
+        .h-card { font-family: var(--font-heading); font-size: var(--fs-card-title); font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; }
+        .body-lead { font-family: var(--font-body); font-size: var(--fs-body-lg); font-weight: 300; line-height: var(--lh-relaxed); }
+        .body-text { font-family: var(--font-body); font-size: var(--fs-body-sm); font-weight: 400; line-height: var(--lh-relaxed); }
+        .eyebrow { font-family: var(--font-body); font-size: var(--fs-eyebrow); font-weight: 700; letter-spacing: var(--ls-widest); text-transform: uppercase; }
+
+        /* Gradient Texts */
+        .text-gradient {
+            background-image: linear-gradient(90deg, #60A5FA 0%, #C084FC 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .text-gradient-green {
+            background-image: linear-gradient(90deg, #34D399 0%, #10B981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-up { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+        .delay-100 { animation-delay: 0.1s; } .delay-200 { animation-delay: 0.2s; } .delay-300 { animation-delay: 0.3s; }
+
+        /* Background Pattern */
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        }
+
+        /* Search Bar Typing Cursor */
+        .cursor-blink {
+            display: inline-block;
+            width: 3px;
+            height: 1.1em;
+            background-color: #60A5FA;
+            vertical-align: text-bottom;
+            animation: blink 1s step-end infinite;
+            margin-left: 2px;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Glowing SERP Mockup Animation */
+        @keyframes slideUpSerp {
+            0% { transform: translateY(50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        .serp-item { opacity: 0; animation: slideUpSerp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .serp-1 { animation-delay: 0.5s; }
+        .serp-2 { animation-delay: 0.7s; }
+        .serp-3 { animation-delay: 0.9s; }
+    </style>
+</head>
+<body class="bg-black text-white antialiased overflow-x-hidden min-h-screen">
+
+    <!-- ========================================= -->
+    <!-- HERO SECTION (SEARCH BAR CONCEPT)         -->
+    <!-- ========================================= -->
+    <section class="relative pt-36 pb-24 overflow-hidden min-h-[85vh] flex flex-col justify-center">
+        
+        <!-- Ambient Background -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-[1600px] bg-blue-600/10 blur-[150px] rounded-full pointer-events-none z-0"></div>
+        <div class="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none z-0"></div>
+
+        <!-- Strict Container Constraints -->
+        <div class="max-w-[1600px] mx-auto w-full px-6 md:px-12 xl:px-[50px] relative z-10 flex flex-col items-center">
+            
+            <!-- Custom Google-Style Search Bar -->
+            <div class="w-full max-w-4xl mx-auto mb-16 animate-fade-up relative group">
+                <!-- Glow behind search bar -->
+                <div class="absolute -inset-1 bg-gradient-to-r from-[#60A5FA] to-[#C084FC] rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                
+                <!-- The Search Bar Interface -->
+                <div class="relative bg-[#0A0A0A]/80 backdrop-blur-xl border border-white/20 rounded-full p-4 sm:p-6 flex items-center shadow-2xl transition-all duration-300">
+                    <i data-lucide="search" class="w-7 h-7 sm:w-8 sm:h-8 text-neutral-400 mr-4 shrink-0"></i>
+                    
+                    <!-- Typing Text Container -->
+                    <div class="flex-grow font-heading text-xl sm:text-3xl md:text-4xl font-semibold text-white whitespace-nowrap overflow-hidden">
+                        <span id="typed-text" class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-300"></span><span class="cursor-blink"></span>
+                    </div>
+
+                    <div class="flex items-center gap-4 shrink-0 ml-4 border-l border-white/10 pl-4 hidden sm:flex">
+                        <i data-lucide="mic" class="w-6 h-6 text-blue-400 cursor-pointer hover:scale-110 transition-transform"></i>
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-[#60A5FA] to-[#C084FC] flex items-center justify-center shadow-lg">
+                            <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Headline & Content -->
+            <div class="text-center max-w-5xl mx-auto animate-fade-up delay-100">
+                <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-[#3B82F6]/30 bg-[#1D4ED8]/20 backdrop-blur-md mb-8">
+                    <span class="eyebrow text-blue-300">SEO & Content Strategy</span>
+                </div>
+
+                <h1 class="h-hero text-white mb-8">
+                    Dominate the <br>
+                    <span class="text-gradient">Search Results.</span>
+                </h1>
+                <p class="body-lead text-neutral-400 max-w-4xl mx-auto">
+                    Search-optimized content designed to attract, engage, and convert high-intent users at the exact moment they are looking for you.
+                </p>
+
+                <div class="mt-12 flex justify-center gap-6">
+                    <a href="#approach" class="font-body group relative inline-flex items-center gap-3 px-8 py-4 bg-white/5 border border-white/10 text-white text-lg font-bold rounded-full overflow-hidden transition-all hover:bg-white/10 active:scale-95 backdrop-blur-md">
+                        Explore Strategy <i data-lucide="chevron-down" class="w-5 h-5 group-hover:translate-y-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- PILLARS OF SEO GRID                       -->
+    <!-- ========================================= -->
+    <section id="approach" class="relative py-24 md:py-32 bg-[#050505] border-t border-white/5">
+        <!-- Strict Container Constraints -->
+        <div class="max-w-[1600px] mx-auto w-full px-6 md:px-12 xl:px-[50px] relative z-10">
+            
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-20 gap-8 animate-fade-up">
+                <div class="max-w-3xl">
+                    <h2 class="h-section text-white">The Anatomy of <br>Top Rankings.</h2>
+                </div>
+                <p class="body-lead text-neutral-400 max-w-md">
+                    We don't rely on guesswork. Our methodology is built on four technical and editorial pillars.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Pillar 1 -->
+                <div class="group relative rounded-[2.5rem] bg-[#111111] border border-white/10 p-10 lg:p-12 hover:border-[#60A5FA]/50 transition-all duration-500 animate-fade-up delay-100 shadow-2xl overflow-hidden">
+                    <div class="absolute top-0 right-0 w-48 h-48 bg-[#60A5FA]/10 rounded-bl-full -mr-10 -mt-10 transition-transform duration-700 group-hover:scale-[1.5]"></div>
+                    <div class="relative z-10">
+                        <div class="w-16 h-16 rounded-2xl bg-[#60A5FA]/10 flex items-center justify-center mb-8 group-hover:bg-[#60A5FA]/20 transition-colors border border-[#60A5FA]/20">
+                            <i data-lucide="target" class="w-8 h-8 text-[#60A5FA]"></i>
+                        </div>
+                        <h3 class="h-card text-white mb-4">Intent-Driven Keywords</h3>
+                        <p class="body-text text-neutral-400">
+                            We don't just chase high-volume vanity metrics. We target commercial-intent search terms that capture users ready to make a decision.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Pillar 2 -->
+                <div class="group relative rounded-[2.5rem] bg-[#111111] border border-white/10 p-10 lg:p-12 hover:border-[#C084FC]/50 transition-all duration-500 animate-fade-up delay-200 shadow-2xl overflow-hidden">
+                    <div class="absolute top-0 right-0 w-48 h-48 bg-[#C084FC]/10 rounded-bl-full -mr-10 -mt-10 transition-transform duration-700 group-hover:scale-[1.5]"></div>
+                    <div class="relative z-10">
+                        <div class="w-16 h-16 rounded-2xl bg-[#C084FC]/10 flex items-center justify-center mb-8 group-hover:bg-[#C084FC]/20 transition-colors border border-[#C084FC]/20">
+                            <i data-lucide="code-2" class="w-8 h-8 text-[#C084FC]"></i>
+                        </div>
+                        <h3 class="h-card text-white mb-4">Technical SEO Precision</h3>
+                        <p class="body-text text-neutral-400">
+                            Fast loading speeds, mobile-first indexing, clean schema markup, and crawlable architectures that search engine bots love.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Pillar 3 -->
+                <div class="group relative rounded-[2.5rem] bg-[#111111] border border-white/10 p-10 lg:p-12 hover:border-[#3B82F6]/50 transition-all duration-500 animate-fade-up delay-100 shadow-2xl overflow-hidden">
+                    <div class="absolute top-0 right-0 w-48 h-48 bg-[#3B82F6]/10 rounded-bl-full -mr-10 -mt-10 transition-transform duration-700 group-hover:scale-[1.5]"></div>
+                    <div class="relative z-10">
+                        <div class="w-16 h-16 rounded-2xl bg-[#3B82F6]/10 flex items-center justify-center mb-8 group-hover:bg-[#3B82F6]/20 transition-colors border border-[#3B82F6]/20">
+                            <i data-lucide="file-text" class="w-8 h-8 text-[#3B82F6]"></i>
+                        </div>
+                        <h3 class="h-card text-white mb-4">Editorial Authority</h3>
+                        <p class="body-text text-neutral-400">
+                            Content that satisfies Google’s E-E-A-T guidelines (Experience, Expertise, Authoritativeness, Trustworthiness) to build brand credibility.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Pillar 4 -->
+                <div class="group relative rounded-[2.5rem] bg-[#111111] border border-white/10 p-10 lg:p-12 hover:border-emerald-500/50 transition-all duration-500 animate-fade-up delay-200 shadow-2xl overflow-hidden">
+                    <div class="absolute top-0 right-0 w-48 h-48 bg-emerald-500/10 rounded-bl-full -mr-10 -mt-10 transition-transform duration-700 group-hover:scale-[1.5]"></div>
+                    <div class="relative z-10">
+                        <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 flex items-center justify-center mb-8 group-hover:bg-emerald-500/20 transition-colors border border-emerald-500/20">
+                            <i data-lucide="link" class="w-8 h-8 text-emerald-400"></i>
+                        </div>
+                        <h3 class="h-card text-white mb-4">Strategic Link Building</h3>
+                        <p class="body-text text-neutral-400">
+                            High-quality, relevant backlink acquisition that passes real link equity and skyrockets your domain authority.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- VISUAL FEATURE: THE SERP MOCKUP           -->
+    <!-- ========================================= -->
+    <section class="relative py-32 bg-gray-900 border-y border-gray-800 overflow-hidden">
+        <div class="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none"></div>
+
+        <!-- Strict Container Constraints -->
+        <div class="max-w-[1600px] mx-auto w-full px-6 md:px-12 xl:px-[50px] relative z-10">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                <!-- Left: Content -->
+                <div class="space-y-10 animate-fade-up">
+                    <h2 class="h-section text-white">Outrank the <br>Competition.</h2>
+                    <p class="body-lead text-neutral-400">
+                        A beautiful website is invisible if nobody can find it. We bridge the gap between creative branding and search engine visibility.
+                    </p>
+                    <ul class="space-y-6">
+                        <li class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-full bg-[#60A5FA]/20 flex items-center justify-center shrink-0 mt-1">
+                                <i data-lucide="check" class="w-5 h-5 text-[#60A5FA]"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-heading font-bold text-xl text-white">Organic Traffic Growth</h4>
+                                <p class="body-text text-neutral-500 text-sm mt-1">Sustainable, long-term traffic that reduces dependency on paid ads.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-full bg-[#C084FC]/20 flex items-center justify-center shrink-0 mt-1">
+                                <i data-lucide="check" class="w-5 h-5 text-[#C084FC]"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-heading font-bold text-xl text-white">Conversion Optimization</h4>
+                                <p class="body-text text-neutral-500 text-sm mt-1">Content structured not just to rank, but to guide users to a sale.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-full bg-[#34D399]/20 flex items-center justify-center shrink-0 mt-1">
+                                <i data-lucide="check" class="w-5 h-5 text-[#34D399]"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-heading font-bold text-xl text-white">Algorithm Resilience</h4>
+                                <p class="body-text text-neutral-500 text-sm mt-1">White-hat strategies that survive and thrive through Google updates.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Right: Custom SERP Visual -->
+                <div class="relative h-[600px] w-full rounded-[3rem] bg-[#050505] border border-white/10 overflow-hidden flex flex-col justify-end p-8 shadow-2xl group animate-fade-up delay-200">
+                    <!-- Glow -->
+                    <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-blue-500/20 blur-[100px] rounded-full"></div>
+                    
+                    <!-- Search Bar Header inside mockup -->
+                    <div class="absolute top-8 left-8 right-8 bg-[#111] border border-white/10 rounded-full p-4 flex items-center gap-4 shadow-lg z-20">
+                        <i data-lucide="search" class="w-5 h-5 text-neutral-500"></i>
+                        <div class="h-2 w-32 bg-neutral-700 rounded-full"></div>
+                    </div>
+
+                    <!-- SERP Results Stack -->
+                    <div class="space-y-4 relative z-10 w-full perspective-[1000px]">
+                        
+                        <!-- Top Result (Web Affino Client) -->
+                        <div class="serp-item serp-1 bg-gradient-to-r from-blue-900/40 to-[#111] border border-blue-500/50 rounded-2xl p-6 shadow-[0_0_30px_rgba(96,165,250,0.2)] transform transition-transform group-hover:scale-[1.02] group-hover:-translate-y-2">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center">
+                                    <i data-lucide="star" class="w-3 h-3 text-white"></i>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-xs font-bold text-white">Your Brand</span>
+                                    <span class="text-[10px] text-neutral-400">https://yourdomain.com</span>
+                                </div>
+                            </div>
+                            <h3 class="text-lg font-bold text-blue-400 mb-2">The Ultimate Solution For Your Needs</h3>
+                            <div class="h-2 w-full bg-white/10 rounded-full mb-2"></div>
+                            <div class="h-2 w-3/4 bg-white/10 rounded-full"></div>
+                        </div>
+
+                        <!-- Result 2 (Competitor) -->
+                        <div class="serp-item serp-2 bg-[#111] border border-white/5 rounded-2xl p-6 opacity-60 scale-95 origin-top">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-6 h-6 rounded-full bg-neutral-800"></div>
+                                <div class="flex flex-col">
+                                    <div class="h-2 w-16 bg-neutral-700 rounded-full mb-1"></div>
+                                    <div class="h-1.5 w-24 bg-neutral-800 rounded-full"></div>
+                                </div>
+                            </div>
+                            <div class="h-3 w-48 bg-blue-900/50 rounded-full mb-3"></div>
+                            <div class="h-1.5 w-full bg-neutral-800 rounded-full mb-2"></div>
+                            <div class="h-1.5 w-2/3 bg-neutral-800 rounded-full"></div>
+                        </div>
+
+                        <!-- Result 3 (Competitor) -->
+                        <div class="serp-item serp-3 bg-[#111] border border-white/5 rounded-2xl p-6 opacity-40 scale-90 origin-top">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-6 h-6 rounded-full bg-neutral-800"></div>
+                                <div class="flex flex-col">
+                                    <div class="h-2 w-20 bg-neutral-700 rounded-full mb-1"></div>
+                                    <div class="h-1.5 w-20 bg-neutral-800 rounded-full"></div>
+                                </div>
+                            </div>
+                            <div class="h-3 w-56 bg-blue-900/30 rounded-full mb-3"></div>
+                            <div class="h-1.5 w-full bg-neutral-800 rounded-full mb-2"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- CTA SECTION                               -->
+    <!-- ========================================= -->
+    <section class="relative py-40 text-center overflow-hidden bg-black">
+        
+        <!-- Background Elements -->
+        <div class="absolute inset-0 bg-gradient-to-b from-gray-900 via-black to-[#050505] z-0"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl bg-[#C084FC]/10 blur-[150px] rounded-full pointer-events-none z-0"></div>
+
+        <!-- Strict Container Constraints -->
+        <div class="max-w-[1600px] mx-auto w-full px-6 md:px-12 xl:px-[50px] relative z-10 animate-fade-up">
+            <h2 class="h-section text-white mb-10">
+                Ready to Rank <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#60A5FA] to-[#C084FC]">Above the Rest?</span>
+            </h2>
+            <p class="body-lead text-neutral-400 mb-16 max-w-4xl mx-auto">
+                Stop losing high-intent traffic to your competitors. Let Web Affino build an SEO and content strategy that turns search engines into your most powerful acquisition channel.
+            </p>
+            
+            <div class="flex justify-center">
+                <a href="https://webaffino.com/contact-us" class="font-body group relative inline-flex items-center gap-4 px-12 py-5 bg-white text-black text-lg font-bold rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(192,132,252,0.3)]">
+                    <span class="relative z-10 flex items-center gap-2">
+                        Start Growing Organically
+                        <i data-lucide="arrow-right" class="w-6 h-6 transition-transform group-hover:translate-x-1"></i>
+                    </span>
+                    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-purple-100 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+
+            // JavaScript Typing Effect for the Search Bar
+            const typedTextSpan = document.getElementById("typed-text");
+            // List of services provided
+            const textArray = [
+                "Performance Marketing",
+                "SEO & Content Strategy",
+                "Lead Generation",
+                "Site Optimization",
+                "Digital Marketing"
+            ];
+            const typingDelay = 100;
+            const erasingDelay = 50;
+            const newTextDelay = 2000; // Delay between current and next text
+            let textArrayIndex = 0;
+            let charIndex = 0;
+
+            function type() {
+                if (charIndex < textArray[textArrayIndex].length) {
+                    typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+                    charIndex++;
+                    setTimeout(type, typingDelay);
+                } else {
+                    setTimeout(erase, newTextDelay);
+                }
+            }
+
+            function erase() {
+                if (charIndex > 0) {
+                    typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
+                    charIndex--;
+                    setTimeout(erase, erasingDelay);
+                } else {
+                    textArrayIndex++;
+                    if (textArrayIndex >= textArray.length) textArrayIndex = 0;
+                    setTimeout(type, typingDelay + 500);
+                }
+            }
+
+            // Start typing effect on load
+            if (textArray.length) {
+                setTimeout(type, newTextDelay + 250);
+            }
+        });
+    </script>
+</body>
+</html>
